@@ -1,24 +1,20 @@
-import { ringPosition } from "../lib/spawnRing";
-
-/** Arena center and the radius of the spawn ring, in Hammer units. */
-const ARENA_CENTER: readonly [number, number] = [0, 0];
-const SPAWN_RADIUS = 3500;
+import { battleLinePosition, type Side } from "../lib/battleLines";
+import { PLAYERS_PER_TEAM, SPAWN_LINE_X, SPAWN_SPACING } from "../config";
 
 /**
- * Fixed per-team spawn slots on a ring around the arena.
+ * Fixed per-team spawn slots on two battle lines either side of the river.
  *
- * A Hammer map ships spawn points for the two STOCK teams only. Heroes on the
- * eight `DotaTeam.CUSTOM_*` teams therefore spawn at the world origin — all of
- * them, in one pile, every respawn. Rather than placing ten spawners in Hammer
- * (a map recompile, Windows-only), this system repositions every real hero on
- * every spawn event to its team's slot on the ring.
+ * A Hammer map ships spawn points for its stock teams' lanes, but this is a
+ * script-only arena with no `.vmap` yet — so every hero would spawn at the world
+ * origin, both teams in one pile, every respawn (landmine L7). This system
+ * teleports each real hero on every spawn to its team's slot: Radiant on the
+ * negative-X line, Dire on positive X, spread along Y.
  *
- * The geometry itself lives in `lib/spawnRing.ts`, which touches no engine
- * globals and is therefore unit-tested. This file is the thin engine-facing
- * shell around it — the purity split described in playbook chapter 05.
+ * The geometry is pure and unit-tested in `lib/battleLines.ts`; this file is the
+ * thin engine-facing shell (the purity split from playbook chapter 05).
  */
 export class SpawnPositions {
-    constructor(private readonly ffaTeams: readonly DotaTeam[]) {
+    constructor(private readonly teamSides: ReadonlyMap<DotaTeam, Side>) {
         ListenToGameEvent("npc_spawned", event => this.onNpcSpawned(event), undefined);
     }
 
@@ -26,10 +22,13 @@ export class SpawnPositions {
         const unit = EntIndexToHScript(event.entindex) as CDOTA_BaseNPC | undefined;
         if (!unit || !unit.IsRealHero()) return;
 
-        const slot = this.ffaTeams.indexOf(unit.GetTeamNumber());
-        if (slot < 0) return; // spectator or neutral — leave it where it is
+        const team = unit.GetTeamNumber();
+        const side = this.teamSides.get(team);
+        if (side === undefined) return; // spectator or neutral — leave it be
 
-        const [x, y] = ringPosition(ARENA_CENTER, SPAWN_RADIUS, slot, this.ffaTeams.length);
+        const slot = this.teamSlot(unit.GetPlayerOwnerID(), team);
+        const [x, y] = battleLinePosition(side, slot, PLAYERS_PER_TEAM, SPAWN_LINE_X, SPAWN_SPACING);
+
         // Wait one frame: CreateHeroForPlayer / ReplaceHeroWith finish
         // positioning the unit AFTER npc_spawned fires, so a synchronous
         // teleport here would be silently overwritten.
@@ -38,5 +37,22 @@ export class SpawnPositions {
             FindClearSpaceForUnit(unit, GetGroundPosition(Vector(x, y, 0), unit), true);
             unit.Stop();
         });
+    }
+
+    /**
+     * This player's stable index within its team: the count of same-team players
+     * with a lower player id. Deterministic, so a player keeps the same slot
+     * across respawns. At most a handful of players, so the scan is cheap.
+     */
+    private teamSlot(playerId: PlayerID, team: DotaTeam): number {
+        let slot = 0;
+        for (let i = 0; i < 24; i++) {
+            const other = i as PlayerID;
+            if (other === playerId) continue;
+            if (!PlayerResource.IsValidPlayerID(other)) continue;
+            if (PlayerResource.GetTeam(other) !== team) continue;
+            if (other < playerId) slot++;
+        }
+        return slot;
     }
 }

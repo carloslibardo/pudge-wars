@@ -2,24 +2,23 @@
 // from the stock hero, so this file only lists the deltas.
 "DOTAHeroes"
 {
-	"npc_dota_hero_windrunner"
+	"npc_dota_hero_pudge"
 	{
-		// No "override_hero" here: the block key IS the base hero name, and
-		// that is the whole pattern. The old approach — a "_custom" key with
-		// "override_hero" pointing at the base — produces heroes that cannot
-		// be spawned independently (CreateHeroForPlayer fails with
-		// "unit ... is invalid"). See playbook landmine L2.
+		// The block key IS the base hero name — no "override_hero" (landmine L2).
+		// Everyone is Pudge, forced in GameMode with SetCustomGameForceHero,
+		// and GetUnitName() returns this base name for every player.
 
-		// A skillshot-only mode: strip the right-click so all damage has to
-		// flow through abilities you control. NO_ATTACK is what actually
-		// removes the attack; the 1-damage floor is a fallback for anything
-		// that force-attacks regardless.
+		// Hook-only mode: strip the right-click so every kill flows through Meat
+		// Hook + Rot. NO_ATTACK is what actually removes the attack; the
+		// 1-damage floor is a fallback for anything that force-attacks.
 		"AttackCapabilities"			"DOTA_UNIT_CAP_NO_ATTACK"
 		"AttackDamageMin"				"1"
 		"AttackDamageMax"				"1"
-		"AttackRate"					"2.0"
 
-		"Ability1"						"example_ability"
+		// Ability slots are filled as each ability lands (specs 002-003):
+		//   Ability1 pudge_meat_hook, Ability2 pudge_rot, Ability3 pudge_flesh_heap.
+		// Kept empty here so this commit references only abilities that exist.
+		"Ability1"						""
 		"Ability2"						""
 		"Ability3"						""
 		"Ability4"						""

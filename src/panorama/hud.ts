@@ -9,19 +9,26 @@
     const rows = $("#ScoreRows");
     const title = $("#ScoreTitle") as LabelPanel;
 
+    // Score is per TEAM in Pudge Wars (the win condition is a team total), so
+    // the net table is keyed by team number. Radiant = 2, Dire = 3.
+    const TEAM_NAMES: Record<string, string> = {
+        "2": "Radiant",
+        "3": "Dire",
+    };
+
     function refresh(): void {
         const table = CustomNetTables.GetAllTableValues("pudge_wars_score");
         rows.RemoveAndDeleteChildren();
         let total = 0;
         for (const entry of table) {
-            const playerId = Number(entry.key) as PlayerID;
             const kills = entry.value.kills;
             total += kills;
-            const label = $.CreatePanel("Label", rows, `ScoreRow${playerId}`);
+            const name = TEAM_NAMES[entry.key] ?? `Team ${entry.key}`;
+            const label = $.CreatePanel("Label", rows, `ScoreRow${entry.key}`);
             label.AddClass("Score__Row");
-            label.text = `${Players.GetPlayerName(playerId)}  ${kills}`;
+            label.text = `${name}  ${kills}`;
         }
-        title.text = total > 0 ? "SCORE" : "SCORE — no kills yet";
+        title.text = total > 0 ? "SCORE" : "SCORE — first to 10 kills";
     }
 
     // Net tables hold STATE, not one-shot events, so a UI that finishes loading

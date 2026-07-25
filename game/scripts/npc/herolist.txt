@@ -1,13 +1,11 @@
 //
 // <key>	<value>   — 1 enables the hero for this custom game.
 //
-// These are BASE hero names, deliberately. Custom hero names
-// ("npc_dota_hero_windrunner_custom") do not resolve — the engine hands the
-// player a random stock hero instead, silently. Override base heroes in place
-// in npc_heroes_custom.txt (the "OAA pattern"), and remember that
-// GetUnitName() then returns the BASE name forever, so any hero-keyed lookup
-// table in your code must key base names too.
+// Base hero name, deliberately. Everyone is Pudge (SetCustomGameForceHero),
+// and a "_custom" name would not resolve — the engine would hand out a random
+// stock hero at the selection timeout, silently. Overridden in place in
+// npc_heroes_custom.txt, so GetUnitName() returns this base name forever.
 "CustomHeroList"
 {
-	"npc_dota_hero_windrunner"		"1"
+	"npc_dota_hero_pudge"			"1"
 }

@@ -10,6 +10,6 @@
  * fired before the panel existed is gone forever.
  */
 interface CustomNetTableDeclarations {
-    /** Player id (stringified) -> running kill count. Written by `GameMode.onEntityKilled`. */
+    /** Team number (stringified) -> running team kill count. Written by `GameMode.onEntityKilled`. */
     pudge_wars_score: Record<string, { kills: number }>;
 }

@@ -1,6 +1,8 @@
-﻿// Localization keys are the ONLY place tooltips exist. A missing key does not
-// warn — the UI just renders the raw token ("#npc_dota_hero_windrunner"), so a
-// missing entry looks like a UI bug rather than a data one.
+// Localization keys are the ONLY place tooltips exist. A missing key does not
+// warn — the UI just renders the raw token ("#DOTA_Tooltip_ability_..."), so a
+// missing entry looks like a UI bug rather than a data one. Every ability and
+// item added below needs name + description tokens (and value tokens to show
+// numbers in the tooltip).
 "lang"
 {
 	"Language"		"English"
@@ -9,9 +11,10 @@
 		"addon_game_name"							"Pudge Wars"
 
 		// The loc key for an overridden hero is the BASE hero name.
-		"npc_dota_hero_windrunner"					"Ranger"
+		"npc_dota_hero_pudge"						"Pudge"
 
-		"DOTA_Tooltip_ability_example_ability"				"Shoot Arrow"
-		"DOTA_Tooltip_ability_example_ability_Description"		"Fire a skillshot arrow that damages the first enemy hero it strikes."
+		// Team labels shown in the score HUD.
+		"pudge_wars_team_radiant"					"Radiant"
+		"pudge_wars_team_dire"						"Dire"
 	}
 }
