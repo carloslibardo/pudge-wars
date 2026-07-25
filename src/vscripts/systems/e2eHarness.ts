@@ -25,10 +25,12 @@
  *     horn rather than during setup.
  */
 import { heroForPlayer } from "../lib/heroResolve";
+import { firstHookTarget, hookDirection, type HookCandidate } from "../lib/hook";
 
 const MAX_PLAYER_SLOTS = 24;
 const THINK_INTERVAL = 0.5;
-const ATTACK_RANGE = 900;
+/** Toggle Rot on when an enemy is at least this close. */
+const ROT_TOGGLE_RANGE = 350;
 
 export function e2eEnabled(): boolean {
     return IsInToolsMode() && (Convars.GetInt("pudge_wars_e2e") ?? 0) > 0;
@@ -91,39 +93,80 @@ export class E2EHarness {
             const hero = heroForPlayer(id);
             if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
 
-            const target = this.nearestEnemyHero(hero);
-            if (!target) continue;
+            const enemies = this.enemyHeroesOf(hero);
+            if (enemies.length === 0) continue;
+            const target = this.nearest(hero, enemies);
+            const origin = hero.GetAbsOrigin();
+            const distance = ((target.GetAbsOrigin() - origin) as Vector).Length2D();
 
-            const distance = ((target.GetAbsOrigin() - hero.GetAbsOrigin()) as Vector).Length2D();
-            const ability = hero.GetAbilityByIndex(0);
-            if (ability && distance < ATTACK_RANGE && ability.IsFullyCastable()) {
+            // Toggle Rot (slot 1) on when an enemy is in range and it is off, so
+            // hooked victims dragged into the cloud actually die and the run
+            // reaches the win condition.
+            const rot = hero.GetAbilityByIndex(1);
+            if (rot && distance < ROT_TOGGLE_RANGE && !rot.GetToggleState() && rot.IsFullyCastable()) {
                 ExecuteOrderFromTable({
                     UnitIndex: hero.entindex(),
-                    OrderType: UnitOrder.CAST_POSITION,
-                    AbilityIndex: ability.entindex(),
-                    Position: target.GetAbsOrigin(),
-                    Queue: false,
-                });
-            } else {
-                ExecuteOrderFromTable({
-                    UnitIndex: hero.entindex(),
-                    OrderType: UnitOrder.MOVE_TO_POSITION,
-                    Position: target.GetAbsOrigin(),
+                    OrderType: UnitOrder.CAST_TOGGLE,
+                    AbilityIndex: rot.entindex(),
                     Queue: false,
                 });
             }
+
+            // Fire Meat Hook (slot 0) only when a straight hook at the nearest
+            // enemy would actually connect — the SAME pure selection math the
+            // engine's collision implements (lib/hook firstHookTarget). Aiming
+            // this way makes the headless run reliably produce [HOOK] markers.
+            const hook = hero.GetAbilityByIndex(0);
+            if (hook && hook.IsFullyCastable()) {
+                const [dx, dy] = hookDirection(
+                    [origin.x, origin.y],
+                    [target.GetAbsOrigin().x, target.GetAbsOrigin().y],
+                );
+                const range = hook.GetSpecialValueFor("hook_range");
+                const width = hook.GetSpecialValueFor("hook_width");
+                const candidates: HookCandidate[] = enemies.map(e => {
+                    const p = e.GetAbsOrigin();
+                    return { id: e.entindex(), pos: [p.x, p.y] };
+                });
+                if (firstHookTarget([origin.x, origin.y], [dx, dy], range, width, candidates) === target.entindex()) {
+                    ExecuteOrderFromTable({
+                        UnitIndex: hero.entindex(),
+                        OrderType: UnitOrder.CAST_POSITION,
+                        AbilityIndex: hook.entindex(),
+                        Position: target.GetAbsOrigin(),
+                        Queue: false,
+                    });
+                    continue;
+                }
+            }
+
+            // Otherwise close the distance to line up a hook.
+            ExecuteOrderFromTable({
+                UnitIndex: hero.entindex(),
+                OrderType: UnitOrder.MOVE_TO_POSITION,
+                Position: target.GetAbsOrigin(),
+                Queue: false,
+            });
         }
         return THINK_INTERVAL;
     }
 
-    private nearestEnemyHero(hero: CDOTA_BaseNPC_Hero): CDOTA_BaseNPC_Hero | undefined {
-        let best: CDOTA_BaseNPC_Hero | undefined;
-        let bestDistance = Number.MAX_SAFE_INTEGER;
+    private enemyHeroesOf(hero: CDOTA_BaseNPC_Hero): CDOTA_BaseNPC_Hero[] {
+        const enemies: CDOTA_BaseNPC_Hero[] = [];
         const count = HeroList.GetHeroCount();
         for (let i = 0; i < count; i++) {
             const other = HeroList.GetHero(i);
             if (!other || other.IsNull() || !other.IsAlive()) continue;
             if (other.GetTeamNumber() === hero.GetTeamNumber()) continue;
+            enemies.push(other);
+        }
+        return enemies;
+    }
+
+    private nearest(hero: CDOTA_BaseNPC_Hero, enemies: CDOTA_BaseNPC_Hero[]): CDOTA_BaseNPC_Hero {
+        let best = enemies[0];
+        let bestDistance = ((best.GetAbsOrigin() - hero.GetAbsOrigin()) as Vector).Length2D();
+        for (const other of enemies) {
             const distance = ((other.GetAbsOrigin() - hero.GetAbsOrigin()) as Vector).Length2D();
             if (distance < bestDistance) {
                 bestDistance = distance;
