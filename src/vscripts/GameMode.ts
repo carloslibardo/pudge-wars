@@ -4,7 +4,7 @@ import { Marker } from "./lib/markers";
 import { SpawnPositions } from "./systems/spawnPositions";
 import { RiverSystem } from "./systems/riverBand";
 import { E2EHarness, e2eEnabled, e2eKillTarget } from "./systems/e2eHarness";
-import { KILLS_TO_WIN, PLAYERS_PER_TEAM, RESPAWN_SECONDS, STARTING_GOLD } from "./config";
+import { KILL_BOUNTY, KILLS_TO_WIN, PLAYERS_PER_TEAM, RESPAWN_SECONDS, STARTING_GOLD } from "./config";
 import type { Side } from "./lib/battleLines";
 
 // Abilities and modifiers are imported for their @register* decorator SIDE
@@ -19,6 +19,8 @@ import "./modifiers/modifier_pudge_rot_slow";
 import "./abilities/pudge_flesh_heap";
 import "./modifiers/modifier_pudge_flesh_heap";
 import "./modifiers/modifier_pudge_river";
+import "./abilities/pudge_items";
+import "./modifiers/modifier_pudge_stat_item";
 
 declare global {
     interface CDOTAGameRules {
@@ -92,6 +94,13 @@ export class GameMode {
         GameRules.SetUseUniversalShopMode(true);
 
         ListenToGameEvent("entity_killed", event => this.onEntityKilled(event), undefined);
+        ListenToGameEvent("dota_item_purchased", event => this.onItemPurchased(event), undefined);
+    }
+
+    private onItemPurchased(event: DotaItemPurchasedEvent): void {
+        // Only mark our custom items; native/neutral buys are noise.
+        if (event.itemname === "" || !event.itemname.startsWith("item_pudge_")) return;
+        if (e2eEnabled()) print(Marker.itemPurchased(event.itemname, event.PlayerID));
     }
 
     private onStateChange(): void {
@@ -125,6 +134,12 @@ export class GameMode {
         if (killerTeam === killed.GetTeamNumber()) return;
 
         this.growFleshHeap(attacker);
+
+        // Kill bounty funds the shop over a 10-kill game (spec 005).
+        const killerPid = attacker.GetPlayerOwnerID();
+        if (killerPid !== -1) {
+            PlayerResource.ModifyGold(killerPid, KILL_BOUNTY, true, ModifyGoldReason.HERO_KILL);
+        }
 
         const { total, hasWon } = this.score.recordKill(killerTeam);
         if (total === 0) return; // post-win kills freeze at the first winner

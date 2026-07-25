@@ -36,5 +36,19 @@
 		"DOTA_Tooltip_ability_pudge_flesh_heap_Description"	"Every enemy Pudge you kill makes you permanently tougher: bonus maximum health and a sliver of magic resistance, stacking with no limit."
 		"DOTA_Tooltip_ability_pudge_flesh_heap_hp_per_stack"	"HEALTH PER STACK:"
 		"DOTA_Tooltip_ability_pudge_flesh_heap_resist_per_stack"	"MAGIC RESIST PER STACK:"
+
+		// --- Shop items (spec 005) ---
+		"DOTA_Tooltip_ability_item_pudge_hook_chain"				"Hook Chain"
+		"DOTA_Tooltip_ability_item_pudge_hook_chain_Description"		"Extra links. Your Meat Hook reaches +250 units farther. Stacks."
+		"DOTA_Tooltip_ability_item_pudge_greased_hook"				"Greased Hook"
+		"DOTA_Tooltip_ability_item_pudge_greased_hook_Description"	"A slicker chain. Your Meat Hook flies +400 speed faster. Stacks."
+		"DOTA_Tooltip_ability_item_pudge_barbed_hook"				"Barbed Hook"
+		"DOTA_Tooltip_ability_item_pudge_barbed_hook_Description"	"Cruel barbs. Your Meat Hook deals +40 damage. Stacks."
+		"DOTA_Tooltip_ability_item_pudge_flesh_boots"				"Flesh Boots"
+		"DOTA_Tooltip_ability_item_pudge_flesh_boots_Description"	"+45 move speed to walk your victims down."
+		"DOTA_Tooltip_ability_item_pudge_rancid_flask"				"Rancid Flask"
+		"DOTA_Tooltip_ability_item_pudge_rancid_flask_Description"	"+12 health regen — outlast your own Rot."
+		"DOTA_Tooltip_ability_item_pudge_gut_stitch"				"Gut Stitch"
+		"DOTA_Tooltip_ability_item_pudge_gut_stitch_Description"		"+350 maximum health. More meat on the hook."
 	}
 }

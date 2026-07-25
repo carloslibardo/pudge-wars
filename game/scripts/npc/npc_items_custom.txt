@@ -1,8 +1,105 @@
-// Custom items. The file must exist even when empty.
+// Custom items — the hook-fantasy shop (spec 005). Each key matches an exported
+// class in src/vscripts/abilities/pudge_items.ts; costs and stack caps are the
+// SAME numbers as lib/shop.ts SHOP_ITEMS, and kvShop.test.ts fails if they drift.
 //
-// Two useful base classes:
-//   "item_lua"        — has a TypeScript class with real cast behavior
-//   "item_datadriven" — no code; something else reads its AbilityValues
+// HOOK items carry bonus_range/bonus_speed/bonus_damage that Meat Hook reads
+// straight from the inventory. STAT items carry bonus_movespeed/bonus_health/
+// bonus_health_regen, granted by the shared modifier_pudge_stat_item.
 "DOTAAbilities"
 {
+	"item_pudge_hook_chain"
+	{
+		"BaseClass"					"item_lua"
+		"ScriptFile"				"abilities/pudge_items"
+		"AbilityTextureName"		"item_spider_legs"
+		"ItemCost"					"600"
+		"ItemPurchasable"			"1"
+		"ItemShopTags"				"hook"
+		"ItemQuality"				"common"
+		"MaxLevel"					"1"
+		"AbilityValues"
+		{
+			"bonus_range"			"250"
+		}
+	}
+
+	"item_pudge_greased_hook"
+	{
+		"BaseClass"					"item_lua"
+		"ScriptFile"				"abilities/pudge_items"
+		"AbilityTextureName"		"item_wind_lace"
+		"ItemCost"					"500"
+		"ItemPurchasable"			"1"
+		"ItemShopTags"				"hook"
+		"ItemQuality"				"common"
+		"MaxLevel"					"1"
+		"AbilityValues"
+		{
+			"bonus_speed"			"400"
+		}
+	}
+
+	"item_pudge_barbed_hook"
+	{
+		"BaseClass"					"item_lua"
+		"ScriptFile"				"abilities/pudge_items"
+		"AbilityTextureName"		"item_blades_of_attack"
+		"ItemCost"					"700"
+		"ItemPurchasable"			"1"
+		"ItemShopTags"				"hook"
+		"ItemQuality"				"rare"
+		"MaxLevel"					"1"
+		"AbilityValues"
+		{
+			"bonus_damage"			"40"
+		}
+	}
+
+	"item_pudge_flesh_boots"
+	{
+		"BaseClass"					"item_lua"
+		"ScriptFile"				"abilities/pudge_items"
+		"AbilityTextureName"		"item_boots"
+		"ItemCost"					"500"
+		"ItemPurchasable"			"1"
+		"ItemShopTags"				"movement"
+		"ItemQuality"				"common"
+		"MaxLevel"					"1"
+		"AbilityValues"
+		{
+			"bonus_movespeed"		"45"
+		}
+	}
+
+	"item_pudge_rancid_flask"
+	{
+		"BaseClass"					"item_lua"
+		"ScriptFile"				"abilities/pudge_items"
+		"AbilityTextureName"		"item_flask"
+		"ItemCost"					"400"
+		"ItemPurchasable"			"1"
+		"ItemShopTags"				"regen"
+		"ItemQuality"				"common"
+		"MaxLevel"					"1"
+		"AbilityValues"
+		{
+			"bonus_health_regen"	"12"
+		}
+	}
+
+	"item_pudge_gut_stitch"
+	{
+		"BaseClass"					"item_lua"
+		"ScriptFile"				"abilities/pudge_items"
+		"AbilityTextureName"		"item_vitality_booster"
+		"ItemCost"					"900"
+		"ItemPurchasable"			"1"
+		"ItemShopTags"				"health"
+		"ItemQuality"				"rare"
+		"MaxLevel"					"1"
+		"AbilityValues"
+		{
+			"bonus_health"			"350"
+		}
+	}
 }

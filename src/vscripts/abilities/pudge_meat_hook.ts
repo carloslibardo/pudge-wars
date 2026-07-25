@@ -1,5 +1,5 @@
 import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
-import { hookDirection } from "../lib/hook";
+import { hookDirection, sumHookBonuses, type HookBonus } from "../lib/hook";
 import { Marker } from "../lib/markers";
 import { e2eEnabled } from "../systems/e2eHarness";
 import { modifier_pudge_hook_drag } from "../modifiers/modifier_pudge_hook_drag";
@@ -26,15 +26,26 @@ function round2(n: number): number {
  */
 @registerAbility()
 export class pudge_meat_hook extends BaseAbility {
-    /** Base + item-bonus hook range. Items extend this via spec 005. */
-    private hookRange(): number {
-        return this.GetSpecialValueFor("hook_range");
-    }
-    private hookSpeed(): number {
-        return this.GetSpecialValueFor("hook_speed");
-    }
-    private hookDamage(): number {
-        return this.GetSpecialValueFor("hook_damage");
+    /**
+     * The hook bonuses granted by the caster's equipped hook items, summed by
+     * the pure `sumHookBonuses`. Hook items carry `bonus_range`/`bonus_speed`/
+     * `bonus_damage`; stat items read 0 for those keys. Inventory is scanned
+     * only when the hook actually fires/hits, so the per-slot reads are cheap.
+     */
+    private itemHookBonus(caster: CDOTA_BaseNPC): HookBonus {
+        const bonuses: HookBonus[] = [];
+        for (let slot = 0; slot < 9; slot++) {
+            const item = caster.GetItemInSlot(slot as InventorySlot);
+            if (item === undefined) continue;
+            const name = item.GetAbilityName();
+            if (!name.startsWith("item_pudge_")) continue;
+            bonuses.push({
+                range: item.GetSpecialValueFor("bonus_range"),
+                speed: item.GetSpecialValueFor("bonus_speed"),
+                damage: item.GetSpecialValueFor("bonus_damage"),
+            });
+        }
+        return sumHookBonuses(bonuses);
     }
 
     OnSpellStart(): void {
@@ -44,7 +55,9 @@ export class pudge_meat_hook extends BaseAbility {
         const [dx, dy] = hookDirection([origin.x, origin.y], [cursor.x, cursor.y]);
         const direction = Vector(dx, dy, 0);
 
-        const range = this.hookRange();
+        const bonus = this.itemHookBonus(caster);
+        const range = this.GetSpecialValueFor("hook_range") + bonus.range;
+        const speed = this.GetSpecialValueFor("hook_speed") + bonus.speed;
         const width = this.GetSpecialValueFor("hook_width");
 
         ProjectileManager.CreateLinearProjectile({
@@ -55,7 +68,7 @@ export class pudge_meat_hook extends BaseAbility {
             fDistance: range,
             fStartRadius: width,
             fEndRadius: width,
-            vVelocity: (direction * this.hookSpeed()) as Vector,
+            vVelocity: (direction * speed) as Vector,
             iUnitTargetTeam: UnitTargetTeam.ENEMY,
             iUnitTargetType: UnitTargetType.HERO,
             bProvidesVision: true,
@@ -73,10 +86,11 @@ export class pudge_meat_hook extends BaseAbility {
         if (!target || target.IsNull()) return true; // max distance, or victim died mid-flight
 
         const caster = this.GetCaster();
+        const damage = this.GetSpecialValueFor("hook_damage") + this.itemHookBonus(caster).damage;
         ApplyDamage({
             victim: target,
             attacker: caster,
-            damage: this.hookDamage(),
+            damage,
             damage_type: DamageTypes.MAGICAL,
             ability: this,
         });
