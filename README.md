@@ -1,7 +1,23 @@
 # Pudge Wars
 
+Everyone is Pudge. Two teams face off across a central river; you win by hooking
+enemies to your side and finishing them. First team to 10 kills takes it.
+
+- **Meat Hook** — a skillshot that latches the first enemy it hits and drags
+  them back to you.
+- **Rot** — a toggle cloud that damages nearby enemies and yourself (never
+  fatally) and slows them.
+- **Flesh Heap** — a passive: every kill permanently grows your health and
+  magic resistance.
+- **The river** — a mid-map band that grants move speed + HP regen while you
+  stand in it. A coordinate band in script, not map geometry.
+- **A hook-fantasy shop** — six items: longer / faster / meaner hook, boots,
+  regen, and extra health.
+
 A Dota 2 custom game written in TypeScript, compiled to Lua with
-TypeScriptToLua. Scaffolded from [dota2-claude-playbook][playbook].
+TypeScriptToLua. Scaffolded from [dota2-claude-playbook][playbook]; each feature
+was built through the playbook's SDD loop (`docs/specs/`), and the log-marker
+contract a future engine run must satisfy is `docs/specs/MARKERS.md`.
 
 [playbook]: https://github.com/carloslibardo/dota2-claude-playbook
 

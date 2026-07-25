@@ -15,7 +15,7 @@
 		}
 	}
 	"maps"			"pudge_wars"
-	// One team per player = free-for-all. Must match the FFA_TEAMS list in
-	// src/vscripts/GameMode.ts.
-	"TeamCount"		"10"
+	// Two teams (Radiant / Dire) facing across the river, up to 5 each. Must
+	// match TEAM_SIDES + PLAYERS_PER_TEAM in src/vscripts/GameMode.ts / config.ts.
+	"TeamCount"		"2"
 }

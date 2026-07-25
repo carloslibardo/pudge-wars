@@ -131,6 +131,22 @@ place.
   silently swallows every mouseover in the game, killing native tooltips while
   leaving the game otherwise playable. Set `hittest="false"` all the way down
   unless a panel genuinely needs clicks.
+- **TSTL does not polyfill all of `Math`/`Number`.** `Math.hypot` errors the
+  build outright (`TSTL: Math.hypot is unsupported`) — spell the length out as
+  `Math.sqrt(dx*dx + dy*dy)`. `Number.POSITIVE_INFINITY`/`Infinity` sentinels
+  are risky too; track "the first/best so far" with an `undefined` guard instead.
+  This one is LOUD (build-time), unlike most here — but it is non-obvious and
+  cost a build. Discovered live building Meat Hook's geometry.
+- **Not every engine method is in the typings.** `GetIntervalThinkTime()` exists
+  in-engine but is absent from `@moddota/dota-lua-types` — `tsc` rejects it. When
+  a documented method is missing, don't cast around it; keep the value you passed
+  to `StartIntervalThink` in a field and reuse that. (Rot's slow-refresh duration.)
+- **A wrong particle path renders NOTHING, silently — and you cannot tell a
+  wrong path from a correct one without a GPU host.** Precaching a *misspelled*
+  or renamed particle is not an error; it just never draws (L3/L12 restated for
+  emphasis). Any particle path written without running the client is a guess:
+  `modifier_pudge_river` uses `particles/generic_gameplay/rune_haste_owner.vpcf`,
+  UNVERIFIED. Confirm every `.vpcf` path in a tier-4 frame pass before trusting it.
 
 ## Testing strategy
 
