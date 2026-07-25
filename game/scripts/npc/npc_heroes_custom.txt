@@ -15,10 +15,8 @@
 		"AttackDamageMin"				"1"
 		"AttackDamageMax"				"1"
 
-		// Ability slots are filled as each ability lands (specs 002-003):
-		//   Ability1 pudge_meat_hook, Ability2 pudge_rot, Ability3 pudge_flesh_heap.
-		// Kept empty here so this commit references only abilities that exist.
-		"Ability1"						""
+		// Ability slots are filled as each ability lands (specs 002-003).
+		"Ability1"						"pudge_meat_hook"
 		"Ability2"						""
 		"Ability3"						""
 		"Ability4"						""

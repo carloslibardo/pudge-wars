@@ -16,5 +16,12 @@
 		// Team labels shown in the score HUD.
 		"pudge_wars_team_radiant"					"Radiant"
 		"pudge_wars_team_dire"						"Dire"
+
+		// --- Meat Hook (spec 002) ---
+		"DOTA_Tooltip_ability_pudge_meat_hook"				"Meat Hook"
+		"DOTA_Tooltip_ability_pudge_meat_hook_Description"	"Launch a hook chain in a straight line. The first enemy it catches is dragged back to Pudge, taking magic damage. The heart of the war: hook them to your side and finish them."
+		"DOTA_Tooltip_ability_pudge_meat_hook_hook_damage"	"HOOK DAMAGE:"
+		"DOTA_Tooltip_ability_pudge_meat_hook_hook_range"	"RANGE:"
+		"DOTA_Tooltip_ability_pudge_meat_hook_hook_speed"	"HOOK SPEED:"
 	}
 }

@@ -4,4 +4,28 @@
 // AbilityValues and are read in TS with GetSpecialValueFor — never hardcoded.
 "DOTAAbilities"
 {
+	"pudge_meat_hook"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"abilities/pudge_meat_hook"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"pudge_meat_hook"
+		"AbilityCastRange"				"1100"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"5.0"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"4"
+		"AbilityValues"
+		{
+			// Read in TS via GetSpecialValueFor. hook_range must match
+			// AbilityCastRange; shop items add bonuses on top (spec 005).
+			"hook_damage"				"100 150 200 250"
+			"hook_speed"				"1600"
+			"hook_range"				"1100"
+			"hook_width"				"100"
+			"drag_speed"				"1050"
+		}
+	}
 }

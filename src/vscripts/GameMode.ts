@@ -6,6 +6,13 @@ import { E2EHarness, e2eEnabled, e2eKillTarget } from "./systems/e2eHarness";
 import { KILLS_TO_WIN, PLAYERS_PER_TEAM, RESPAWN_SECONDS, STARTING_GOLD } from "./config";
 import type { Side } from "./lib/battleLines";
 
+// Abilities and modifiers are imported for their @register* decorator SIDE
+// EFFECT — TSTL only emits Lua for modules reachable from the entry point, so
+// an unimported ability simply does not exist at runtime, with no error (L8).
+// Bases (dota_ts_adapter) load first via these modules' own imports.
+import "./abilities/pudge_meat_hook";
+import "./modifiers/modifier_pudge_hook_drag";
+
 declare global {
     interface CDOTAGameRules {
         Addon: GameMode;
@@ -30,9 +37,11 @@ export class GameMode {
 
     public static Precache(this: void, context: CScriptPrecacheContext) {
         // Everyone is Pudge — precache the base hero or CreateHeroForPlayer
-        // fails "unit ... is invalid" (L3). Ability particles are precached as
-        // each ability is added (specs 002-004).
+        // fails "unit ... is invalid" (L3).
         PrecacheUnitByNameSync("npc_dota_hero_pudge", context);
+        // Un-precached particles render NOTHING, silently (L3/L12). Precaching
+        // the hero covers most Pudge assets, but pin the hook chain explicitly.
+        PrecacheResource("particle", "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", context);
     }
 
     public static Activate(this: void) {
