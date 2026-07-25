@@ -23,5 +23,18 @@
 		"DOTA_Tooltip_ability_pudge_meat_hook_hook_damage"	"HOOK DAMAGE:"
 		"DOTA_Tooltip_ability_pudge_meat_hook_hook_range"	"RANGE:"
 		"DOTA_Tooltip_ability_pudge_meat_hook_hook_speed"	"HOOK SPEED:"
+
+		// --- Rot (spec 003) ---
+		"DOTA_Tooltip_ability_pudge_rot"					"Rot"
+		"DOTA_Tooltip_ability_pudge_rot_Description"		"Toggle a stinking cloud that damages nearby enemies and Pudge himself each pulse, and slows enemies caught in it. It cannot kill Pudge — the self-damage stops at 1 health."
+		"DOTA_Tooltip_ability_pudge_rot_rot_damage"			"DAMAGE PER PULSE:"
+		"DOTA_Tooltip_ability_pudge_rot_rot_radius"			"RADIUS:"
+		"DOTA_Tooltip_ability_pudge_rot_rot_slow"			"MOVE SLOW:"
+
+		// --- Flesh Heap (spec 003) ---
+		"DOTA_Tooltip_ability_pudge_flesh_heap"				"Flesh Heap"
+		"DOTA_Tooltip_ability_pudge_flesh_heap_Description"	"Every enemy Pudge you kill makes you permanently tougher: bonus maximum health and a sliver of magic resistance, stacking with no limit."
+		"DOTA_Tooltip_ability_pudge_flesh_heap_hp_per_stack"	"HEALTH PER STACK:"
+		"DOTA_Tooltip_ability_pudge_flesh_heap_resist_per_stack"	"MAGIC RESIST PER STACK:"
 	}
 }

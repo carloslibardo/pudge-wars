@@ -12,6 +12,11 @@ import type { Side } from "./lib/battleLines";
 // Bases (dota_ts_adapter) load first via these modules' own imports.
 import "./abilities/pudge_meat_hook";
 import "./modifiers/modifier_pudge_hook_drag";
+import "./abilities/pudge_rot";
+import "./modifiers/modifier_pudge_rot";
+import "./modifiers/modifier_pudge_rot_slow";
+import "./abilities/pudge_flesh_heap";
+import "./modifiers/modifier_pudge_flesh_heap";
 
 declare global {
     interface CDOTAGameRules {
@@ -42,6 +47,7 @@ export class GameMode {
         // Un-precached particles render NOTHING, silently (L3/L12). Precaching
         // the hero covers most Pudge assets, but pin the hook chain explicitly.
         PrecacheResource("particle", "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", context);
+        PrecacheResource("particle", "particles/units/heroes/hero_pudge/pudge_rot.vpcf", context);
     }
 
     public static Activate(this: void) {
@@ -112,6 +118,8 @@ export class GameMode {
         // No credit for a Pudge dying to his own Rot, or to an ally.
         if (killerTeam === killed.GetTeamNumber()) return;
 
+        this.growFleshHeap(attacker);
+
         const { total, hasWon } = this.score.recordKill(killerTeam);
         if (total === 0) return; // post-win kills freeze at the first winner
         CustomNetTables.SetTableValue("pudge_wars_score", tostring(killerTeam), { kills: total });
@@ -121,6 +129,22 @@ export class GameMode {
             GameRules.SetGameWinner(killerTeam);
             if (e2eEnabled()) print(Marker.win(killerTeam, total));
         }
+    }
+
+    /**
+     * Add a Flesh Heap stack to the killer (spec 003). The stack count IS the
+     * kill count; the modifier reads it for its HP/resist bonus, so we only bump
+     * it and force a stat recompute here. Every hero is Pudge, so the passive is
+     * always present — but guard anyway.
+     */
+    private growFleshHeap(attacker: CDOTA_BaseNPC): void {
+        if (!attacker.IsRealHero()) return;
+        const heap = attacker.FindModifierByName("modifier_pudge_flesh_heap");
+        if (!heap) return;
+        const stacks = heap.GetStackCount() + 1;
+        heap.SetStackCount(stacks);
+        (attacker as CDOTA_BaseNPC_Hero).CalculateStatBonus(true);
+        if (e2eEnabled()) print(Marker.fleshStack(stacks, attacker.entindex()));
     }
 
     /** Called on `script_reload` in tools mode. */

@@ -17,8 +17,8 @@
 
 		// Ability slots are filled as each ability lands (specs 002-003).
 		"Ability1"						"pudge_meat_hook"
-		"Ability2"						""
-		"Ability3"						""
+		"Ability2"						"pudge_rot"
+		"Ability3"						"pudge_flesh_heap"
 		"Ability4"						""
 		"Ability5"						""
 		"Ability6"						""

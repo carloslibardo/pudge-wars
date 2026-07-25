@@ -28,4 +28,39 @@
 			"drag_speed"				"1050"
 		}
 	}
+
+	"pudge_rot"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"abilities/pudge_rot"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"pudge_rot"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"4"
+		"AbilityValues"
+		{
+			"rot_radius"				"275"
+			"rot_damage"				"30"
+			"rot_self_damage"			"15"
+			"tick_interval"				"0.5"
+			// Enemy move slow, in percent (read as a negative bonus in TS).
+			"rot_slow"					"20"
+		}
+	}
+
+	"pudge_flesh_heap"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"abilities/pudge_flesh_heap"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"pudge_flesh_heap"
+		"MaxLevel"						"4"
+		"AbilityValues"
+		{
+			"hp_per_stack"				"40"
+			// Per-stack magic resist and its cap, both in percent.
+			"resist_per_stack"			"0.6"
+			"resist_cap"				"60"
+		}
+	}
 }
