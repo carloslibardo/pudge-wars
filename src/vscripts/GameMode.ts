@@ -2,6 +2,7 @@ import { reloadable } from "./lib/tstl-utils";
 import { ScoreTracker } from "./lib/score";
 import { Marker } from "./lib/markers";
 import { SpawnPositions } from "./systems/spawnPositions";
+import { RiverSystem } from "./systems/riverBand";
 import { E2EHarness, e2eEnabled, e2eKillTarget } from "./systems/e2eHarness";
 import { KILLS_TO_WIN, PLAYERS_PER_TEAM, RESPAWN_SECONDS, STARTING_GOLD } from "./config";
 import type { Side } from "./lib/battleLines";
@@ -17,6 +18,7 @@ import "./modifiers/modifier_pudge_rot";
 import "./modifiers/modifier_pudge_rot_slow";
 import "./abilities/pudge_flesh_heap";
 import "./modifiers/modifier_pudge_flesh_heap";
+import "./modifiers/modifier_pudge_river";
 
 declare global {
     interface CDOTAGameRules {
@@ -48,6 +50,7 @@ export class GameMode {
         // the hero covers most Pudge assets, but pin the hook chain explicitly.
         PrecacheResource("particle", "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", context);
         PrecacheResource("particle", "particles/units/heroes/hero_pudge/pudge_rot.vpcf", context);
+        PrecacheResource("particle", "particles/generic_gameplay/rune_haste_owner.vpcf", context);
     }
 
     public static Activate(this: void) {
@@ -63,6 +66,9 @@ export class GameMode {
         // hero spawns at the world origin in one pile (L7). This puts the two
         // teams on their mirrored battle lines each spawn.
         new SpawnPositions(TEAM_SIDES);
+        // The river down the middle is a coordinate band, buffing whoever stands
+        // in it (spec 004). Pure membership check + thin scanner.
+        new RiverSystem();
     }
 
     private configure(): void {

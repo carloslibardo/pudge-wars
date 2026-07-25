@@ -29,3 +29,7 @@ export const KILL_BOUNTY = 300;
  */
 export const RIVER_BAND: RiverBand = { axis: "x", min: -400, max: 400 };
 export const RIVER_SCAN_INTERVAL = 0.25;
+/** River buff strength. No KV ability backs the river, so its numbers live here
+ *  (the documented home for mode-level values KV has no block for). */
+export const RIVER_MOVE_SPEED_PCT = 12;
+export const RIVER_HP_REGEN = 30;
