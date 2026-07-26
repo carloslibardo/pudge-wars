@@ -1,0 +1,33 @@
+﻿smoke start 2026-07-26T23:27:47.7855640+00:00
+Creating device for graphics adapter 0 'NVIDIA Tesla T4' [vendorid 0x10DE]: 32.0.15.9636
+
+-----------------------------------------------------------------
+ ERROR: 0 compiled, 0 failed, 0 skipped, 0m:02s
+-----------------------------------------------------------------
+
+screenshots: 15
+process alive at kill: True
+console.log lines: 1201
+--- SCRIPT ERRORS ---
+--- E2E MARKERS ---
+07/26 23:29:57 [VScript] [E2E] seating fake clients during setup
+07/26 23:30:05 [VScript] [E2E] harness engaged — driving bots
+--- HOOK / GAME MARKERS ---
+--- GAMERULES STATE ---
+07/26 23:29:35 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_INIT'
+07/26 23:29:53 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_INIT'
+07/26 23:29:57 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP'
+07/26 23:29:57 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP'
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_HERO_SELECTION'
+07/26 23:30:00 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_HERO_SELECTION'
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_STRATEGY_TIME'
+07/26 23:30:00 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_STRATEGY_TIME'
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_TEAM_SHOWCASE'
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_WAIT_FOR_MAP_TO_LOAD'
+07/26 23:30:00 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_WAIT_FOR_MAP_TO_LOAD'
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_PRE_GAME'
+07/26 23:30:00 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_PRE_GAME'
+07/26 23:30:05 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_GAME_IN_PROGRESS'
+07/26 23:30:05 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_GAME_IN_PROGRESS'
+SMOKE FAIL: no [E2E] WIN marker -- bots never reached 3 kills
+smoke done 2026-07-26T23:32:52.8999953+00:00

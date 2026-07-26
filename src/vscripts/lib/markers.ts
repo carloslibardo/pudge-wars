@@ -28,5 +28,8 @@ export const Marker = {
         `[SHOP] purchased ${itemName} by ${pid}`,
     killScored: (team: number, total: number): string =>
         `[E2E] kill scored team ${team} -> ${total}`,
+    botTeamAssigned: (pid: number, team: number): string =>
+        `[E2E] bot ${pid} assigned team ${team}`,
+    botHeroCreated: (pid: number): string => `[E2E] hero created for heroless bot ${pid}`,
     win: (team: number, kills: number): string => `[E2E] WIN team ${team} reached ${kills} kills`,
 } as const;

@@ -26,6 +26,8 @@
  */
 import { heroForPlayer } from "../lib/heroResolve";
 import { firstHookTarget, hookDirection, type HookCandidate } from "../lib/hook";
+import { teamForSeat } from "../lib/botTeams";
+import { Marker } from "../lib/markers";
 
 const MAX_PLAYER_SLOTS = 24;
 const THINK_INTERVAL = 0.5;
@@ -57,6 +59,22 @@ export class E2EHarness {
         this.seated = true;
         print("[E2E] seating fake clients during setup");
         SendToServerConsole("dota_create_fake_clients");
+        // Fake clients arrive with NO team. On archer-wars' 10-teams-of-one
+        // FFA the engine auto-assigned each joiner to the next free team, but
+        // on a two-team game they stay unassigned, sit out hero selection, and
+        // SetCustomGameForceHero never touches them — nine seated bots, zero
+        // heroes, zero kills (2026-07-26 VM smoke). Assign a balanced split
+        // explicitly, one tick later so the seats exist, while the game is
+        // still inside the CUSTOM_GAME_SETUP window.
+        Timers.CreateTimer(0.5, () => {
+            let seat = 0;
+            const teams = [DotaTeam.GOODGUYS, DotaTeam.BADGUYS] as const;
+            for (const id of this.bots()) {
+                const team = teamForSeat(seat++, teams);
+                PlayerResource.SetCustomTeamAssignment(id, team);
+                print(Marker.botTeamAssigned(id, team));
+            }
+        });
     }
 
     /** Start the think loop once the match is actually live. */
@@ -64,6 +82,19 @@ export class E2EHarness {
         if (this.started || !e2eEnabled()) return;
         this.started = true;
         print("[E2E] harness engaged — driving bots");
+        // Belt and braces under the team fix above: any fake client that still
+        // came out of selection heroless gets a Pudge assigned directly. Safe
+        // here because the bots were seated during setup — CreateHeroForPlayer
+        // rejects only LATE-seated clients ("bogus player id"). SpawnPositions
+        // teleports every hero onto its battle line at spawn, so no position
+        // is needed, and the hero is already precached (GameMode.Precache).
+        for (const id of this.bots()) {
+            if (heroForPlayer(id)) continue;
+            const player = PlayerResource.GetPlayer(id);
+            if (!player) continue;
+            CreateHeroForPlayer("npc_dota_hero_pudge", player);
+            print(Marker.botHeroCreated(id));
+        }
         // Perma-day. The day/night cycle renders night rounds near-black, which
         // makes every screenshot the rig captures worthless (landmine L15).
         Timers.CreateTimer(0, () => {

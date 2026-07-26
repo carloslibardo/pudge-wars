@@ -1,0 +1,1201 @@
+﻿07/26 23:28:01 [RenderSystem] Determined driver version for graphics adapter 0 [output 0] '': 32.0.15.9636
+07/26 23:28:02 [RenderSystem] Creating device for graphics adapter 0 'NVIDIA Tesla T4' [vendorid 0x10DE]: 32.0.15.9636
+07/26 23:28:02 Requested non-existent write path USRLOCAL!
+07/26 23:28:02 (17): Setting setting.cpu_level to 1
+07/26 23:28:02 (9): Setting setting.mem_level to 2
+07/26 23:28:02 (14): Setting setting.gpu_mem_level to 2
+07/26 23:28:02 Video Card dxsupport (10de : 1eb8)
+07/26 23:28:02 (565): ADD setting.defaultres = 1900
+07/26 23:28:02 (565): ADD setting.defaultresheight = 1200
+07/26 23:28:02 (565): ADD setting.gpu_level = 3
+07/26 23:28:02 (565): ADD setting.version = 1
+07/26 23:28:02 Requested non-existent write path USRLOCAL!
+07/26 23:28:02 [RenderSystem] Failed to save video settings config to 'cfg\video_tools.txt'
+07/26 23:28:02 [RenderSystem] Successfully created dx11 swap chain [    Discard |    NoTear]
+07/26 23:28:02 Pagefile: estimated 1mb CPU 14313mb GPU needed, 27272mb pagefile free
+07/26 23:28:02 Requested non-existent write path USRLOCAL!
+07/26 23:28:02 [RenderSystem] Failed to save video settings config to 'cfg\video_tools.txt'
+07/26 23:28:02 [Filesystem] ---------------
+07/26 23:28:02 [Filesystem] Path ID:             File Path:
+07/26 23:28:02 [Filesystem] ADDONS               "C:\steamcmd\steamapps\common\dota 2 beta\game\dota_addons\" 
+07/26 23:28:02 [Filesystem] CONTENT              "C:\steamcmd\steamapps\common\dota 2 beta\content\dota_addons\pudge_wars\" 
+07/26 23:28:02 [Filesystem] CONTENT              "C:\steamcmd\steamapps\common\dota 2 beta\content\dota\" 
+07/26 23:28:02 [Filesystem] CONTENT              "C:\steamcmd\steamapps\common\dota 2 beta\content\core\" 
+07/26 23:28:02 [Filesystem] CONTENTADDONS        "C:\steamcmd\steamapps\common\dota 2 beta\content\dota_addons\" 
+07/26 23:28:02 [Filesystem] CONTENTROOT          "C:\steamcmd\steamapps\common\dota 2 beta\content\" 
+07/26 23:28:02 [Filesystem] DEFAULT_WRITE_PATH   "C:\steamcmd\steamapps\common\dota 2 beta\game\dota\pak01.vpk" (vpk) C:\steamcmd\steamapps\common\dota 2 beta\game\dota\pak01.vpk
+07/26 23:28:02 [Filesystem] DEFAULT_WRITE_PATH   "C:\steamcmd\steamapps\common\dota 2 beta\game\dota\" 
+07/26 23:28:02 [Filesystem] EXECUTABLE_PATH      "C:\steamcmd\steamapps\common\dota 2 beta\game\bin\win64\" 
+07/26 23:28:02 [Filesystem] EXECUTABLE_PATH      "C:\steamcmd\steamapps\common\dota 2 beta\game\bin\" 
+07/26 23:28:02 [Filesystem] GAME                 "C:\steamcmd\steamapps\common\dota 2 beta\game\dota_addons\pudge_wars\" 
+07/26 23:28:02 [Filesystem] GAME                 "C:\steamcmd\steamapps\common\dota 2 beta\game\dota\pak01.vpk" (vpk) C:\steamcmd\steamapps\common\dota 2 beta\game\dota\pak01.vpk
+07/26 23:28:02 [Filesystem] GAME                 "C:\steamcmd\steamapps\common\dota 2 beta\game\core\pak01.vpk" (vpk) C:\steamcmd\steamapps\common\dota 2 beta\game\core\pak01.vpk
+07/26 23:28:02 [Filesystem] GAME                 "C:\steamcmd\steamapps\common\dota 2 beta\game\dota\shaders_pc.vpk" (vpk) C:\steamcmd\steamapps\common\dota 2 beta\game\dota\shaders_pc.vpk
+07/26 23:28:02 [Filesystem] GAME                 "C:\steamcmd\steamapps\common\dota 2 beta\game\core\shaders_pc.vpk" (vpk) C:\steamcmd\steamapps\common\dota 2 beta\game\core\shaders_pc.vpk
+07/26 23:28:02 [Filesystem] GAME                 "C:\steamcmd\steamapps\common\dota 2 beta\game\dota\" 
+07/26 23:28:02 [Filesystem] GAME                 "C:\steamcmd\steamapps\common\dota 2 beta\game\core\" 
+07/26 23:28:02 [Filesystem] GAMEBIN              "C:\steamcmd\steamapps\common\dota 2 beta\game\dota\bin\win64\" 
+07/26 23:28:02 [Filesystem] GAMEBIN              "C:\steamcmd\steamapps\common\dota 2 beta\game\dota\bin\" 
+07/26 23:28:02 [Filesystem] GAMEBIN              "C:\steamcmd\steamapps\common\dota 2 beta\game\core\bin\win64\" 
+07/26 23:28:02 [Filesystem] GAMEBIN              "C:\steamcmd\steamapps\common\dota 2 beta\game\core\bin\" 
+07/26 23:28:02 [Filesystem] GAMEROOT             "C:\steamcmd\steamapps\common\dota 2 beta\game\" 
+07/26 23:28:02 [Filesystem] MOD                  "C:\steamcmd\steamapps\common\dota 2 beta\game\dota\pak01.vpk" (vpk) C:\steamcmd\steamapps\common\dota 2 beta\game\dota\pak01.vpk
+07/26 23:28:02 [Filesystem] MOD                  "C:\steamcmd\steamapps\common\dota 2 beta\game\dota\" 
+07/26 23:28:02 [Filesystem] PLATFORM             "C:\steamcmd\steamapps\common\dota 2 beta\game\core\pak01.vpk" (vpk) C:\steamcmd\steamapps\common\dota 2 beta\game\core\pak01.vpk
+07/26 23:28:02 [Filesystem] PLATFORM             "C:\steamcmd\steamapps\common\dota 2 beta\game\core\" 
+07/26 23:28:02 [Filesystem] SHADER_SOURCE        "C:\steamcmd\steamapps\common\dota 2 beta\src\shaders\dota\" 
+07/26 23:28:02 [Filesystem] SHADER_SOURCE        "C:\steamcmd\steamapps\common\dota 2 beta\src\shaders\core\" 
+07/26 23:28:02 [Filesystem] SHADER_SOURCE        "C:\steamcmd\steamapps\common\dota 2 beta\src\shaders\dota_core\" 
+07/26 23:28:02 [Filesystem] SHADER_SOURCE_MOD    "C:\steamcmd\steamapps\common\dota 2 beta\src\shaders\dota\" 
+07/26 23:28:02 [Filesystem] SHADER_SOURCE_ROOT   "C:\steamcmd\steamapps\common\dota 2 beta\src\shaders\" 
+07/26 23:28:02 [CommandLine] command line arguments:
+07/26 23:28:02 [CommandLine] -novid -tools -addon pudge_wars -condebug -nominidumps -nocrashdialog -windowed -w 1280 -h 720 +pudge_wars_e2e 1 +pudge_wars_e2e_kills 3 +dota_launch_custom_game pudge_wars dota
+07/26 23:28:02 [Networking] CNetworkSystem::Init() failed - no SteamNetworking()
+07/26 23:28:02 [Networking] No steam client; SDR features will be unavailable
+07/26 23:28:02 [SteamNetSockets] Initialized low level socket/threading support.
+07/26 23:28:02 [Networking] Got ISteamNetworkingSockets user interfaces from standalone lib
+07/26 23:28:02 [Networking] Allowing IP connections without auth
+07/26 23:28:02 [Networking] Network System Initialized
+07/26 23:28:04 [SteamAudio] Initialized Embree v4.04.00.
+07/26 23:28:04 [SteamAudio] Parse error on scripts/surfaceproperties_steamaudio.txt: Failed to open file
+07/26 23:28:04 [SteamAudio] Parse error on scripts/surfaceproperties_steamaudio.txt: Failed to open file
+07/26 23:28:06 Parent and child ConVars with different default values! dota_enemy_color child: 255 255 0 parent: 255 0 0 (parent wins)
+07/26 23:28:06 Parent and child ConVars with different default values! dota_enemy_color_cb child: 255 255 0 parent: 255 0 0 (parent wins)
+07/26 23:28:06 [AssetSystem] AssetSystem: Mod 'dota' set to read-only
+07/26 23:28:06 [AssetSystem] AssetSystem: Mod 'core' set to read-only
+07/26 23:28:06 [HelpSystem] Failed to find mod help file 'resource/toolhelp_models_gamedata_fgd_english.txt' (dota) - new help will be written to 'C:\steamcmd\steamapps\common\dota 2 beta\game\dota\resource\toolhelp_models_gamedata_fgd_english.txt'
+07/26 23:28:06 [HelpSystem] Failed to find mod help file 'resource/toolhelp_models_base_fgd_english.txt' (core) - new help will be written to 'C:\steamcmd\steamapps\common\dota 2 beta\game\core\resource\toolhelp_models_base_fgd_english.txt'
+07/26 23:28:06 [HelpSystem] Failed to find mod help file 'resource/toolhelp_modeldoc_editor_english.txt' (dota) - new help will be written to 'C:\steamcmd\steamapps\common\dota 2 beta\game\dota\resource\toolhelp_modeldoc_editor_english.txt'
+07/26 23:28:07 [HelpSystem] Failed to find mod help file 'resource/toolhelp_dota_fgd_english.txt' (dota) - new help will be written to 'C:\steamcmd\steamapps\common\dota 2 beta\game\dota\resource\toolhelp_dota_fgd_english.txt'
+07/26 23:28:07 [HelpSystem] Failed to find mod help file 'resource/toolhelp_base_fgd_english.txt' (core) - new help will be written to 'C:\steamcmd\steamapps\common\dota 2 beta\game\core\resource\toolhelp_base_fgd_english.txt'
+07/26 23:28:07 [ResourceSystem] Failed loading resource "scripts/nav_hulls.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:07 [HelpSystem] Failed to find help file 'resource/toolhelp_helpsystem_english.txt' - new help will be written to 'C:\steamcmd\steamapps\common\dota 2 beta\game\core\resource\toolhelp_helpsystem_english.txt'
+07/26 23:28:08 [ToolFramework2] Registering system tool for extension:           '.mp3':                     Windows Media Player (exe 'C:\Program Files (x86)\Windows Media Player\wmplayer.exe' args '/prefetch:6 /Open "%L" {MultipleFilePaths}')
+07/26 23:28:08 [ToolFramework2] Registering system tool for extension:           '.wav':                     Windows Media Player (exe 'C:\Program Files (x86)\Windows Media Player\wmplayer.exe' args '/Open "%L" {MultipleFilePaths}')
+07/26 23:28:08 [ToolFramework2] Registering system tool for extension:           '.xml':                        Internet Explorer (exe 'C:\Program Files\Internet Explorer\iexplore.exe' args '{FilePath}')
+07/26 23:28:08 [ToolFramework2] Registering system tool for extension:            '.js':    Microsoft � Windows Based Script Host (exe 'C:\Windows\System32\WScript.exe' args '"{FilePath}" %*')
+07/26 23:28:08 [ToolFramework2] Registering system tool for extension:           '.tif':                     Windows Photo Viewer (exe 'C:\Windows\System32\rundll32.exe' args '"C:\Program Files\Windows Photo Viewer\PhotoViewer.dll", ImageView_Fullscreen {FilePath}')
+07/26 23:28:09 [AssetSystem] AssetSystem loaded persistent info from 2 layers / 374831 assets in 1.25s
+07/26 23:28:09 [AssetSystem] Scanning for Asset Files (1/6): 'Game (dota_addons/pudge_wars)' = C:\steamcmd\steamapps\common\dota 2 beta\game\dota_addons\pudge_wars\, previously scanned 0 directories and 0 files
+07/26 23:28:09 [AssetSystem] Scanning for Asset Files (2/6): 'Game (dota)' = C:\steamcmd\steamapps\common\dota 2 beta\game\dota\, previously scanned 8 directories and 39 files
+07/26 23:28:09 [AssetSystem] Scanning for Asset Files (3/6): 'Game (core)' = C:\steamcmd\steamapps\common\dota 2 beta\game\core\, previously scanned 8 directories and 39 files
+07/26 23:28:09 [AssetSystem] Scanning for Asset Files (4/6): 'Content (dota_addons/pudge_wars)' = C:\steamcmd\steamapps\common\dota 2 beta\content\dota_addons\pudge_wars\, previously scanned 8 directories and 39 files
+07/26 23:28:09 [AssetSystem] Scanning for Asset Files (5/6): 'Content (dota)' = C:\steamcmd\steamapps\common\dota 2 beta\content\dota\, previously scanned 16 directories and 45 files
+07/26 23:28:09 [AssetSystem] Scanning for Asset Files (6/6): 'Content (core)' = C:\steamcmd\steamapps\common\dota 2 beta\content\core\, previously scanned 16 directories and 45 files
+07/26 23:28:09 [AssetSystem] AssetSystem files scanned in 0.07 seconds.
+07/26 23:28:09 [AssetSystem] AssetSystem pruned 0 stale assets
+07/26 23:28:09 [AssetSystem] Asset System - Updating dependency information...
+07/26 23:28:11 [AssetSystem] AssetSystem dependency data propagated in 2.14s (refreshed 44 of 374665)
+07/26 23:28:11 [AssetSystem] AssetSystem dependency graph created in 2.19 seconds.
+07/26 23:28:11 [AssetSystem] AssetSystem saved persistent info for 1 layers / 44 assets in 0.010 sec
+07/26 23:28:12 [AssetSystem] AssetSystem initialized in 3.56 seconds. [1.25 load, 0.07 scan, 2.19 dependencies, 0.01 save]
+07/26 23:28:12 [HelpSystem] Failed to find help file 'resource/toolhelp_fgd_from_asset_english.txt' - new help will be written to 'C:\steamcmd\steamapps\common\dota 2 beta\game\dota\resource\toolhelp_fgd_from_asset_english.txt'
+07/26 23:28:12 [SplitScreen] Clamping split screen users to 1 due to -tools mode.
+07/26 23:28:12 [SoundSystem] Sound Initialization: Finish, Device Sampling Rate: 44100
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_splash_ads.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_9255039.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_5.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8260983.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8724984.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8261882.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8255888.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8686313.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_111474.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7626304.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8376426.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8604954.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8733722.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8944221.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_9351740.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8214850.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8724984.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_7119388.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_9691969.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8574561.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8894818.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8740972.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8375259.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8668460.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8680612.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8582076.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8390848.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_2672298.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8131728.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8572181.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8118197.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8261554.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8582076.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_9640842.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_abilities.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_9651185.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_8291895.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_9572001.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_7732977.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_9303484.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_2163.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_7554697.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_7119388.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_9467224.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_36.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_8255888.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_8261500.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_12_9247354.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_8261500.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_8599101.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_9467224.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_9303484.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_8255888.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_8597976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_9247354.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_8291895.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_8605863.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_8728920.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_7119388.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_2163.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_9080405.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_11_8254400.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8599101.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_15.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_7119388.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8574561.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8255756.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8255888.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8597976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8291895.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8254400.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_7422789.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8894818.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8724984.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8244493.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8605863.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_8728920.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_7391077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_1061269.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_39.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_10_2163.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8574561.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8975678.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_9019673.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7453020.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8261500.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8971308.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8668460.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8944440.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8736661.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_1061269.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7391077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7119388.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8244493.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_6209166.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_39.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_15.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8525778.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8376696.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_2672298.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_9017006.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8598633.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_5.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8375259.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8254145.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8588969.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8118197.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8255756.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8545488.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7732977.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8254400.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8261554.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7422789.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_2586976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8607159.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_5014799.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8856662.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8230115.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8680612.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8687717.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8599101.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8894818.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_2163.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8291895.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8605863.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8261648.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8390848.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_1838315.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8944302.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7554697.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8597391.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8214850.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8572181.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8597976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8740097.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7119077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7626304.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8205424.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8728920.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8376426.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8604954.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8606828.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_36.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7300277.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_7584152.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_9_8740972.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8944337.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7584152.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7391077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_9017006.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_36.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8616073.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_15.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8255756.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_2672298.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8686786.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8291895.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8254145.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8205424.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7390454.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8390848.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8607159.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8686313.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8597976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8525778.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8863825.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8724984.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8944440.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8597391.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8261882.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_1061269.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_5014799.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8244493.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8856662.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8169775.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8702318.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_1838315.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8606828.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8687717.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8318683.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8944302.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7422789.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7453020.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8230115.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8736661.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_726228.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8261500.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8668460.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_5.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8740097.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7732977.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7119077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8588969.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8599101.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8118197.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8376696.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8545488.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7119388.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_111474.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8255888.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8254400.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8894818.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8574561.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_39.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7554697.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_2163.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_2586976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8605863.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8728920.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8260983.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_7300277.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_8_8261554.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8702318.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_7390454.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8863825.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8572181.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8736661.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8261554.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8936210.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8254145.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8244493.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8214850.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_726228.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_4.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8261500.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_7453020.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_6209166.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_6209804.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_1520578.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_15.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_5.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8733722.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8687717.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8545488.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8616073.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8724829.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8588969.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8944440.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8421850.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8261648.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8376696.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8255888.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_7422789.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_5014799.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_36.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8856662.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8131728.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8686786.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8740097.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_1061269.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8538804.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8944302.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8597391.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8261882.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8260932.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8725475.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8230115.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8607159.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8126892.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_7391077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8291895.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_7300277.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8604954.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_7732977.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8118197.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_7119077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8597976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_350190.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8606828.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8944221.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8605863.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8728920.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8376426.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8318683.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_7554697.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8169775.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8344760.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8254400.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8205424.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_39.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_111474.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8260983.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_1838315.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_2586976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8525778.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_2163.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8255756.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_7_8599101.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8261500.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_726228.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8724984.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_7119077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_2163.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_6209804.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8525778.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_36.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8721219.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_7390454.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8728920.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8597976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_1838315.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_2672298.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8376426.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8605863.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8214850.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_6209166.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_350190.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_2586976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_15.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_39.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_7391077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8254400.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8291895.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_7119388.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_7732977.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8599101.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_6_8260983.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8230115.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_1520578.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_2672298.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8597183.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8255888.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_7554697.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8686313.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8740972.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8598633.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8741446.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8124688.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8606828.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8686786.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8214850.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8390848.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_46.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_7390454.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8728920.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8244493.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8205424.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_2108395.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8736661.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8375259.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_1061269.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_39.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8254400.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_1838315.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8597391.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8588969.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8616073.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_2163.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8607159.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_36.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8260932.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8605863.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8376426.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8261882.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_111474.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8574561.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8291895.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_7119388.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_7732977.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8599101.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8126892.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8255756.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8721219.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8545488.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8360138.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8260983.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_6209804.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8261500.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_5.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_5055770.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8724829.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8421850.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_2289950.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8525778.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_7356881.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_6209166.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_7407260.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_4.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_7453020.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8668460.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8724984.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_2586976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8261648.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_5014799.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_7391077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8180753.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8680612.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_15.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_726228.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_7119077.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8604954.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8597976.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8272699.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8687717.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8376696.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8725475.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_350190.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8169775.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8318683.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_teamfandom_5_8131728.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_plus.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_events.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_dark_carnival.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_monster_hunter.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_crownfall.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_ti14.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_ti13.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_ti12.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_ti11.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_fall2021.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_spring2021.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_ti10.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_ti9.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_ti8.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_ti7.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_set_portraits.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_profile_backgrounds.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_staging.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_profile_badges.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images_heroes.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 [ResourceSystem] Failed loading resource "panorama/dynamic_images.vpdi_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:13 SteamAPI_Init failed.  Cannot create IPC pipe to Steam client process.  Steam is probably not running.
+07/26 23:28:13 BUG:  client couldn't look up codegen info for CEntityClass()
+07/26 23:28:13 BUG:  server couldn't look up codegen info for CEntityClass()
+07/26 23:28:13 [Client] Detected video config level 3
+07/26 23:28:13 Requested non-existent write path USRLOCAL!
+07/26 23:28:13 [RenderSystem] Failed to save video settings config to 'cfg\video_tools.txt'
+07/26 23:28:13 [Client] Event System loaded 94 events from file: vpk:C:/steamcmd/steamapps/common/dota 2 beta/game/core/pak01.vpk:resource/core.gameevents.
+07/26 23:28:13 [Client] Event System loaded 276 events from file: vpk:C:/steamcmd/steamapps/common/dota 2 beta/game/dota/pak01.vpk:resource/game.gameevents.
+07/26 23:28:15 Found
+07/26 23:28:15 Hero npc_dota_hero_tiny is using an invalid ability special_bonus_strength_8 in its bot skill build!
+07/26 23:28:15 WriteSteamRemoteStorageFileAsync failed due to missing ISteamRemoteStorage pointer!
+07/26 23:28:16 [Networking] CEntitySystem::BuildEntityNetworking (parallel build of client) took 435.572 msecs for 3242 out of 3340 classes
+07/26 23:28:16 [Server] Event System loaded 94 events from file: vpk:C:/steamcmd/steamapps/common/dota 2 beta/game/core/pak01.vpk:resource/core.gameevents.
+07/26 23:28:16 [Server] Event System loaded 276 events from file: vpk:C:/steamcmd/steamapps/common/dota 2 beta/game/dota/pak01.vpk:resource/game.gameevents.
+07/26 23:28:17 Found
+07/26 23:28:17 Hero npc_dota_hero_tiny is using an invalid ability special_bonus_strength_8 in its bot skill build!
+07/26 23:28:18 [Networking] CEntitySystem::BuildEntityNetworking (parallel build of server) took 677.886 msecs for 3229 out of 3326 classes
+07/26 23:28:18 [STARTUP] {18.027} server module init ok
+07/26 23:28:23 [ToolsStallMonitor] Stall detected.
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:28:24 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:28:24 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:28:25 [ResourceSystem] Failed loading resource "scripts/trophies_staging.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:25 [ResourceSystem] Failed loading resource "scripts/tracked_stats_player_staging.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:25 [ResourceSystem] Failed loading resource "scripts/tracked_stats_team_staging.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:25 [ResourceSystem] Failed loading resource "scripts/tracked_stats_match_staging.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:25 [ResourceSystem] Failed loading resource "scripts/ping_wheel_staging.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:25 [ResourceSystem] Failed loading resource "scripts/featured_gamemodes_staging.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:25 [ResourceSystem] Failed loading resource "scripts/roadtoti_staging.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:25 [ResourceSystem] Failed loading resource "scripts/candy_shops_staging.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:26 [ResourceSystem] Failed loading resource "soundevents/soundevents_test.vsndevts_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:26 [ResourceSystem] Failed loading resource "scripts/tools/anim_preview_archetypes.vdata_c" (ERROR_FILEOPEN: File not found)
+07/26 23:28:26 Inventory shuffle information file "cfg/dota_player_loadout_shuffle.txt" not found in remote storage; not loading.
+07/26 23:28:31 [ToolsStallMonitor] Stall detected.
+07/26 23:28:31 ILocalize::AddFile() failed to load file "".
+07/26 23:28:31 Failed to load mutations file! scripts/battlepass/ti2018/mutations.txt
+07/26 23:28:31 [HostStateManager] CHostStateMgr::QueueNewRequest( Idle (levelload), 1 )
+07/26 23:28:36 [ToolsStallMonitor] Stall detected.
+07/26 23:29:25 ChangeGameUIState: DOTA_GAME_UI_STATE_INVALID -> DOTA_GAME_UI_STATE_LOADING_SCREEN
+07/26 23:29:25 Source2Init OK
+07/26 23:29:25 [HostStateManager] HostStateRequest::Start(HSR_IDLE):  loop(levelload) id(1) addons() desc(Idle (levelload))
+07/26 23:29:25 [EngineServiceManager] SwitchToLoop levelload requested:  id [1] addons []
+07/26 23:29:27 Time: 0.392747
+07/26 23:29:27 Blocked change to read-only path C:\steamcmd\steamapps\common\dota 2 beta\content\dota\panorama\layout.xsd!
+07/26 23:29:27 Successfully loaded player info from 'scripts/dota_pro_player_info.json'
+07/26 23:29:27 [Localization System] CLocalize::CompileString failed to localize: '#DOTA_Plus_ProfileCard_TimeRemainingDays'
+07/26 23:29:27 WriteSteamRemoteStorageFileAsync failed due to missing ISteamRemoteStorage pointer!
+07/26 23:29:27 Requested non-existent write path USRLOCAL!
+07/26 23:29:27 [RenderSystem] Failed to save video settings config to 'cfg\video_tools.txt'
+07/26 23:29:28 ILocalize::AddFile() failed to load file "resource/localization/broadcastfacts_english.txt".
+07/26 23:29:28 [Localization System] CLocalize::CompileString failed to localize: '#DOTA_DeityBlessing_ChooseTitle'
+07/26 23:29:29 [HostStateManager] Host activate: Idle (levelload)
+07/26 23:29:29 [InputSystem] Raw keyboard mode: 0
+07/26 23:29:29 [SplitScreen] Writing configuration for slot 0
+07/26 23:29:29 [SplitScreen] Tried to write clouded file, but we don't have Steam interfaces?  Probably bug with order of initialization, or trying to run without steam
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 [SplitScreen] Error writing user config file 'cfg/user_keys_0_slot0.vcfg'
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 [SplitScreen] Tried to write clouded file, but we don't have Steam interfaces?  Probably bug with order of initialization, or trying to run without steam
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 [SplitScreen] Error writing user config file 'cfg/user_convars_0_slot0.vcfg'
+07/26 23:29:29 [HostStateManager] CHostStateMgr::QueueNewRequest( Loading (dota), 2 )
+07/26 23:29:29 [SplitScreen] Writing configuration for slot 0
+07/26 23:29:29 [SplitScreen] Tried to write clouded file, but we don't have Steam interfaces?  Probably bug with order of initialization, or trying to run without steam
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 [SplitScreen] Error writing user config file 'cfg/user_keys_0_slot0.vcfg'
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 [SplitScreen] Tried to write clouded file, but we don't have Steam interfaces?  Probably bug with order of initialization, or trying to run without steam
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 Requested non-existent write path USRLOCAL!
+07/26 23:29:29 [SplitScreen] Error writing user config file 'cfg/user_convars_0_slot0.vcfg'
+07/26 23:29:29 [Steam] Running SteamAPI_RunCallbacks for first time
+07/26 23:29:29 [GCClient] Trying to send message type 8879 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:29 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:29 [GCClient] Trying to send message type 9023 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:29 [GCClient] Trying to send message type 8793 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:29 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:29 [GCClient] Trying to send message type 7427 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:29 WriteSteamRemoteStorageFileAsync failed due to missing ISteamRemoteStorage pointer!
+07/26 23:29:29 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:29 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:29 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:29 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:29 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:29 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:29 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:29 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_default.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/primary_white.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/point_worldtext_default_background.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material materials/dev/luminaire.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:29:29 [Vfx] No valid vcs file found for shader generic.vfx
+07/26 23:29:29 [MaterialSystem] CMaterial2::LoadShadersAndSetupModes(1598): Error creating shader generic.vfx for material dev/panorama_world_panel_lit_opaque.vmat!
+07/26 23:29:32 UpdateCompleterDataModelstime: 1888.2526ms
+07/26 23:29:32 [HostStateManager] HostStateRequest::Start(HSR_GAME):  loop(levelload) id(2) addons(pudge_wars) desc(Loading (dota))
+07/26 23:29:32 [EngineServiceManager] SwitchToLoop levelload requested:  id [2] addons [pudge_wars]
+07/26 23:29:32 **** Panel TimeRangeSlider has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:32 **** Panel TimeScrubSlider has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:32 **** Panel SliderAndMarkers has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:32 **** Panel TimeScrubSlider has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:32 ResetBreakpadAppId: Universe is 0 (k_EUniverseInvalid)
+07/26 23:29:32 ResetBreakpadAppId: Setting non standard break pad app id: 375360
+07/26 23:29:32 [EngineServiceManager] Mounting addon 'pudge_wars'
+07/26 23:29:32 [Localization System] LOCFAIL: Ignoring unsupported encoding in localization file 'resource/addon_english.txt'
+07/26 23:29:32 ILocalize::AddFile() failed to load file "resource/addon_english.txt".
+07/26 23:29:32 ILocalize::AddFile() failed to load file "panorama/localization/addon_english.txt".
+07/26 23:29:32 [ResourceSystem] Failed loading resource "panorama/images/econ/sets/v2/npc_dota_hero_largo_0_small_png.vtex_c" (ERROR_FILEOPEN: File not found)
+07/26 23:29:32 [Localization System] CLocalize::CompileString failed to localize: '#addon_game_name'
+07/26 23:29:32 [Client] LoadingDisplay changed from NONE to LOADING (map="")
+07/26 23:29:33 [Client] CL:  CLoopModeLevelLoad::MaybeSwitchToGameLoop switching to "game" loopmode with addons (pudge_wars)
+07/26 23:29:33 [EngineServiceManager] SwitchToLoop game requested:  id [2] addons [pudge_wars]
+07/26 23:29:33 [Localization System] CLocalize::CompileString failed to localize: '#addon_game_name'
+07/26 23:29:33 Cannot open C:\steamcmd\steamapps\common\dota 2 beta\game\dota_addons\pudge_wars to calculate addon CRC!
+07/26 23:29:33 [Server] SteamGameServer_Init()
+07/26 23:29:33 Steam Universe valid after having been requested when invalid.  Universe is now 1
+07/26 23:29:33 ResetBreakpadAppId: Universe is 1 (k_EUniversePublic)
+07/26 23:29:33 ResetBreakpadAppId: Setting non standard break pad app id: 375360
+07/26 23:29:33 [Server] SteamGameServer_Init() OK, logging on to Steam
+07/26 23:29:33 [Networking] CNetworkSystem::InitGameServer: SteamGameServerNetworking() OK
+07/26 23:29:33 [SteamNetSockets] src\steamnetworkingsockets\clientlib\steam\csteamnetworkingsockets_steam.cpp(362): Assertion Failed: g_eUniverse == k_EUniverseInvalid || g_eUniverse == eUniverse
+07/26 23:29:33 [SteamNetSockets] Set SteamNetworkingSockets P2P_STUN_ServerList to '' as per SteamNetworkingSocketsSerialized
+07/26 23:29:33 [Server] CNetworkGameServerBase::SetServerState (ss_dead -> ss_waitingforgamesessionmanifest)
+07/26 23:29:33 [Server] SV:  maxplayers set to 64
+07/26 23:29:33 [Networking] Created poll group for socket 'server'
+07/26 23:29:33 [SteamNetSockets] SDR RelayNetworkStatus:  avail=Attempting  config=Attempting  anyrelay=Not Attempted   (Attempt #1 to fetch config (only-if-cached) from https://api.steampowered.com/ISteamApps/GetSDRConfig/v1?appid=570)
+07/26 23:29:33 [SteamNetSockets] AuthStatus (invalid):  Waiting  (Waiting for Steam login)
+07/26 23:29:33 [SteamNetSockets] Pending ping measurement until network config is obtained.
+07/26 23:29:33 [SteamNetSockets] SDR RelayNetworkStatus:  avail=Attempting  config=Attempting  anyrelay=Waiting   (Attempt #1 to fetch config (only-if-cached) from https://api.steampowered.com/ISteamApps/GetSDRConfig/v1?appid=570)
+07/26 23:29:33 [Networking] Network socket 'server' opened on port 27015
+07/26 23:29:33 [SteamNetSockets] Waited 15.5ms for SteamNetworkingSockets lock [ServiceThread]
+07/26 23:29:33 [SteamNetSockets] SDR network config fetch attempt #1 failed.  No ISteamHTTP..  Trying again.
+07/26 23:29:33 [SteamNetSockets] SDR network config fetch attempt #2 failed.  No ISteamHTTP..  Trying again.
+07/26 23:29:33 [SteamNetSockets] SDR network config fetch attempt #3 failed.  No ISteamHTTP..  Giving up.  SDR functionality will not be available!
+07/26 23:29:33 [SteamNetSockets] SDR RelayNetworkStatus:  avail=Failed  config=Failed  anyrelay=Dependency unavailable   (No ISteamHTTP.)
+07/26 23:29:33 [SteamNetSockets] AuthStatus (invalid):  Failed  (No ISteamHTTP.)
+07/26 23:29:33 Failed to load. pName='DOTANeutralItems', bIncrementVersion=true, list: 
+scripts/npc/npc_neutral_items_custom.txt
+07/26 23:29:34 Found
+07/26 23:29:34 Initializing script VM...
+07/26 23:29:34 ...done
+07/26 23:29:34 [Server] SV:  Executing server defaults
+07/26 23:29:34 [Server] SV:  Executing listen server config file
+07/26 23:29:34 Failed to load. pName='DOTANeutralItems', bIncrementVersion=true, list: 
+scripts/npc/npc_neutral_items_custom.txt
+07/26 23:29:35 Found
+07/26 23:29:35 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_INIT'
+07/26 23:29:35 [Server] SV:  CGameRulesGameSystem::GameInit installed game rules
+07/26 23:29:35 CPlayerVoiceListener::GameInit()
+07/26 23:29:35 LoadResponseSystem scripts/talker/response_rules.vrr - Start
+07/26 23:29:35 response rule announcer_Tease has no speaker!
+07/26 23:29:35 response rule announcer_dlc_darkest_dungeon_CustomIsDarkestDungeonAnnIsAnnounceIdleLateGameChance_25%(3) has no CONCEPT!
+07/26 23:29:35 response rule announcer_dlc_darkest_dungeon_CustomIsDarkestDungeonAnnIsAnnounceIdleLateGameChance_25% has no CONCEPT!
+07/26 23:29:35 response rule monkey_king_Chance_5% has no CONCEPT!
+07/26 23:29:35 response rule monkey_king_Chance_5%IsMKCrown has no CONCEPT!
+07/26 23:29:35 CResponseSystem:  scripts/talker/response_rules.vrr (34222 rules, 2980 criteria, and 34222 responses)
+07/26 23:29:35 LoadResponseSystem scripts/talker/response_rules.vrr - Finish
+07/26 23:29:35 [Server] SV:  Connection to Steam servers successful.
+07/26 23:29:35 [Server] SV:  ServerSteamID=[A:1:1508462606:50680] (90289662998433806).
+07/26 23:29:35 [STARTUP] {95.800} logged on to Steam
+07/26 23:29:35 [GCClient] Logged on to Steam, set GC connection state to NO_SESSION
+07/26 23:29:35 [GCClient] Send msg 4007 (k_EMsgGCServerHello), 22 bytes
+07/26 23:29:35 [SteamNetSockets] Gameserver logged on to Steam, assigned identity steamid:90289662998433806
+07/26 23:29:35 [SteamNetSockets] SDR RelayNetworkStatus:  avail=Retrying  config=Retrying  anyrelay=Dependency unavailable   (Attempt #4 to fetch config from https://api.steampowered.com/ISteamApps/GetSDRConfig/v1?appid=570)
+07/26 23:29:35 [SteamNetSockets] AuthStatus (steamid:90289662998433806):  Waiting  (Waiting for Steam login)
+07/26 23:29:35 [SteamNetSockets] AuthStatus (steamid:90289662998433806):  Attempting  (Requesting cert)
+07/26 23:29:35 [SteamNetSockets] Set SteamNetworkingSockets P2P_STUN_ServerList to '162.254.199.181:3478' as per SteamNetworkingSocketsSerialized
+07/26 23:29:35 [GCClient] OnSteamServersConnected()
+07/26 23:29:35 [SteamNetSockets] Waited 3.7ms for SteamNetworkingSockets lock [ServiceThread]
+07/26 23:29:35 [Server] SV:  VAC secure mode disabled.
+07/26 23:29:35 [SteamNetSockets] SDR network config fetch attempt #4 failed.  No ISteamHTTP..  Giving up.  SDR functionality will not be available!
+07/26 23:29:35 [SteamNetSockets] SDR RelayNetworkStatus:  avail=Failed  config=Failed  anyrelay=Dependency unavailable   (No ISteamHTTP.)
+07/26 23:29:35 [SteamNetSockets] AuthStatus (steamid:90289662998433806):  Failed  (No ISteamHTTP.)
+07/26 23:29:37 [SteamNetSockets] SDR RelayNetworkStatus:  avail=Retrying  config=Retrying  anyrelay=Dependency unavailable   (Attempt #5 to fetch config from https://api.steamchina.com/ISteamApps/GetSDRConfig/v1?appid=570&realm=steamglobal)
+07/26 23:29:37 [SteamNetSockets] AuthStatus (steamid:90289662998433806):  Retrying  (Attempt #5 to fetch config from https://api.steamchina.com/ISteamApps/GetSDRConfig/v1?appid=570&realm=steamglobal)
+07/26 23:29:37 [SteamNetSockets] Certificate expires in 47h59m at 1785281375 (current time 1785108577), will renew in 45h59m
+07/26 23:29:37 [SteamNetSockets] SDR network config fetch attempt #5 failed.  No ISteamHTTP..  Giving up.  SDR functionality will not be available!
+07/26 23:29:37 [SteamNetSockets] SDR RelayNetworkStatus:  avail=Failed  config=Failed  anyrelay=Dependency unavailable   (No ISteamHTTP.)
+07/26 23:29:37 [SteamNetSockets] AuthStatus (steamid:90289662998433806):  Failed  (No ISteamHTTP.)
+07/26 23:29:37 [GCClient] Recv msg 4005 (k_EMsgGCServerWelcome), 26 bytes
+07/26 23:29:37 [GCClient] Received server welcome from GC.
+07/26 23:29:37 [SOCache] CMsgClientWelcome subscribed: 0 up-to-date, 0 out-of-date
+07/26 23:29:37 Version out of date (GC wants 6869, we are 6850)!
+07/26 23:29:38 [ResourceSystem] Failed loading resource "materials/sprites/blueglow1.vmat_c" (ERROR_FILEOPEN: File not found)
+07/26 23:29:38 [ResourceSystem] Failed loading resource "panorama/images/players/0_png.vtex_c" (ERROR_FILEOPEN: File not found)
+07/26 23:29:39 [GCClient] Trying to send message type 8793 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:39 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:39 [GCClient] Trying to send message type 7427 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:39 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:40 [ResourceSystem] Failed loading resource "panorama/images/spellicons/dota_base_ability_png.vtex_c" (ERROR_FILEOPEN: File not found)
+07/26 23:29:40 **** Panel MainObjectivesTitle has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel SideObjectivesTitle has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel HealthbarsPreview has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel  has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:29:40 **** Panel AbilityBarHeroSelectorContainer has fill-parent-flow for height, but isn't in a flowing down or up layout
+07/26 23:29:40 [ResourceSystem] Failed loading resource "panorama/images/econ/sets/v2/scavenger_basilisk_small_png.vtex_c" (ERROR_FILEOPEN: File not found)
+07/26 23:29:40 [GCClient] Trying to send message type 8676 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:42 [ResourceSystem] Failed loading resource "materials/particle/particle_ring_blurry_generic_projected.vmat_c" (ERROR_FILEOPEN: File not found)
+07/26 23:29:43 [ResourceSystem] Failed loading resource "particles/neutral_fx/miniboss_damage_reflect_explosion.vpcf_c" (ERROR_FILEOPEN: File not found)
+07/26 23:29:43 [GCClient] Trying to send message type 8673 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:46 [AnimResource]  models/particle/explosion/fx_explosion_capped_sphere.vmdl : Animations loaded but no animation data found
+07/26 23:29:46 [AnimResource]  models/props_structures/xp_shrine/xp_shrine_stones.vmdl : Animations loaded but no animation data found
+07/26 23:29:50 [Server] SV:  Spawn Server: dota
+07/26 23:29:50 [Server] CNetworkGameServerBase::SetServerState (ss_waitingforgamesessionmanifest -> ss_loading)
+07/26 23:29:50 [VScript] [Timers] creating Timers [1.07]
+07/26 23:29:51 [RESPONSE_RULES] CResponseSystem:  failed to load scripts/talker/response_rules_custom.txt
+07/26 23:29:51 [Server] Unable to load grid nav for world "prefabs/promotional_radiant_fountain"
+07/26 23:29:51 [Server] Unable to load grid nav for world "prefabs/promotional_dire_fountain"
+07/26 23:29:52 [Server] CNetworkGameServerBase::SetServerState (ss_loading -> ss_active)
+07/26 23:29:52 [Client] CL:  CWaitForGameServerStartupPrerequisite done waiting for server
+07/26 23:29:52 [Client] CL:  CCreateGameClientJob creating client connection to 'loopback'
+07/26 23:29:52 [SteamNetSockets] [#3345693041 pipe] connected
+07/26 23:29:52 [SteamNetSockets] [#202302576 pipe] connected
+07/26 23:29:52 [Networking] Created poll group for socket 'client'
+07/26 23:29:52 [Networking] Connected loopback client=c76b3971@loopback:1 <-> server=c0ee470@loopback:0
+07/26 23:29:52 [Client] Tick packet desired receive margin now 35.0ms.  cl_tickpacket_recvmargin_desired=5  cl_tickpacket_desired_queuelength=0.  engine_frametime_warnings_enable=0, cl_async_usercmd_send=1
+07/26 23:29:52 [NetSteamConn] Associating NetChan unnamed @ loopback:0 (loopback:0) with Steam Net Connection handle #202302576 (userdata 0)
+07/26 23:29:52 [NetSteamConn] Associating NetChan server @ loopback:1 (loopback:1) with Steam Net Connection handle #3345693041 (userdata 1)
+07/26 23:29:52 [Client] CL:  Connected to 'loopback:1'
+07/26 23:29:52 ClientPutInServer create new player controller [unnamed]
+07/26 23:29:52 [Server] Client 0 'unnamed' setting rate to 80000
+07/26 23:29:52 [Client] Game: "Dota 2"
+07/26 23:29:52 [Client] Map: "dota"
+07/26 23:29:52 [Client] Players: 1 (0 bots) / 64 humans
+07/26 23:29:52 [Client] Build: 10835 (revision 10797369)
+07/26 23:29:52 [Client] Server Number: 1
+07/26 23:29:52 [SignonState] CL:  CNetworkGameClient::ProcessServerInfo
+07/26 23:29:52 [Localization System] LOCFAIL: Ignoring unsupported encoding in localization file 'resource/addon_english.txt'
+07/26 23:29:52 ILocalize::AddFile() failed to load file "resource/addon_english.txt".
+07/26 23:29:52 Failed to load. pName='DOTANeutralItems', bIncrementVersion=true, list: 
+scripts/npc/npc_neutral_items_custom.txt
+07/26 23:29:52 Found
+07/26 23:29:53 Initializing script VM...
+07/26 23:29:53 ...done
+07/26 23:29:53 Failed to load. pName='DOTANeutralItems', bIncrementVersion=true, list: 
+scripts/npc/npc_neutral_items_custom.txt
+07/26 23:29:53 Found
+07/26 23:29:53 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_INIT'
+07/26 23:29:53 [Client] CDOTA_Hud_Main::EventGameRulesStateChanged DOTA_GAMERULES_STATE_INIT
+07/26 23:29:53 [Client] CDOTA_Hud_Main::DeleteGameEndScreen deleted GameEndContainer
+07/26 23:29:53 [Client] CL:  CGameRulesGameSystem::GameInit installed game rules
+07/26 23:29:53 [AssetSystem] On-demand recompile of asset panorama/layout/custom_game/custom_ui_manifest.vxml
+07/26 23:29:53 [AssetSystem]  -> reason: No Game File
+07/26 23:29:53 [AssetSystem] Recompiling resource asset: 'panorama/layout/custom_game/custom_ui_manifest.vxml'
+07/26 23:29:53 [ResourceCompilerSystem] - dota_addons\pudge_wars\panorama\layout\custom_game\custom_ui_manifest.xml
+07/26 23:29:53 [ResourceCompilerSystem] - dota_addons\pudge_wars\panorama\layout\custom_game\hud.xml
+07/26 23:29:53 [ResourceCompilerSystem] - dota_addons\pudge_wars\panorama\scripts\custom_game\hud.js
+07/26 23:29:53 [ResourceCompilerSystem] - dota_addons\pudge_wars\panorama\styles\custom_game\hud.css
+07/26 23:29:54 [ResourceCompilerSystem] - dota_addons\pudge_wars\panorama\scripts\custom_game\manifest.js
+07/26 23:29:54 [AssetSystem] On-demand recompile of asset panorama/scripts/custom_game/manifest.vjs
+07/26 23:29:54 [AssetSystem]  -> reason: No Game File
+07/26 23:29:54 [AssetSystem] Recompiling resource asset: 'panorama/scripts/custom_game/manifest.vjs'
+07/26 23:29:54 [ResourceCompilerSystem] - dota_addons\pudge_wars\panorama\scripts\custom_game\manifest.js
+07/26 23:29:54 [PanoramaScript] [UI] manifest loaded
+07/26 23:29:54 [Client] Tick packet desired receive margin now 71.7ms.  cl_tickpacket_recvmargin_desired=5  cl_tickpacket_desired_queuelength=0.  engine_frametime_warnings_enable=0, cl_async_usercmd_send=1
+07/26 23:29:54 [Client] CNetworkGameClient::ProcessClassInfo: create on client true
+07/26 23:29:54 [Client] CNetworkGameClient::ProcessClassInfo: creating client serializers from local server serializers (crc 0, server api exists)
+07/26 23:29:54 [Client] CL:  loaded 39 replay compatability settings from 'vpk:C:/steamcmd/steamapps/common/dota 2 beta/game/core/pak01.vpk:./scripts/replay_compatability_settings.txt'
+07/26 23:29:54 [Client] CL:  loaded 24 replay compatability settings from 'vpk:C:/steamcmd/steamapps/common/dota 2 beta/game/dota/pak01.vpk:./scripts/replay_compatability_settings.txt'
+07/26 23:29:54 [Client] Client missing networkable entity class CPhysMagnet
+07/26 23:29:54 [Client] Client missing networkable entity class CSpotlightEnd
+07/26 23:29:54 [Client] CNetworkGameClientBase::LinkClasses took 181.952 msec
+07/26 23:29:54 [Client] Unable to load grid nav for world "prefabs/promotional_dire_fountain" (ERROR_FILEOPEN: File not found)
+07/26 23:29:54 [Client] Unable to load grid nav for world "prefabs/promotional_radiant_fountain" (ERROR_FILEOPEN: File not found)
+07/26 23:29:54 [ResourceSystem] Failed loading resource "panorama/images/heroes/icons/npc_dota_hero_announcer_killing_spree_png.vtex_c" (ERROR_FILEOPEN: File not found)
+07/26 23:29:54 [ResourceSystem] Failed loading resource "panorama/images/heroes/icons/npc_dota_hero_announcer_png.vtex_c" (ERROR_FILEOPEN: File not found)
+07/26 23:29:55 [AnimResource]  models/effects/waterfall_02.vmdl : Animations loaded but no animation data found
+07/26 23:29:55 [Client] CL:  CGameClientConnectPrerequisite connection succeeded
+07/26 23:29:55 ChangeGameUIState: DOTA_GAME_UI_STATE_LOADING_SCREEN -> DOTA_GAME_UI_DOTA_INGAME
+07/26 23:29:55 [Server] SV:  IGameSystem::LoopActivateAllSystems {
+07/26 23:29:55 [Host] HO:  IGameSystem::LoopActivateAllSystems {
+07/26 23:29:55 [Host] HO:  } IGameSystem::LoopActivateAllSystems done
+07/26 23:29:55 [Server] CRecipientFilter::AddAllPlayers - no recipients for this message, but 1 player in process of connecting was not included.
+07/26 23:29:55 [Server] CRecipientFilter::AddAllPlayers - no recipients for this message, but 1 player in process of connecting was not included.
+07/26 23:29:55 [Server] CRecipientFilter::AddAllPlayers - no recipients for this message, but 1 player in process of connecting was not included.
+07/26 23:29:55 [Server] CRecipientFilter::AddAllPlayers - no recipients for this message, but 1 player in process of connecting was not included.
+07/26 23:29:55 [Server] CRecipientFilter::AddAllPlayers - no recipients for this message, but 1 player in process of connecting was not included.
+07/26 23:29:55 [Server] CRecipientFilter::AddAllPlayers - no recipients for this message, but 1 player in process of connecting was not included.
+07/26 23:29:55 [Server] SV:  } IGameSystem::LoopActivateAllSystems done
+07/26 23:29:55 [Server] Created physics for dota
+07/26 23:29:55 [Server] 497:bad_result_position::m_vecOrigin CNetworkOriginCellCoordQuantizedVector m_cellY cell -354 is outside of cell bounds (0->128) @(2560.000000 -107231.250000 0.000000)
+07/26 23:29:55 [Entity System] Entity  [info_particle_system]: unrecognized parent "28818_riverflow_model"
+07/26 23:29:55 [Entity System] Entity  [info_particle_system]: unrecognized parent "9072_riverflow_model"
+07/26 23:29:55 [Server] CRecipientFilter::AddAllPlayers - no recipients for this message, but 1 player in process of connecting was not included.
+07/26 23:29:55 [Server] CRecipientFilter::AddAllPlayers - no recipients for this message, but 1 player in process of connecting was not included.
+07/26 23:29:55 Height map file (maps/prefabs/promotional_radiant_fountain.vhcg) not found, this will make ground height traces more expensive! Recompile the map to generate a height map.
+07/26 23:29:55 Height map file (maps/prefabs/promotional_dire_fountain.vhcg) not found, this will make ground height traces more expensive! Recompile the map to generate a height map.
+07/26 23:29:55 Bot ward spot ward_spot_radiant_high_point_top not found in map; falling back to hardcoded location.
+07/26 23:29:55 Bot ward spot ward_spot_dire_rune_bottom not found in map; falling back to hardcoded location.
+07/26 23:29:55 Bot ward spot ward_spot_dire_high_point_top in an invalid location, this may cause bots to get stuck.
+07/26 23:29:55 [Server] SV:  64 player server started
+07/26 23:29:55 [Server] SV:  addon='pudge_wars'
+07/26 23:29:55 [Server] CSource2Server::GameServerSteamAPIActivated()
+07/26 23:29:55 --- Sent CMsgGameServerInfo to GC
+07/26 23:29:55 server_public_ip_addr: 2285904372
+server_private_ip_addr: 176160774
+server_port: 27015
+server_tv_port: 0
+server_key: ""
+server_hibernation: false
+server_type: GAME
+server_region: 0
+server_loadavg: 0.162352011
+server_tv_broadcast_time: -120
+server_game_time: 0
+relay_slots_max: 0
+relays_connected: 0
+relay_clients_connected: 0
+tv_secret_code: 11499371235756821990
+server_version: 6850
+server_cluster: 0
+assigned_server_tv_port: 27020
+allow_custom_games: BOTH
+build_version: 6850
+
+07/26 23:29:55 ---
+07/26 23:29:55 [Client] CL:  IGameSystem::LoopActivateAllSystems {
+07/26 23:29:55 [Client] CL:  } IGameSystem::LoopActivateAllSystems done
+07/26 23:29:55 [HostStateManager] Host activate: Loading (dota)
+07/26 23:29:55 [SignonState] CL:  CNetworkGameClient::OnSwitchLoopModeFinished( game : success )
+07/26 23:29:55 [GCClient] Send msg 4508 (k_EMsgGCGameServerInfo), 82 bytes
+07/26 23:29:55 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:55 [GCClient] Trying to send message type 8944 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:56 [Server] SV:  Sending full update to client unnamed (reason:  initial update)
+07/26 23:29:56 [Client] CNetworkGameClientBase::OnReceivedUncompressedPacket(), received full update
+07/26 23:29:56 [Prediction] Resetting prediction state because we received a full update
+07/26 23:29:56 [Client] Receiving 16.5K non-incremental update from server
+07/26 23:29:56 [Entity System] change callback spew threshold 0.200000 msecs
+07/26 23:29:56 [Client] Created physics for dota
+07/26 23:29:56 DOTABaseGameMode::Spawn()
+07/26 23:29:56 Failed to load. pName='DOTANeutralItems', bIncrementVersion=true, list: 
+scripts/npc/npc_neutral_items_custom.txt
+07/26 23:29:56 Found
+07/26 23:29:57 [Client]    94: 740.186700 msec change 'OnGameModeEntityChanged()' on field m_hGameModeEntity(path=0/28) for ent dota_gamerules(C_DOTAGamerulesProxy) name=''
+07/26 23:29:57 [Networking] server @ loopback:1:  NetChan Setting Timeout to 30.00 seconds
+07/26 23:29:57 [Client] CL:  Signon traffic "server":  incoming 141.609 KB [71 netframes], outgoing 1.792 KB [70 netframes]
+07/26 23:29:57 [Prediction] Added prediction for player slot 0 ()
+07/26 23:29:57 [GCClient] Recv msg 2522 (k_EMsgGCServerVersionUpdated), 11 bytes
+07/26 23:29:57 Version out of date (GC wants 6869, we are 6850)!
+07/26 23:29:57 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:57 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:57 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:29:57 [Client] Setting cl_cq_min_queue=2
+07/26 23:29:57 [Networking] unnamed @ loopback:0:  NetChan Setting Timeout to 20.00 seconds
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 0 FakeClient=0, preferred PlayerID = -1
+07/26 23:29:57 [Server] PR:OnFullyJoinedServer 0:[I:0:0]
+07/26 23:29:57 [Server] PR:SetLeaverStatus 0:[I:0:0] DOTA_LEAVER_NONE
+07/26 23:29:57 [Server] PR:SetConnectionState 0:[I:0:0] DOTA_CONNECTION_STATE_CONNECTED NETWORK_DISCONNECT_INVALID
+07/26 23:29:57 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP'
+07/26 23:29:57 [VScript] [E2E] seating fake clients during setup
+07/26 23:29:57 --- Sent CMsgGameServerInfo to GC
+07/26 23:29:57 server_public_ip_addr: 2285904372
+server_private_ip_addr: 176160774
+server_port: 27015
+server_tv_port: 0
+server_key: ""
+server_hibernation: false
+server_type: GAME
+server_region: 0
+server_loadavg: 0.122883573
+server_tv_broadcast_time: -120
+server_game_time: 7.40000057
+relay_slots_max: 0
+relays_connected: 0
+relay_clients_connected: 0
+tv_secret_code: 11499371235756821990
+server_version: 6850
+server_cluster: 0
+assigned_server_tv_port: 27020
+allow_custom_games: BOTH
+build_version: 6850
+
+07/26 23:29:57 ---
+07/26 23:29:57 ClientPutInServer create new player controller [Fake Player 1]
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 1 FakeClient=1, preferred PlayerID = -1
+07/26 23:29:57 ClientPutInServer create new player controller [Fake Player 2]
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 2 FakeClient=1, preferred PlayerID = -1
+07/26 23:29:57 ClientPutInServer create new player controller [Fake Player 3]
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 3 FakeClient=1, preferred PlayerID = -1
+07/26 23:29:57 ClientPutInServer create new player controller [Fake Player 4]
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 4 FakeClient=1, preferred PlayerID = -1
+07/26 23:29:57 ClientPutInServer create new player controller [Fake Player 5]
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 5 FakeClient=1, preferred PlayerID = -1
+07/26 23:29:57 ClientPutInServer create new player controller [Fake Player 6]
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 6 FakeClient=1, preferred PlayerID = -1
+07/26 23:29:57 ClientPutInServer create new player controller [Fake Player 7]
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 7 FakeClient=1, preferred PlayerID = -1
+07/26 23:29:57 ClientPutInServer create new player controller [Fake Player 8]
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 8 FakeClient=1, preferred PlayerID = -1
+07/26 23:29:57 ClientPutInServer create new player controller [Fake Player 9]
+07/26 23:29:57 [Server] CDOTA_PlayerResource: Adding player SteamID 0 to PlayerID 9 FakeClient=1, preferred PlayerID = -1
+07/26 23:29:57 [Server] PR:SetPlusSubscriptionStatus 0:[I:0:0] IsPlusSubscriber:No
+07/26 23:29:57 [Server] PR:SetWasMVPLastGame 0:[I:0:0] WasMVPLastGame:No
+07/26 23:29:57 [Server] PR:SetFavoriteTeamPacked 0:[I:0:0] unFavTeamPacked:0
+07/26 23:29:57 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP'
+07/26 23:29:57 [Localization System] CLocalize::CompileString failed to localize: '#addon_game_name'
+07/26 23:29:57 [Client] LoadingDisplay changed from LOADING to CUSTOM_GAME_SETUP (map="dota")
+07/26 23:29:57 [Client] CDOTA_Hud_Main::EventGameRulesStateChanged DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
+07/26 23:29:57 [Localization System] CLocalize::CompileString failed to localize: '#addon_game_name'
+07/26 23:29:57 [GCClient] Send msg 4508 (k_EMsgGCGameServerInfo), 82 bytes
+07/26 23:29:57 [Client]    81: 1.134000 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/0/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.804500 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/1/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.350300 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/2/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.544200 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/3/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.304800 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/4/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.474900 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/5/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.349200 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/6/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.442800 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/7/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.336700 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/8/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.280200 msec change 'OnPlayerTeamDataTeamChanged()' on field m_iTeamSlot(path=0/9/27) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.449200 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/0/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.331400 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/1/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.447800 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/2/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.362600 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/3/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.308400 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/4/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.498600 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/5/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.325800 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/6/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.444700 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/7/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.334500 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/8/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [Client]    81: 0.278100 msec change 'OnPlayerDataTeamChanged()' on field m_iPlayerTeam(path=1/9/2) for ent (C_DOTA_PlayerResource) name=''
+07/26 23:29:57 [GCClient] Recv msg 2522 (k_EMsgGCServerVersionUpdated), 11 bytes
+07/26 23:29:57 Version out of date (GC wants 6869, we are 6850)!
+07/26 23:29:59 [GCClient] Trying to send message type 8793 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_HERO_SELECTION'
+07/26 23:30:00 Muted Players: Send msg 8870 (k_EMsgServerToGCLobbyInitialized), 8 bytes
+07/26 23:30:00 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_HERO_SELECTION'
+07/26 23:30:00 [Client] LoadingDisplay changed from CUSTOM_GAME_SETUP to NONE (map="dota")
+07/26 23:30:00 [Client] CDOTA_Hud_Main::EventGameRulesStateChanged DOTA_GAMERULES_STATE_HERO_SELECTION
+07/26 23:30:00 [SceneSystem] Too many non-culled draws (alloc 0, need 346), resizing!
+07/26 23:30:00 [Server] PR:SetSelectedHero 0:[I:0:0] npc_dota_hero_pudge(14)
+07/26 23:30:00 [Server] PR:SetSelectedHeroFacet 0:[I:0:0] (npc_dota_hero_pudge:(null))
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_STRATEGY_TIME'
+07/26 23:30:00 Player 0 is the econ owner for 'npc_dota_hero_pudge' but has null econ inventory when checking by playerID.
+07/26 23:30:00 However, we did find a player for playerID 0 with steamID [I:0:0].
+07/26 23:30:00 With player inventory 0000000000000000.
+07/26 23:30:00 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_STRATEGY_TIME'
+07/26 23:30:00 [Client] CDOTA_Hud_Main::EventGameRulesStateChanged DOTA_GAMERULES_STATE_STRATEGY_TIME
+07/26 23:30:00 [Server] PR:SetSelectedHeroFacet 0:[I:0:0] (npc_dota_hero_pudge:(null))
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_TEAM_SHOWCASE'
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_WAIT_FOR_MAP_TO_LOAD'
+07/26 23:30:00 --- Sent CMsgGameServerInfo to GC
+07/26 23:30:00 server_public_ip_addr: 2285904372
+server_private_ip_addr: 176160774
+server_port: 27015
+server_tv_port: 0
+server_key: ""
+server_hibernation: false
+server_type: GAME
+server_region: 0
+server_loadavg: 0.238206208
+server_tv_broadcast_time: -120
+server_game_time: 0.0333328247
+relay_slots_max: 0
+relays_connected: 0
+relay_clients_connected: 0
+tv_secret_code: 11499371235756821990
+server_version: 6850
+server_cluster: 0
+assigned_server_tv_port: 27020
+allow_custom_games: BOTH
+build_version: 6850
+
+07/26 23:30:00 ---
+07/26 23:30:00 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_WAIT_FOR_MAP_TO_LOAD'
+07/26 23:30:00 [Client] CDOTA_Hud_Main::EventGameRulesStateChanged DOTA_GAMERULES_STATE_WAIT_FOR_MAP_TO_LOAD
+07/26 23:30:00 [GCClient] Send msg 4508 (k_EMsgGCGameServerInfo), 82 bytes
+07/26 23:30:00 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_PRE_GAME'
+07/26 23:30:00 m_flPreGameStartTime set to 9.57
+07/26 23:30:00 m_flStateTransitionTime set to 14.57
+07/26 23:30:00 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_PRE_GAME'
+07/26 23:30:00 [PanoramaScript] [UI] Hud loaded
+07/26 23:30:00 [Client] CDOTA_Hud_Main::EventGameRulesStateChanged DOTA_GAMERULES_STATE_PRE_GAME
+07/26 23:30:00 **** Panel Hint has fill-parent-flow for width, but isn't in a flowing right layout
+07/26 23:30:00 [SceneSystem] Too many non-culled draws (alloc 384, need 490), resizing!
+07/26 23:30:00 [SceneSystem] Too many non-culled draws (alloc 512, need 532), resizing!
+07/26 23:30:00 [GCClient] Recv msg 2522 (k_EMsgGCServerVersionUpdated), 11 bytes
+07/26 23:30:00 Version out of date (GC wants 6869, we are 6850)!
+07/26 23:30:05 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_GAME_IN_PROGRESS'
+07/26 23:30:05 m_flGameStartTime set to 14.60
+07/26 23:30:05 [VScript] [E2E] harness engaged — driving bots
+07/26 23:30:05 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_GAME_IN_PROGRESS'
+07/26 23:30:05 [Client] CDOTA_Hud_Main::EventGameRulesStateChanged DOTA_GAMERULES_STATE_GAME_IN_PROGRESS
+07/26 23:30:05 [Client] CDOTA_Hud_Main::DeleteGameEndScreen deleted GameEndContainer
+07/26 23:30:05 --- Sent CMsgGameServerInfo to GC
+07/26 23:30:05 server_public_ip_addr: 2285904372
+server_private_ip_addr: 176160774
+server_port: 27015
+server_tv_port: 0
+server_key: ""
+server_hibernation: false
+server_type: GAME
+server_region: 0
+server_loadavg: 0.170486256
+server_tv_broadcast_time: -120
+server_game_time: 0.0333337784
+relay_slots_max: 0
+relays_connected: 0
+relay_clients_connected: 0
+tv_secret_code: 11499371235756821990
+server_version: 6850
+server_cluster: 0
+assigned_server_tv_port: 27020
+allow_custom_games: BOTH
+build_version: 6850
+
+07/26 23:30:05 ---
+07/26 23:30:05 [GCClient] Send msg 4508 (k_EMsgGCGameServerInfo), 82 bytes
+07/26 23:30:06 [GCClient] Recv msg 2522 (k_EMsgGCServerVersionUpdated), 11 bytes
+07/26 23:30:06 Version out of date (GC wants 6869, we are 6850)!
+07/26 23:30:06 [GCClient] Trying to send message type 8676 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:06 [GCClient] Trying to send message type 8673 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:07 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:07 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:07 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:07 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:07 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:27 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:27 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:27 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:27 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:29 [GCClient] Trying to send message type 8793 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:57 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:57 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:57 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:57 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:30:57 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:31:09 [GCClient] Trying to send message type 8793 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:31:37 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:31:37 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:31:37 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:31:37 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:31:37 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:31:59 [GCClient] Trying to send message type 8793 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:32:27 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:32:27 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:32:27 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:32:27 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.
+07/26 23:32:27 [GCClient] Trying to send message type 7387 (Unknown MsgType - Not Found) before GC connection established.  This is guaranteed to fail.

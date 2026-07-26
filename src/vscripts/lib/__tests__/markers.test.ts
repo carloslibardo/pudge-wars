@@ -27,4 +27,9 @@ describe("Marker", () => {
         expect(Marker.killScored(2, 1)).toBe("[E2E] kill scored team 2 -> 1");
         expect(Marker.win(2, 10)).toBe("[E2E] WIN team 2 reached 10 kills");
     });
+
+    it("builds the e2e bot seating markers", () => {
+        expect(Marker.botTeamAssigned(4, 3)).toBe("[E2E] bot 4 assigned team 3");
+        expect(Marker.botHeroCreated(7)).toBe("[E2E] hero created for heroless bot 7");
+    });
 });
