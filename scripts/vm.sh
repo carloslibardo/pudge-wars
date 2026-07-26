@@ -55,10 +55,14 @@ case "${1:-}" in
     unset TOKEN
 
     # First run also needs node_modules (tstl/tsc binaries) and the addon
-    # junctions into the steamcmd Dota install.
+    # junctions into the steamcmd Dota install. --ignore-scripts: the
+    # postinstall (scripts/install.js) walks the Steam-client library index,
+    # which a steamcmd-installed Dota does not have -- it throws ENOENT on
+    # libraryfolders.vdf and aborts the whole install. Linking on the VM is
+    # vm-link.ps1's job, so the postinstall is pure downside here.
     echo "ensuring node_modules + addon junctions..."
     ssh "${SSH_OPTS[@]}" builder@localhost \
-      "cd $RVM; \$env:Path += \";\$env:USERPROFILE\\.bun\\bin\"; if (-not (Test-Path node_modules\\.bin\\tstl.exe)) { bun install --frozen-lockfile 2>&1 | Select-Object -Last 3 }"
+      "cd $RVM; \$env:Path += \";\$env:USERPROFILE\\.bun\\bin\"; if (-not (Test-Path node_modules\\.bin\\tstl.exe)) { bun install --frozen-lockfile --ignore-scripts 2>&1 | Select-Object -Last 3 }"
     ssh "${SSH_OPTS[@]}" builder@localhost \
       "powershell.exe -NoProfile -ExecutionPolicy Bypass -File $RVM\\scripts\\vm-link.ps1"
 
