@@ -51,7 +51,6 @@ export class modifier_pudge_wars_rot extends BaseModifier {
 
     OnIntervalThink(): void {
         if (!IsServer()) return;
-        if (e2eEnabled()) print("[ROT] think enter");
         const caster = this.GetParent();
         if (caster.IsNull() || !caster.IsAlive()) return;
 

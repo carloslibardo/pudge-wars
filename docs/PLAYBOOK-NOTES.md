@@ -102,3 +102,63 @@ tools-mode with the Asset Browser over the game window), the rot toggle never
 engaged (the leveling loop maxes hook before touching Rot — follow-up), and
 `pudge_wars.vmap` still does not exist. Frame-quality evidence is the next
 mode to port (`match`/`showcase`), after the map.
+
+## Tier-2 addendum, part 2: full-system gates + recorded video (2026-07-27, runs 5-10)
+
+Round two raised the bar from "a team wins" to "every system leaves evidence":
+the smoke now HARD-FAILS unless `[ROT] tick`, `[FLESH] stack` and
+`[SHOP] purchased` all appear alongside `[E2E] WIN`, zero script errors, and a
+produced recording. Six runs to green; the reds found two real game bugs and a
+stack of harness/testrig landmines:
+
+1. **Runs 5-9: `modifier_pudge_rot` never ran — vanilla NAME SHADOWING.**
+   The headline find of the whole exercise. `modifier_pudge_rot` and
+   `modifier_pudge_flesh_heap` are the names of Dota's own engine-registered
+   C++ modifiers for vanilla Pudge, and `LinkLuaModifier` cannot shadow a
+   built-in: every application path resolves the name to the inert C++
+   modifier — `HasModifier()` returns true, and not one Lua callback ever
+   runs. No error, ever. Four application mechanisms "succeeded" silently
+   (CAST_TOGGLE order, `ToggleAbility()`, `AddNewModifier`-by-name,
+   `modifier.apply()`); lifecycle probes on OnCreated/OnDestroy finally proved
+   the class was never instantiated. Fix: `_wars_` infix on every modifier
+   whose name collides with a stock hero's kit. **Playbook v1.1: custom
+   modifiers (and probably abilities) for a re-kitted stock hero MUST NOT
+   reuse the stock kit's modifier names — and only a marker-gated tier-2 run
+   can tell you, because everything else looks like success. Flesh Heap's
+   stacks even "worked" via GameMode's SetStackCount landing on the vanilla
+   modifier while the custom HP-per-stack logic was dead.**
+2. **Fake clients cannot reach toggle abilities through the order pipeline.**
+   A CAST_TOGGLE order is clobbered by the same think's Queue:false move/cast
+   order, and `ToggleAbility()` is a silent no-op on an `ability_lua` toggle
+   from server script. The harness drives the modifier directly
+   (`modifier.apply()`, the same call OnToggle makes); the toggle switch
+   itself stays a human-playtest item.
+3. **Slot-order leveling starves later abilities of evidence** (run 4's PASS
+   shipped Rot with zero ticks). Points now spread lowest-level-first, and a
+   1300 XP boost at the horn (the L3 curve step is 640 — 600 buys two points,
+   not three) puts all three abilities at level 1 before the first kill.
+4. **Bots now buy from the catalog** through the same pure `purchase()` rule
+   the design pins (cost + stack caps, per-seat rotation for diversity) —
+   `AddItemByName` + `SpendGold`, grant-first so a full inventory can't burn
+   gold. The native shop event can never fire for a fake client.
+5. **Recording: ffmpeg gdigrab + window wrangling, fragmented mp4.** The
+   archer pattern (minimize "Asset Browser", pin "Dota 2" topmost every poll
+   cycle) works verbatim. `frag_keyframe+empty_moov` matters: the smoke
+   early-exits on WIN and hard-stops ffmpeg, which corrupts a plain mp4's
+   trailer but leaves a fragmented one playable to the last complete fragment.
+6. **Testrig flakes**: the IAP tunnel must be retried as a unit with the ssh
+   probe (gcloud's own preflight dies against a booting Windows before sshd is
+   up — a leftover tunnel from an earlier session had masked this); T4
+   capacity in us-central1-a can STOCKOUT (retry loop, or zones b/f).
+
+Green run (artifacts/smoke/20260727T121355Z): `[E2E] WIN team 2 reached 3
+kills` with 135 rot ticks, 4 flesh stacks, 12 shop purchases, 9 hooks/4 drags
+(rot now finishes what hooks start), zero script errors, and pw-record.mp4
+(~3.6min, 15fps) showing load → match → "Radiant Victory" with the fake-player
+kill feed on screen. With rot live, 5 kills landed in ~25s of combat — the
+600s window is now generous.
+
+Still open: `pudge_wars.vmap` (smoke runs on the stock map by design),
+match/showcase modes for curated frame-quality evidence, and Rot balance
+itself (3 rot-fed kills in half a minute says the numbers need a design pass
+once a human plays).
