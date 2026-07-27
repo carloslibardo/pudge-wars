@@ -108,7 +108,7 @@ export class E2EHarness {
             for (const id of this.bots()) {
                 const hero = heroForPlayer(id);
                 if (hero && !hero.IsNull()) {
-                    hero.AddExperience(600, ModifyXpReason.UNSPECIFIED, false, true);
+                    hero.AddExperience(600, ModifyXpReason.UNSPECIFIED, false, true, 0);
                 }
             }
         });
