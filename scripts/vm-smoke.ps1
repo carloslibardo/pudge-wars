@@ -17,7 +17,8 @@ param(
   [string]$Addon  = "pudge_wars",
   [string]$Map    = "dota",   # stock map until pudge_wars.vmap exists
   [int]$Kills     = 3,        # e2e win-threshold override (bounded smoke run)
-  [int]$LoadSeconds = 300     # GPU/asset warmup (~2min) + time for bots to reach $Kills
+  [int]$LoadSeconds = 480     # GPU/asset warmup (~2min) + time for bots to reach $Kills
+                              # (measured 2026-07-26: first kill lands ~t+215s, then ~1 per 20-25s)
 )
 $ErrorActionPreference = "Continue"
 $win64  = Join-Path $Dota "game\bin\win64"
