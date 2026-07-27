@@ -1,0 +1,60 @@
+﻿smoke start 2026-07-26T23:42:01.8376400+00:00
+Creating device for graphics adapter 0 'NVIDIA Tesla T4' [vendorid 0x10DE]: 32.0.15.9636
+
+-----------------------------------------------------------------
+ ERROR: 0 compiled, 0 failed, 0 skipped, 0m:03s
+-----------------------------------------------------------------
+
+screenshots: 15
+process alive at kill: True
+console.log lines: 1272
+--- SCRIPT ERRORS ---
+--- E2E MARKERS ---
+07/26 23:44:12 [VScript] [E2E] seating fake clients during setup
+07/26 23:44:13 [VScript] [E2E] bot 1 assigned team 2
+07/26 23:44:13 [VScript] [E2E] bot 2 assigned team 3
+07/26 23:44:13 [VScript] [E2E] bot 3 assigned team 2
+07/26 23:44:13 [VScript] [E2E] bot 4 assigned team 3
+07/26 23:44:13 [VScript] [E2E] bot 5 assigned team 2
+07/26 23:44:13 [VScript] [E2E] bot 6 assigned team 3
+07/26 23:44:13 [VScript] [E2E] bot 7 assigned team 2
+07/26 23:44:13 [VScript] [E2E] bot 8 assigned team 3
+07/26 23:44:13 [VScript] [E2E] bot 9 assigned team 2
+07/26 23:44:21 [VScript] [E2E] harness engaged — driving bots
+07/26 23:44:21 [VScript] [E2E] hero created for heroless bot 1
+07/26 23:44:21 [VScript] [E2E] hero created for heroless bot 2
+07/26 23:44:21 [VScript] [E2E] hero created for heroless bot 3
+07/26 23:44:21 [VScript] [E2E] hero created for heroless bot 4
+07/26 23:44:21 [VScript] [E2E] hero created for heroless bot 5
+07/26 23:44:21 [VScript] [E2E] hero created for heroless bot 6
+07/26 23:44:21 [VScript] [E2E] hero created for heroless bot 7
+07/26 23:44:21 [VScript] [E2E] hero created for heroless bot 8
+07/26 23:44:21 [VScript] [E2E] hero created for heroless bot 9
+--- HOOK / GAME MARKERS ---
+07/26 23:44:31 [VScript] [RIVER] buff applied to 1321
+07/26 23:44:31 [VScript] [RIVER] buff applied to 1384
+07/26 23:44:32 [VScript] [RIVER] buff applied to 1447
+07/26 23:44:32 [VScript] [RIVER] buff applied to 1300
+07/26 23:44:32 [VScript] [RIVER] buff applied to 1342
+07/26 23:44:32 [VScript] [RIVER] buff applied to 1405
+07/26 23:44:33 [VScript] [RIVER] buff applied to 1279
+07/26 23:44:34 [VScript] [RIVER] buff applied to 1363
+07/26 23:44:36 [VScript] [RIVER] buff applied to 1426
+--- GAMERULES STATE ---
+07/26 23:43:51 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_INIT'
+07/26 23:44:09 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_INIT'
+07/26 23:44:12 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP'
+07/26 23:44:12 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP'
+07/26 23:44:15 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_HERO_SELECTION'
+07/26 23:44:15 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_HERO_SELECTION'
+07/26 23:44:16 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_STRATEGY_TIME'
+07/26 23:44:16 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_STRATEGY_TIME'
+07/26 23:44:16 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_TEAM_SHOWCASE'
+07/26 23:44:16 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_WAIT_FOR_MAP_TO_LOAD'
+07/26 23:44:16 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_WAIT_FOR_MAP_TO_LOAD'
+07/26 23:44:16 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_PRE_GAME'
+07/26 23:44:16 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_PRE_GAME'
+07/26 23:44:21 S:Gamerules: entering state 'DOTA_GAMERULES_STATE_GAME_IN_PROGRESS'
+07/26 23:44:21 C:Gamerules: entering state 'DOTA_GAMERULES_STATE_GAME_IN_PROGRESS'
+SMOKE FAIL: no [E2E] WIN marker -- bots never reached 3 kills
+smoke done 2026-07-26T23:47:07.5492258+00:00

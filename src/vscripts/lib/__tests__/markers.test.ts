@@ -31,5 +31,8 @@ describe("Marker", () => {
     it("builds the e2e bot seating markers", () => {
         expect(Marker.botTeamAssigned(4, 3)).toBe("[E2E] bot 4 assigned team 3");
         expect(Marker.botHeroCreated(7)).toBe("[E2E] hero created for heroless bot 7");
+        expect(Marker.botAbilityLeveled(3, "pudge_meat_hook", 1)).toBe(
+            "[E2E] bot 3 leveled pudge_meat_hook -> 1",
+        );
     });
 });

@@ -116,6 +116,31 @@ export class E2EHarness {
         return ids;
     }
 
+    /**
+     * Spend the bot's ability points, hook first. Nothing else in the game
+     * levels bot abilities — a fresh hero holds its point forever, the hook
+     * sits at level 0, IsFullyCastable() is never true, and the bots just
+     * walk into each other for the whole run (2026-07-26 smoke #2: nine live
+     * Pudges, river buffs flowing, zero [HOOK] lines). Runs every think so
+     * respawns and XP levels get spent too. e2e bots only — a real player
+     * levels their own hook.
+     */
+    private levelAbilities(id: PlayerID, hero: CDOTA_BaseNPC_Hero): void {
+        let guard = 8; // points per think, bounded
+        while (hero.GetAbilityPoints() > 0 && guard-- > 0) {
+            let upgraded = false;
+            for (const idx of [0, 1, 2]) {
+                const ability = hero.GetAbilityByIndex(idx);
+                if (!ability || ability.GetLevel() >= ability.GetMaxLevel()) continue;
+                hero.UpgradeAbility(ability);
+                print(Marker.botAbilityLeveled(id, ability.GetAbilityName(), ability.GetLevel()));
+                upgraded = true;
+                break;
+            }
+            if (!upgraded) return; // everything maxed, stop burning the guard
+        }
+    }
+
     private think(): number {
         for (const id of this.bots()) {
             // NOT PlayerResource.GetSelectedHeroEntity — it returns nil for
@@ -123,6 +148,7 @@ export class E2EHarness {
             // (landmine L5). heroForPlayer() walks all three fallbacks.
             const hero = heroForPlayer(id);
             if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
+            this.levelAbilities(id, hero);
 
             const enemies = this.enemyHeroesOf(hero);
             if (enemies.length === 0) continue;
