@@ -35,13 +35,27 @@ case "${1:-}" in
       gcloud compute instances start "$VM" --project="$P" --zone="$Z"
     fi
 
-    gcloud compute start-iap-tunnel "$VM" 22 --local-host-port=localhost:2222 --project="$P" --zone="$Z" &
-    TUNNEL_PID=$!
-    trap 'kill "$TUNNEL_PID" 2>/dev/null' EXIT
-    for i in $(seq 1 90); do
-      ssh "${SSH_OPTS[@]}" builder@localhost "echo ready" >/dev/null 2>&1 && break
-      sleep 2
+    # The tunnel must be RETRIED, not just the ssh probe: right after a VM
+    # start, gcloud's own connection check hits Windows before sshd is up,
+    # start-iap-tunnel exits ("4003: failed to connect to backend"), and every
+    # later ssh gets connection-refused against a dead tunnel (run 6).
+    TUNNEL_PID=""
+    READY=""
+    trap '[ -n "$TUNNEL_PID" ] && kill "$TUNNEL_PID" 2>/dev/null' EXIT
+    for attempt in $(seq 1 10); do
+      gcloud compute start-iap-tunnel "$VM" 22 --local-host-port=localhost:2222 --project="$P" --zone="$Z" &
+      TUNNEL_PID=$!
+      for i in $(seq 1 30); do
+        kill -0 "$TUNNEL_PID" 2>/dev/null || break   # tunnel process died
+        if ssh "${SSH_OPTS[@]}" builder@localhost "echo ready" >/dev/null 2>&1; then READY=1; break; fi
+        sleep 2
+      done
+      [ -n "$READY" ] && break
+      kill "$TUNNEL_PID" 2>/dev/null || true
+      echo "tunnel/ssh not ready (attempt $attempt/10) -- retrying in 15s..."
+      sleep 15
     done
+    if [ -z "$READY" ]; then echo "FATAL: VM ssh never came up"; exit 1; fi
 
     # Bootstrap on first run: bare clone dir + git init. The token is minted
     # HERE (Mac gh keyring), passed one-shot into the fetch URL, never stored
