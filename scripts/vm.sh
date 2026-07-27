@@ -89,6 +89,15 @@ case "${1:-}" in
     ssh "${SSH_OPTS[@]}" builder@localhost \
       "cd $RVM; & node_modules\\.bin\\tsc.exe --project src\\panorama\\tsconfig.json; echo (\"TSC_PANORAMA_EXIT=\" + \$LASTEXITCODE)"
 
+    echo "building pudge_wars map (genmap -> dmxconvert -> resourcecompiler)..."
+    ssh "${SSH_OPTS[@]}" builder@localhost \
+      "powershell.exe -NoProfile -ExecutionPolicy Bypass -File $RVM\\scripts\\vm-buildmap.ps1" || {
+        echo "--- BUILDMAP RESULT ---"
+        ssh "${SSH_OPTS[@]}" builder@localhost 'Get-Content C:\pw-buildmap-result.txt' || true
+        exit 1
+      }
+    ssh "${SSH_OPTS[@]}" builder@localhost 'Get-Content C:\pw-buildmap-result.txt | Select-Object -Last 3'
+
     echo "staging vm-smoke.ps1 to C:\\aw\\vm-qgate.ps1 (reusing aw_qgate Interactive task)..."
     ssh "${SSH_OPTS[@]}" builder@localhost "Copy-Item $RVM\\scripts\\vm-smoke.ps1 C:\\aw\\vm-qgate.ps1 -Force"
 

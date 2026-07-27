@@ -1,0 +1,36 @@
+<!-- dmx encoding keyvalues2 4 format vmap 29 -->
+"CMapRootElement"
+{
+	"id" "elementid" "e414bd50-4c30-45ae-9b40-91f9e67f61a0"
+	"name" "string" "root"
+	"isprefab" "bool" "0"
+	"editorbuild" "int" "9820"
+	"editorversion" "int" "400"
+	"world" "CMapWorld"
+	{
+		"id" "elementid" "0f0b1a3c-8a4f-4b8e-9d2e-7c6a5b4d3e2f"
+		"name" "string" "world"
+		"nodeID" "int" "1"
+		"referenceID" "uint64" "0x0"
+		"children" "element_array"
+		[
+			"CMapEntity"
+			{
+				"id" "elementid" "1a2b3c4d-5e6f-4a8b-9c0d-1e2f3a4b5c6d"
+				"name" "string" ""
+				"nodeID" "int" "2"
+				"referenceID" "uint64" "0x0"
+				"origin" "vector3" "0 0 256"
+				"angles" "angle" "0 0 0"
+				"scales" "vector3" "1 1 1"
+				"entity_properties" "EditGameClassProps"
+				{
+					"id" "elementid" "2b3c4d5e-6f7a-4b8c-9d0e-1f2a3b4c5d6e"
+					"name" "string" ""
+					"classname" "string" "light_environment"
+				}
+			}
+		]
+		"mapUsageType" "string" "standard"
+	}
+}

@@ -20,3 +20,7 @@ node_modules
 *.vsndevts_c
 *.vsnd_c
 panorama_debugger.cfg
+
+# generated map artifacts (built per-machine by mapgen + vm-buildmap.ps1)
+content/maps/*.vmap
+content/maps/*.vmap_c
