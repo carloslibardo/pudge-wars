@@ -215,7 +215,7 @@ export class E2EHarness {
             if (rot && rot.GetLevel() > 0) {
                 const rotOn = hero.HasModifier("modifier_pudge_rot");
                 if (distance < ROT_TOGGLE_RANGE && !rotOn) {
-                    modifier_pudge_rot.apply(hero, hero, rot, {});
+                    modifier_pudge_rot.apply(hero, hero, rot, { duration: -1 });
                     print(
                         `[E2E] rot applied to bot ${id} dist ${Math.floor(distance)} ok ${hero.HasModifier("modifier_pudge_rot")}`,
                     );

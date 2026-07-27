@@ -42,10 +42,16 @@ export class modifier_pudge_rot extends BaseModifier {
         const interval = this.ability().GetSpecialValueFor("tick_interval");
         this.tickInterval = interval > 0 ? interval : 0.5;
         this.StartIntervalThink(this.tickInterval);
+        // e2e lifecycle probes (2026-07-27): run 8 showed the modifier
+        // PRESENT (HasModifier true right after apply) yet zero [ROT] ticks
+        // over a full match — these pin down whether it is created-then-
+        // instantly-destroyed, never thinking, or dying mid-think.
+        if (e2eEnabled()) print(`[ROT] modifier created, interval ${this.tickInterval}`);
     }
 
     OnIntervalThink(): void {
         if (!IsServer()) return;
+        if (e2eEnabled()) print("[ROT] think enter");
         const caster = this.GetParent();
         if (caster.IsNull() || !caster.IsAlive()) return;
 
@@ -98,6 +104,7 @@ export class modifier_pudge_rot extends BaseModifier {
 
     OnDestroy(): void {
         if (!IsServer()) return;
+        if (e2eEnabled()) print("[ROT] modifier destroyed");
         if (this.particle !== undefined) {
             ParticleManager.DestroyParticle(this.particle, false);
             ParticleManager.ReleaseParticleIndex(this.particle);
