@@ -7,7 +7,7 @@ import { BaseModifier, registerModifier } from "../lib/dota_ts_adapter";
  * from the Rot ability's KV (`rot_slow`), read through the passed ability.
  */
 @registerModifier()
-export class modifier_pudge_rot_slow extends BaseModifier {
+export class modifier_pudge_wars_rot_slow extends BaseModifier {
     IsHidden(): boolean {
         return false;
     }

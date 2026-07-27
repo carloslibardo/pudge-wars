@@ -12,7 +12,7 @@ import { fleshHeapBonus } from "../lib/combat";
  * permanent), and RemoveOnDeath false to match.
  */
 @registerModifier()
-export class modifier_pudge_flesh_heap extends BaseModifier {
+export class modifier_pudge_wars_flesh_heap extends BaseModifier {
     IsHidden(): boolean {
         return false;
     }

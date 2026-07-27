@@ -30,7 +30,7 @@ import { teamForSeat } from "../lib/botTeams";
 import { nextAbilitySlot } from "../lib/botSkillPlan";
 import { nextPurchase } from "../lib/botShopping";
 import { Marker } from "../lib/markers";
-import { modifier_pudge_rot } from "../modifiers/modifier_pudge_rot";
+import { modifier_pudge_wars_rot } from "../modifiers/modifier_pudge_wars_rot";
 import { e2eEnabled, e2eKillTarget } from "./e2eFlags";
 
 export { e2eEnabled, e2eKillTarget };
@@ -213,14 +213,14 @@ export class E2EHarness {
             // human-playtest item.
             const rot = hero.GetAbilityByIndex(1);
             if (rot && rot.GetLevel() > 0) {
-                const rotOn = hero.HasModifier("modifier_pudge_rot");
+                const rotOn = hero.HasModifier("modifier_pudge_wars_rot");
                 if (distance < ROT_TOGGLE_RANGE && !rotOn) {
-                    modifier_pudge_rot.apply(hero, hero, rot, { duration: -1 });
+                    modifier_pudge_wars_rot.apply(hero, hero, rot, { duration: -1 });
                     print(
-                        `[E2E] rot applied to bot ${id} dist ${Math.floor(distance)} ok ${hero.HasModifier("modifier_pudge_rot")}`,
+                        `[E2E] rot applied to bot ${id} dist ${Math.floor(distance)} ok ${hero.HasModifier("modifier_pudge_wars_rot")}`,
                     );
                 } else if (distance >= ROT_TOGGLE_RANGE * 2 && rotOn) {
-                    hero.RemoveModifierByName("modifier_pudge_rot");
+                    hero.RemoveModifierByName("modifier_pudge_wars_rot");
                 }
             }
 

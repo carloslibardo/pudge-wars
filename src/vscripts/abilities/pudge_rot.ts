@@ -1,8 +1,8 @@
 import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
-import { modifier_pudge_rot } from "../modifiers/modifier_pudge_rot";
+import { modifier_pudge_wars_rot } from "../modifiers/modifier_pudge_wars_rot";
 
 /**
- * Rot — a toggle. While on, `modifier_pudge_rot` pulses AoE damage around Pudge
+ * Rot — a toggle. While on, `modifier_pudge_wars_rot` pulses AoE damage around Pudge
  * (hurting him too, but never fatally — see `rotSelfDamage`) and slows enemies
  * caught in it. Toggling is the whole ability; all the work is in the modifier.
  *
@@ -13,9 +13,9 @@ export class pudge_rot extends BaseAbility {
     OnToggle(): void {
         const caster = this.GetCaster();
         if (this.GetToggleState()) {
-            modifier_pudge_rot.apply(caster, caster, this, {});
+            modifier_pudge_wars_rot.apply(caster, caster, this, {});
         } else {
-            caster.RemoveModifierByName("modifier_pudge_rot");
+            caster.RemoveModifierByName("modifier_pudge_wars_rot");
         }
     }
 }

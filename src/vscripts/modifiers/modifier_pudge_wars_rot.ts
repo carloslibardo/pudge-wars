@@ -2,7 +2,7 @@ import { BaseModifier, registerModifier } from "../lib/dota_ts_adapter";
 import { rotSelfDamage } from "../lib/combat";
 import { Marker } from "../lib/markers";
 import { e2eEnabled } from "../systems/e2eFlags";
-import { modifier_pudge_rot_slow } from "./modifier_pudge_rot_slow";
+import { modifier_pudge_wars_rot_slow } from "./modifier_pudge_wars_rot_slow";
 
 const ROT_FX = "particles/units/heroes/hero_pudge/pudge_rot.vpcf";
 
@@ -17,7 +17,7 @@ const ROT_FX = "particles/units/heroes/hero_pudge/pudge_rot.vpcf";
  * (/tstl-lua-gotchas).
  */
 @registerModifier()
-export class modifier_pudge_rot extends BaseModifier {
+export class modifier_pudge_wars_rot extends BaseModifier {
     private particle?: ParticleID;
     private tickInterval = 0.5;
 
@@ -80,7 +80,7 @@ export class modifier_pudge_rot extends BaseModifier {
                 damage_type: DamageTypes.MAGICAL,
                 ability,
             });
-            modifier_pudge_rot_slow.apply(enemy, caster, ability, {
+            modifier_pudge_wars_rot_slow.apply(enemy, caster, ability, {
                 duration: this.tickInterval * 1.2,
             });
         }
@@ -114,7 +114,7 @@ export class modifier_pudge_rot extends BaseModifier {
     /** The Rot ability, or a throw — it is always present for this modifier. */
     private ability(): CDOTABaseAbility {
         const ability = this.GetAbility();
-        if (ability === undefined) throw "modifier_pudge_rot has no ability";
+        if (ability === undefined) throw "modifier_pudge_wars_rot has no ability";
         return ability;
     }
 }

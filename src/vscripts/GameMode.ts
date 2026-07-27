@@ -14,10 +14,10 @@ import type { Side } from "./lib/battleLines";
 import "./abilities/pudge_meat_hook";
 import "./modifiers/modifier_pudge_hook_drag";
 import "./abilities/pudge_rot";
-import "./modifiers/modifier_pudge_rot";
-import "./modifiers/modifier_pudge_rot_slow";
+import "./modifiers/modifier_pudge_wars_rot";
+import "./modifiers/modifier_pudge_wars_rot_slow";
 import "./abilities/pudge_flesh_heap";
-import "./modifiers/modifier_pudge_flesh_heap";
+import "./modifiers/modifier_pudge_wars_flesh_heap";
 import "./modifiers/modifier_pudge_river";
 import "./abilities/pudge_items";
 import "./modifiers/modifier_pudge_stat_item";
@@ -160,7 +160,7 @@ export class GameMode {
      */
     private growFleshHeap(attacker: CDOTA_BaseNPC): void {
         if (!attacker.IsRealHero()) return;
-        const heap = attacker.FindModifierByName("modifier_pudge_flesh_heap");
+        const heap = attacker.FindModifierByName("modifier_pudge_wars_flesh_heap");
         if (!heap) return;
         const stacks = heap.GetStackCount() + 1;
         heap.SetStackCount(stacks);

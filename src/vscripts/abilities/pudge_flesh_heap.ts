@@ -9,6 +9,6 @@ import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
 @registerAbility()
 export class pudge_flesh_heap extends BaseAbility {
     GetIntrinsicModifierName(): string {
-        return "modifier_pudge_flesh_heap";
+        return "modifier_pudge_wars_flesh_heap";
     }
 }
