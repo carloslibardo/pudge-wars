@@ -100,6 +100,12 @@ case "${1:-}" in
       "builder@localhost:C:/steamcmd/steamapps/common/dota 2 beta/game/dota/console.log" "$OUTDIR/" 2>/dev/null || true
     scp -P 2222 -i "$KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
       "builder@localhost:C:/pw-shots/*.png" "$OUTDIR/" 2>/dev/null || true
+    # The match recording (tens of MB over the IAP tunnel — worth the wait).
+    scp -P 2222 -i "$KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+      builder@localhost:C:/pw-record.mp4 "$OUTDIR/" 2>/dev/null || true
+    [ -f "$OUTDIR/pw-record.mp4" ] \
+      && echo "recording: $OUTDIR/pw-record.mp4 ($(du -h "$OUTDIR/pw-record.mp4" | cut -f1))" \
+      || echo "recording: NOT pulled"
 
     echo "--- SMOKE SUMMARY ($OUTDIR/pw-smoke-result.txt) ---"
     grep -E "SMOKE PASS|SMOKE FAIL|smoke done" "$OUTDIR/pw-smoke-result.txt" 2>/dev/null || echo "(result file not pulled)"

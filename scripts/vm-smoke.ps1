@@ -3,6 +3,14 @@
 # team reaches the (overridden) kill target, then scan console.log for script
 # errors and the [E2E] WIN marker. Best autonomous approximation of a playtest.
 #
+# The whole run is also screen-recorded to C:\pw-record.mp4 (ffmpeg gdigrab,
+# archer-wars vm-smoke-record.ps1 pattern). Tools mode opens the Asset Browser
+# ON TOP of the game window, so without intervention the recording (and the
+# screenshots) show a file browser, not the match — the poll loop minimizes
+# "Asset Browser" and pins the game window topmost every cycle. Window lookup
+# is by TITLE with CharSet.Unicode (class lookup returns 0; ANSI marshaling
+# silently breaks FindWindowW — both verified on archer-wars runs 5/6).
+#
 # MAP: the repo ships no pudge_wars.vmap yet (Hammer-only artifact, see
 # content/maps/README.md), so the smoke launches on the STOCK "dota" map.
 # Spawns/river are pure coordinates in config.ts, so the game logic runs fine
@@ -24,17 +32,39 @@ $ErrorActionPreference = "Continue"
 $win64  = Join-Path $Dota "game\bin\win64"
 $log    = Join-Path $Dota "game\dota\console.log"
 $result = "C:\pw-smoke-result.txt"
+$video  = "C:\pw-record.mp4"
 
 "smoke start $(Get-Date -Format o)" | Out-File $result -Encoding utf8
 
-# fresh console log
-if (Test-Path $log) { Remove-Item $log -Force }
+# fresh console log + old recording
+if (Test-Path $log)   { Remove-Item $log -Force }
+if (Test-Path $video) { Remove-Item $video -Force }
 
 # 1) resource compile the addon (panorama/particles; no map of our own yet)
 $rc = Join-Path $win64 "resourcecompiler.exe"
 & $rc -a -i "$Dota\content\dota_addons\$Addon\*" 2>&1 | Select-Object -Last 10 | Out-String | Add-Content $result
 
-# 2) launch tools mode, auto-load the custom game with the harness engaged and
+# 2) start the screen recording BEFORE the game launches so load + match are
+#    all captured. FRAGMENTED mp4 (frag_keyframe+empty_moov) on purpose: the
+#    smoke early-exits the moment [E2E] WIN lands, and a plain mp4 killed
+#    mid-write loses its trailer and is unplayable — a fragmented one survives
+#    Stop-Process at any point. -t is the fallback bound if the run goes long.
+#    ffmpeg is on PATH on the VM (installed for archer-wars recorded smokes).
+$ff = $null
+if (Get-Command ffmpeg -ErrorAction SilentlyContinue) {
+  $recSeconds = $LoadSeconds + 30
+  $ffArgs = @(
+    "-y","-f","gdigrab","-framerate","15","-i","desktop",
+    "-t","$recSeconds","-c:v","libx264","-preset","ultrafast","-crf","28",
+    "-pix_fmt","yuv420p","-movflags","frag_keyframe+empty_moov",$video
+  )
+  $ff = Start-Process -FilePath "ffmpeg" -ArgumentList $ffArgs -PassThru -WindowStyle Hidden
+  "recording pid $($ff.Id) for ${recSeconds}s -> $video" | Add-Content $result
+} else {
+  "ffmpeg NOT FOUND on PATH -- no recording this run" | Add-Content $result
+}
+
+# 3) launch tools mode, auto-load the custom game with the harness engaged and
 #    a bounded win threshold.
 $args = @(
   "-novid","-tools","-addon",$Addon,"-condebug","-nominidumps","-nocrashdialog",
@@ -52,11 +82,42 @@ Remove-Item "$shots\*.png" -Force -ErrorAction SilentlyContinue
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
+# Window wrangling so the recording sees the GAME, not the Asset Browser.
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+public static class PWWin {
+  [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
+  // CharSet.Unicode is REQUIRED: default ANSI marshaling silently breaks the
+  // W-suffixed API (title never matches, returns 0).
+  [DllImport("user32.dll", CharSet=CharSet.Unicode)] public static extern IntPtr FindWindowW(string cls, string title);
+  [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, int cmd);
+  [DllImport("user32.dll")] public static extern bool SetWindowPos(IntPtr hWnd, IntPtr after, int x, int y, int w, int h, uint flags);
+}
+"@
+$HWND_TOPMOST = [IntPtr](-1)
+$SWP_NOSIZE_NOMOVE = 0x0003
+$SW_MINIMIZE = 6
+
 $elapsed = 0
 $winSeen = $false
 while ($elapsed -lt $LoadSeconds) {
   Start-Sleep -Seconds 20
   $elapsed += 20
+  # Every cycle: bury the Asset Browser, surface the game window. Tools mode
+  # re-raises the browser on some reloads, so this is a loop, not a one-shot.
+  $ab = [PWWin]::FindWindowW($null, "Asset Browser")
+  if ($ab -ne [IntPtr]::Zero) { [PWWin]::ShowWindow($ab, $SW_MINIMIZE) | Out-Null }
+  $game = [PWWin]::FindWindowW($null, "Dota 2")
+  if ($game -eq [IntPtr]::Zero) {
+    $p = Get-Process dota2 -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowHandle -ne 0 } | Select-Object -First 1
+    if ($p) { $game = $p.MainWindowHandle }
+  }
+  if ($game -ne [IntPtr]::Zero) {
+    [PWWin]::SetWindowPos($game, $HWND_TOPMOST, 0, 0, 0, 0, $SWP_NOSIZE_NOMOVE) | Out-Null
+    [PWWin]::SetForegroundWindow($game) | Out-Null
+  }
+  if ($elapsed -eq 60) { "window push t60: ab=$ab game=$game" | Add-Content $result }
   try {
     $bounds = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
     $bmp = New-Object System.Drawing.Bitmap $bounds.Width, $bounds.Height
@@ -76,6 +137,19 @@ while ($elapsed -lt $LoadSeconds) {
 "screenshots: $((Get-ChildItem $shots -Filter *.png).Count)" | Add-Content $result
 "process alive at kill: $(-not $proc.HasExited)" | Add-Content $result
 if (-not $proc.HasExited) { Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue }
+
+# Close out the recording. Fragmented mp4 tolerates a hard stop; give ffmpeg a
+# few seconds to flush the last fragment first.
+if ($ff -and -not $ff.HasExited) {
+  Start-Sleep -Seconds 5
+  Stop-Process -Id $ff.Id -Force -ErrorAction SilentlyContinue
+  Start-Sleep -Seconds 2
+}
+if (Test-Path $video) {
+  "recording done: $((Get-Item $video).Length) bytes" | Add-Content $result
+} else {
+  "NO recording produced" | Add-Content $result
+}
 
 # 3) scan console log against the marker contract (docs/specs/MARKERS.md)
 $fail = $null
@@ -100,6 +174,12 @@ if (Test-Path $log) {
   if ($errors.Count -gt 0)                { $fail = "script errors in console.log ($($errors.Count) lines)" }
   elseif ($logText -notmatch "\[E2E\] harness engaged") { $fail = "harness never engaged (convar/addon load problem)" }
   elseif ($logText -notmatch "\[E2E\] WIN")             { $fail = "no [E2E] WIN marker -- bots never reached $Kills kills" }
+  # Full-system gates (2026-07-27): a WIN off hooks alone previously passed
+  # while Rot, Flesh Heap and the shop shipped with ZERO tier-2 evidence.
+  elseif ($logText -notmatch "\[ROT\] tick")        { $fail = "no [ROT] tick -- Rot never damaged anyone" }
+  elseif ($logText -notmatch "\[FLESH\] stack")     { $fail = "no [FLESH] stack -- Flesh Heap never grew" }
+  elseif ($logText -notmatch "\[SHOP\] purchased")  { $fail = "no [SHOP] purchased -- bots never bought an item" }
+  elseif (-not (Test-Path $video))                  { $fail = "no recording produced (ffmpeg missing or died)" }
 } else {
   $fail = "NO console.log produced (launch may have failed)"
   $fail | Add-Content $result
