@@ -167,3 +167,36 @@ once a human plays).
 (spec 003 rev). Horn→WIN went 23s → 43s; the kill feed is hook-led again
 (12 drags feeding 4 kills, 460 rot ticks softening instead of deciding).
 Evidence: artifacts/smoke/20260727T125733Z.
+
+## Tier-2 addendum, part 3: marker-green is not gameplay-right (2026-07-27, run 12)
+
+The reviewer watched run 11's "green" video and rejected it: stock Dota
+jungle instead of the traditional two-fields-and-a-river arena, a mid-river
+melee brawl instead of a hook war, and a camera that never framed the action.
+Every gate was green while the GAME was wrong. Root causes, in playbook
+terms:
+
+1. **Markers measure mechanics, not shape.** [HOOK]/[ROT]/[WIN] prove code
+   paths fire; they say nothing about WHERE the fight happens or what it
+   looks like. The fix was three design-level changes markers could never
+   have demanded: an uncrossable river (lib/sideLock order filter + stranded
+   return, [SIDE] marker), bank-hold bot behavior (hold your side, hook
+   across), and the generated traditional map (mapgen/ port: flat court,
+   real water river, facing spawn rows, rim wall).
+2. **Static frames lied by omission.** The run-11 "review" was three
+   hand-picked frames; the reviewer watched the video. New rule: a recorded
+   run is reviewed as a FRAME STRIP across the whole match window, and the
+   reviewer's question is "is this the game?" not "is something on screen?"
+3. **The camera needs a subject.** +dota_camera_lock on the host hero,
+   parked mid-river as an invisible invulnerable tripod, frames both banks
+   for the entire match — the archer finding (engine convar beats both
+   script camera routes for match recordings) held exactly.
+
+Run 12 evidence (artifacts/smoke/20260727T152402Z): generated map compiled
+(vpk 4.2MB), hook accuracy 51/56 latched (91% — bank duels at fixed range),
+33 drags, 560 rot ticks, 4 flesh stacks, 12 buys, 8 stranded returns, WIN in
+110s, and the frame strip shows the classic layout: two green fields, wide
+river, five Pudges per bank, hooks visibly crossing the water with dragged
+victims. Playbook v1.1 items: port tiers 3-4 (frame evidence) BEFORE calling
+any visual mode done; add "vanilla-map smoke is a bootstrap, not a
+deliverable" to the testrig chapter.
