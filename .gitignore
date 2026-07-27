@@ -24,3 +24,6 @@ panorama_debugger.cfg
 # generated map artifacts (built per-machine by mapgen + vm-buildmap.ps1)
 content/maps/*.vmap
 content/maps/*.vmap_c
+
+# local smoke evidence (mp4/png/logs) — never in the repo
+artifacts/

@@ -3,6 +3,7 @@ import { hookDirection, sumHookBonuses, type HookBonus } from "../lib/hook";
 import { Marker } from "../lib/markers";
 import { e2eEnabled } from "../systems/e2eFlags";
 import { modifier_pudge_hook_drag } from "../modifiers/modifier_pudge_hook_drag";
+import { RiverGiftSystem } from "../systems/riverGifts";
 
 const HOOK_FX = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf";
 
@@ -69,8 +70,11 @@ export class pudge_meat_hook extends BaseAbility {
             fStartRadius: width,
             fEndRadius: width,
             vVelocity: (direction * speed) as Vector,
+            // BASIC on top of HERO so the projectile also latches the river
+            // gift chest (spec 006) — the only non-hero unit in the game. The
+            // chest sits on NEUTRALS, hostile to both teams, so ENEMY covers it.
             iUnitTargetTeam: UnitTargetTeam.ENEMY,
-            iUnitTargetType: UnitTargetType.HERO,
+            iUnitTargetType: UnitTargetType.HERO + UnitTargetType.BASIC,
             bProvidesVision: true,
             iVisionRadius: 300,
         });
@@ -86,6 +90,17 @@ export class pudge_meat_hook extends BaseAbility {
         if (!target || target.IsNull()) return true; // max distance, or victim died mid-flight
 
         const caster = this.GetCaster();
+
+        // River gift chest (spec 006): no damage, no steal — just latch and
+        // drag it home; the drag modifier redeems it on arrival.
+        if (RiverGiftSystem.isGift(target)) {
+            if (target.HasModifier("modifier_pudge_hook_drag")) return true; // already claimed mid-drag
+            target.EmitSound("Hero_Pudge.AttackHookImpact");
+            if (e2eEnabled()) print(Marker.giftHooked(caster.GetPlayerOwnerID()));
+            modifier_pudge_hook_drag.apply(target, caster, this, {});
+            return true;
+        }
+
         const damage = this.GetSpecialValueFor("hook_damage") + this.itemHookBonus(caster).damage;
         ApplyDamage({
             victim: target,

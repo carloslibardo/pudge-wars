@@ -33,3 +33,8 @@ export const RIVER_SCAN_INTERVAL = 0.25;
  *  (the documented home for mode-level values KV has no block for). */
 export const RIVER_MOVE_SPEED_PCT = 12;
 export const RIVER_HP_REGEN = 30;
+
+/** River gifts (spec 006): a hookable chest mid-river on an interval. */
+export const GIFT_SPAWN_INTERVAL = 25;
+export const GIFT_SPAWN_Y_MAX = 1400;
+export const GIFT_GOLD_PURSE = 250;

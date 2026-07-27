@@ -30,8 +30,13 @@ import { sideForTeam } from "../lib/battleLines";
 import { teamForSeat } from "../lib/botTeams";
 import { nextAbilitySlot } from "../lib/botSkillPlan";
 import { nextPurchase } from "../lib/botShopping";
+import { anchorY, holdY } from "../lib/botFormation";
+import { addTravel, isStuck, AUDIT_WINDOW_THINKS, STUCK_THRESHOLD } from "../lib/motionLiveness";
+import { giftHunter } from "../lib/riverGift";
 import { Marker } from "../lib/markers";
+import { SPAWN_SPACING } from "../config";
 import { modifier_pudge_wars_rot } from "../modifiers/modifier_pudge_wars_rot";
+import { RiverGiftSystem } from "./riverGifts";
 import { e2eEnabled, e2eKillTarget } from "./e2eFlags";
 
 export { e2eEnabled, e2eKillTarget };
@@ -42,14 +47,19 @@ const THINK_INTERVAL = 0.5;
 const ROT_TOGGLE_RANGE = 350;
 /** Where a bot holds: its own river bank (river 400 + margin), never across. */
 const BANK_HOLD_X = 450;
-/** Y range a bot will slide along its bank while mirroring its target. */
-const BANK_HOLD_Y_MAX = 1000;
 
 export class E2EHarness {
     private seated = false;
     private started = false;
     /** Per-bot item counts, mirroring lib/shop's PurchaseState.owned. */
     private owned: Partial<Record<number, Record<string, number>>> = {};
+    /** Think counter — the time source for strafing and the liveness windows. */
+    private tick = 0;
+    /** Per-bot travel accumulated this liveness window (spec 007). */
+    private travel: Partial<Record<number, number>> = {};
+    private prevPos: Partial<Record<number, [number, number]>> = {};
+    /** Thinks this window the bot was alive — dead bots are not audited. */
+    private aliveThinks: Partial<Record<number, number>> = {};
 
     /**
      * Seat the fake clients during CUSTOM_GAME_SETUP — before hero selection
@@ -200,10 +210,77 @@ export class E2EHarness {
         PlayerResource.SpendGold(id, pick.item.cost, ModifyGoldReason.PURCHASE_ITEM);
         owned[pick.item.name] = (owned[pick.item.name] ?? 0) + 1;
         print(Marker.itemPurchased(pick.item.name, id));
+        // A buy must be SEEN, not just logged (spec 005 visibility rev): the
+        // gold-cost popup over the buyer's head is what the frame reviewer
+        // looks for at each [SHOP] timestamp.
+        SendOverheadEventMessage(undefined, OverheadAlert.GOLD, hero, pick.item.cost, undefined);
+        EmitSoundOn("Item.PickUpShop", hero);
+    }
+
+    /**
+     * Spec 007 liveness + inventory audit, printed once per window. Only bots
+     * alive for ≥80% of the window are motion-audited — death + respawn wait
+     * would read as travel 0 and fake a STUCK.
+     */
+    private audit(bots: PlayerID[]): void {
+        let withItems = 0;
+        let total = 0;
+        for (const id of bots) {
+            const hero = heroForPlayer(id);
+            if (!hero || hero.IsNull()) continue;
+            total++;
+            let holds = false;
+            for (let slot = 0; slot < 9; slot++) {
+                if (hero.GetItemInSlot(slot as InventorySlot) !== undefined) {
+                    holds = true;
+                    break;
+                }
+            }
+            if (holds) withItems++;
+
+            const travelled = this.travel[id] ?? 0;
+            const alive = this.aliveThinks[id] ?? 0;
+            if (alive >= AUDIT_WINDOW_THINKS * 0.8) {
+                print(Marker.motionAudit(id, Math.floor(travelled), AUDIT_WINDOW_THINKS * THINK_INTERVAL));
+                if (isStuck(travelled, STUCK_THRESHOLD)) print(Marker.motionStuck(id));
+            }
+            this.travel[id] = 0;
+            this.aliveThinks[id] = 0;
+        }
+        print(Marker.shopAudit(withItems, total));
     }
 
     private think(): number {
-        for (const id of this.bots()) {
+        this.tick++;
+        const bots = this.bots();
+
+        // Team rosters (stable, seat-ordered) drive per-slot formation anchors
+        // (spec 007) and per-team gift hunting (spec 006).
+        const rosters = new Map<number, PlayerID[]>();
+        for (const id of bots) {
+            const team = PlayerResource.GetTeam(id);
+            const roster = rosters.get(team) ?? [];
+            roster.push(id);
+            rosters.set(team, roster);
+        }
+        const gift = RiverGiftSystem.currentGift();
+        const hunters = new Set<PlayerID>();
+        if (gift) {
+            const giftY = gift.GetAbsOrigin().y;
+            for (const roster of rosters.values()) {
+                const alive = roster.filter(id => {
+                    const h = heroForPlayer(id);
+                    return h !== undefined && !h.IsNull() && h.IsAlive();
+                });
+                const pick = giftHunter(
+                    alive.map(id => heroForPlayer(id)!.GetAbsOrigin().y),
+                    giftY,
+                );
+                if (pick !== undefined) hunters.add(alive[pick]);
+            }
+        }
+
+        for (const id of bots) {
             // NOT PlayerResource.GetSelectedHeroEntity — it returns nil for
             // every bot, because bots get heroes ASSIGNED rather than selected
             // (landmine L5). heroForPlayer() walks all three fallbacks.
@@ -212,10 +289,30 @@ export class E2EHarness {
             this.levelAbilities(id, hero);
             this.shop(id, hero);
 
+            const origin = hero.GetAbsOrigin();
+            // Liveness sampling (spec 007): travel accumulates while alive.
+            this.travel[id] = addTravel(this.travel[id] ?? 0, this.prevPos[id], [origin.x, origin.y]);
+            this.prevPos[id] = [origin.x, origin.y];
+            this.aliveThinks[id] = (this.aliveThinks[id] ?? 0) + 1;
+
+            const hook = hero.GetAbilityByIndex(0);
+
+            // Gift hunting (spec 006): the team's best-placed bot hooks the
+            // chest the moment its hook is up — the mid-river prize duel.
+            if (gift && hunters.has(id) && hook && hook.IsFullyCastable()) {
+                ExecuteOrderFromTable({
+                    UnitIndex: hero.entindex(),
+                    OrderType: UnitOrder.CAST_POSITION,
+                    AbilityIndex: hook.entindex(),
+                    Position: gift.GetAbsOrigin(),
+                    Queue: false,
+                });
+                continue;
+            }
+
             const enemies = this.enemyHeroesOf(hero);
             if (enemies.length === 0) continue;
             const target = this.nearest(hero, enemies);
-            const origin = hero.GetAbsOrigin();
             const distance = ((target.GetAbsOrigin() - origin) as Vector).Length2D();
 
             // Rot when an enemy is close, so hooked victims dragged into the
@@ -248,7 +345,6 @@ export class E2EHarness {
             // enemy would actually connect — the SAME pure selection math the
             // engine's collision implements (lib/hook firstHookTarget). Aiming
             // this way makes the headless run reliably produce [HOOK] markers.
-            const hook = hero.GetAbilityByIndex(0);
             if (hook && hook.IsFullyCastable()) {
                 const [dx, dy] = hookDirection(
                     [origin.x, origin.y],
@@ -272,25 +368,26 @@ export class E2EHarness {
                 }
             }
 
-            // Otherwise hold the own bank, sliding along Y to mirror the
-            // target — the traditional Pudge Wars duel: two lines of Pudges
-            // trading hooks across the river, never walking into it. (The
-            // old executor chased the nearest enemy into a mid-river melee
-            // scrum — run 11's video showed a brawl, not a hook war. The
-            // side-lock order filter would clamp a chase anyway; this aims
-            // the bot at the right place to begin with.)
+            // Otherwise hold FORMATION on the own bank (spec 007): a per-slot
+            // anchor spread along the river, clamped tracking toward the
+            // target, and a constant strafe. Run 12's rule — mirror the
+            // nearest enemy's Y — was a positive-feedback loop that collapsed
+            // each team into one motionless stack; the anchor term is what
+            // makes that impossible now.
             const side = sideForTeam(hero.GetTeamNumber()) ?? -1;
-            const holdY = Math.max(
-                -BANK_HOLD_Y_MAX,
-                Math.min(BANK_HOLD_Y_MAX, target.GetAbsOrigin().y),
-            );
+            const roster = rosters.get(hero.GetTeamNumber()) ?? [id];
+            const slot = Math.max(0, roster.indexOf(id));
+            const anchor = anchorY(slot, roster.length, SPAWN_SPACING);
+            const y = holdY(anchor, target.GetAbsOrigin().y, this.tick);
             ExecuteOrderFromTable({
                 UnitIndex: hero.entindex(),
                 OrderType: UnitOrder.MOVE_TO_POSITION,
-                Position: GetGroundPosition(Vector(side * BANK_HOLD_X, holdY, 0), hero),
+                Position: GetGroundPosition(Vector(side * BANK_HOLD_X, y, 0), hero),
                 Queue: false,
             });
         }
+
+        if (this.tick % AUDIT_WINDOW_THINKS === 0) this.audit(bots);
         return THINK_INTERVAL;
     }
 

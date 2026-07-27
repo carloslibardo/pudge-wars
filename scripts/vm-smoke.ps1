@@ -171,6 +171,9 @@ if (Test-Path $log) {
   "--- HOOK / GAME MARKERS ---" | Add-Content $result
   ($lines | Select-String -Pattern "\[HOOK\]|\[ROT\]|\[RIVER\]|\[SHOP\]|\[MATCH\]" | ForEach-Object { $_.Line } | Select-Object -First 60) | Add-Content $result
 
+  "--- GIFT / MOTION MARKERS ---" | Add-Content $result
+  ($lines | Select-String -Pattern "\[GIFT\]|\[MOTION\]" | ForEach-Object { $_.Line } | Select-Object -First 60) | Add-Content $result
+
   "--- GAMERULES STATE ---" | Add-Content $result
   ($lines | Select-String -Pattern "entering state 'DOTA_GAMERULES" | ForEach-Object { $_.Line }) | Add-Content $result
 
@@ -183,7 +186,27 @@ if (Test-Path $log) {
   elseif ($logText -notmatch "\[ROT\] tick")        { $fail = "no [ROT] tick -- Rot never damaged anyone" }
   elseif ($logText -notmatch "\[FLESH\] stack")     { $fail = "no [FLESH] stack -- Flesh Heap never grew" }
   elseif ($logText -notmatch "\[SHOP\] purchased")  { $fail = "no [SHOP] purchased -- bots never bought an item" }
+  # Gameplay-shape gates (2026-07-27, specs 006/007): run 12 was marker-green
+  # while the video showed two motionless stacks, no river prizes and no
+  # visible economy. These gates make that class of run FAIL.
+  elseif ($logText -notmatch "\[GIFT\] spawned")    { $fail = "no [GIFT] spawned -- river gift system never fired" }
+  elseif ($logText -notmatch "\[GIFT\] redeemed")   { $fail = "no [GIFT] redeemed -- bots never hooked a chest home" }
+  elseif ($logText -match  "\[MOTION\] STUCK")      { $fail = "[MOTION] STUCK -- a bot stood still a full window (run-12 class failure)" }
+  elseif (($lines | Select-String -Pattern "\[MOTION\] audit").Count -lt 12) {
+    $fail = "motion audit thin ($(($lines | Select-String -Pattern '\[MOTION\] audit').Count) lines < 12) -- liveness not measured across the match"
+  }
   elseif (-not (Test-Path $video))                  { $fail = "no recording produced (ffmpeg missing or died)" }
+  else {
+    # Final inventory audit must be n/n: every living bot holds >=1 item.
+    $audits = $lines | Select-String -Pattern "\[SHOP\] audit bots_with_items (\d+)/(\d+)"
+    if ($audits.Count -eq 0) { $fail = "no [SHOP] audit lines -- inventory never verified" }
+    else {
+      $last = $audits[-1]
+      $n = [int]$last.Matches[0].Groups[1].Value
+      $m = [int]$last.Matches[0].Groups[2].Value
+      if ($n -lt $m) { $fail = "final [SHOP] audit $n/$m -- $($m - $n) bot(s) ended the match itemless" }
+    }
+  }
 } else {
   $fail = "NO console.log produced (launch may have failed)"
   $fail | Add-Content $result

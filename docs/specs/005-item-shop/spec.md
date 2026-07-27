@@ -35,6 +35,15 @@ are set on the mode; a kill is worth enough to matter over a 10-kill game.
 | Starting gold | 600 | DESIGN-FRESH |
 | Gold per kill (bonus) | 300 | DESIGN-FRESH |
 
+## Visibility (2026-07-27 rev, after run 12)
+
+A purchase must be *seen*, not just logged: run 12 was marker-green on `[SHOP]`
+while the recording showed no evidence anyone ever bought anything. Every
+purchase (human or e2e) now fires an overhead gold-cost alert on the buyer plus
+the buy sound, and the e2e harness prints a periodic
+`[SHOP] audit bots_with_items n/m` whose final value must be `n/n` (spec 007
+contract) — items sitting in inventories, verified per-bot, every window.
+
 ## Out of scope
 
 - Recipes / combined items — every item is a single-tier buy.

@@ -27,6 +27,14 @@ export const Marker = {
     sideReturned: (heroEnt: number): string => `[SIDE] stranded hero ${heroEnt} returned home`,
     itemPurchased: (itemName: string, pid: number): string =>
         `[SHOP] purchased ${itemName} by ${pid}`,
+    shopAudit: (withItems: number, total: number): string =>
+        `[SHOP] audit bots_with_items ${withItems}/${total}`,
+    giftSpawned: (y: number): string => `[GIFT] spawned at y ${y}`,
+    giftHooked: (pid: number): string => `[GIFT] hooked by ${pid}`,
+    giftRedeemed: (kind: string, pid: number): string => `[GIFT] redeemed ${kind} by ${pid}`,
+    motionAudit: (pid: number, units: number, windowSeconds: number): string =>
+        `[MOTION] audit bot ${pid} travelled ${units} in ${windowSeconds}s`,
+    motionStuck: (pid: number): string => `[MOTION] STUCK bot ${pid}`,
     killScored: (team: number, total: number): string =>
         `[E2E] kill scored team ${team} -> ${total}`,
     botTeamAssigned: (pid: number, team: number): string =>

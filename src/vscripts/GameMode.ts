@@ -3,6 +3,7 @@ import { ScoreTracker } from "./lib/score";
 import { Marker } from "./lib/markers";
 import { SpawnPositions } from "./systems/spawnPositions";
 import { RiverSystem } from "./systems/riverBand";
+import { RiverGiftSystem } from "./systems/riverGifts";
 import { SideLockSystem } from "./systems/sideLock";
 import { E2EHarness, e2eEnabled, e2eKillTarget } from "./systems/e2eHarness";
 import { KILL_BOUNTY, KILLS_TO_WIN, PLAYERS_PER_TEAM, RESPAWN_SECONDS, STARTING_GOLD } from "./config";
@@ -54,6 +55,11 @@ export class GameMode {
         PrecacheResource("particle", "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", context);
         PrecacheResource("particle", "particles/units/heroes/hero_pudge/pudge_rot.vpcf", context);
         PrecacheResource("particle", "particles/generic_gameplay/rune_haste_owner.vpcf", context);
+        // River gift chest (spec 006): un-precached unit = "unit ... is
+        // invalid" on first spawn; un-precached glow renders nothing, silently.
+        PrecacheUnitByNameSync("npc_pudge_river_gift", context);
+        PrecacheResource("model", "models/props_debris/merchant_debris_chest001.vmdl", context);
+        PrecacheResource("particle", "particles/generic_gameplay/rune_doubledamage.vpcf", context);
     }
 
     public static Activate(this: void) {
@@ -72,6 +78,7 @@ export class GameMode {
         // The river down the middle is a coordinate band, buffing whoever stands
         // in it (spec 004). Pure membership check + thin scanner.
         new RiverSystem();
+        new RiverGiftSystem();
         new SideLockSystem();
     }
 

@@ -32,6 +32,18 @@ describe("Marker", () => {
         expect(Marker.win(2, 10)).toBe("[E2E] WIN team 2 reached 10 kills");
     });
 
+    it("builds the river gift markers (spec 006)", () => {
+        expect(Marker.giftSpawned(-700)).toBe("[GIFT] spawned at y -700");
+        expect(Marker.giftHooked(3)).toBe("[GIFT] hooked by 3");
+        expect(Marker.giftRedeemed("gold", 3)).toBe("[GIFT] redeemed gold by 3");
+    });
+
+    it("builds the liveness audit markers (spec 007)", () => {
+        expect(Marker.motionAudit(3, 2145, 30)).toBe("[MOTION] audit bot 3 travelled 2145 in 30s");
+        expect(Marker.motionStuck(3)).toBe("[MOTION] STUCK bot 3");
+        expect(Marker.shopAudit(9, 9)).toBe("[SHOP] audit bots_with_items 9/9");
+    });
+
     it("builds the e2e bot seating markers", () => {
         expect(Marker.botTeamAssigned(4, 3)).toBe("[E2E] bot 4 assigned team 3");
         expect(Marker.botHeroCreated(7)).toBe("[E2E] hero created for heroless bot 7");

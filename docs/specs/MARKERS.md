@@ -21,6 +21,10 @@ and the code cannot drift: the test asserts the exact prefixes below.
 | 5 | `[SHOP] purchased` | a Pudge buys a custom item | `Marker.itemPurchased` |
 | 6 | `[E2E] kill scored` | a kill is credited to a team's total | `Marker.killScored` |
 | 7 | `[E2E] WIN` | a team reaches the kill target | `GameMode.onEntityKilled` |
+| 8 | `[GIFT] spawned` | a river chest is created mid-river (spec 006) | `Marker.giftSpawned` |
+| 9 | `[GIFT] redeemed` | a hooked chest arrives and pays out | `Marker.giftRedeemed` |
+| 10 | `[MOTION] audit` | per-bot travel audit each liveness window (spec 007) | `Marker.motionAudit` |
+| 11 | `[SHOP] audit` | bots-holding-items count each window; final must be `n/n` | `Marker.shopAudit` |
 
 Full example lines (verbatim shapes the rig greps):
 
@@ -32,6 +36,11 @@ Full example lines (verbatim shapes the rig greps):
 [SHOP] purchased item_pudge_hook_chain by 0
 [E2E] kill scored team 2 -> 1
 [E2E] WIN team 2 reached 10 kills
+[GIFT] spawned at y -700
+[GIFT] hooked by 3
+[GIFT] redeemed gold by 3
+[MOTION] audit bot 3 travelled 2145 in 30s
+[SHOP] audit bots_with_items 9/9
 ```
 
 ## Forbidden patterns (any occurrence fails the run)
@@ -41,6 +50,10 @@ Full example lines (verbatim shapes the rig greps):
 - `loop or previous error loading module` (require cycle)
 - `error in error handling` (debug lib missing / sourceMapTraceback on)
 - `bogus player id` (bots seated too late)
+- `[MOTION] STUCK` (a bot stood still for a full liveness window — the run-12
+  static-blob failure; spec 007)
+- `Cannot create an entity because entity class is NULL` (unit KV missing
+  `BaseClass`)
 
 ## Known-benign noise
 
@@ -55,3 +68,8 @@ Full example lines (verbatim shapes the rig greps):
   class, /evidence-gate).
 - River buff: any frame while a hero stands in the mid-map band — the river
   buff particle must be visible on the unit.
+- River gift: any frame between `[GIFT] spawned` and its `redeemed` — a glowing
+  chest in the water at map center (an ERROR mesh fails); the ~2 s after
+  `[GIFT] hooked` must show the chest sliding toward a bank.
+- Formation/liveness: any two strip frames ≥15 s apart — each team spread along
+  its bank (no single stack) with per-bot displacement between the frames.

@@ -2,6 +2,7 @@ import { BaseModifierMotionHorizontal, registerModifier } from "../lib/dota_ts_a
 import { dragStep, hasArrived } from "../lib/hook";
 import { Marker } from "../lib/markers";
 import { e2eEnabled } from "../systems/e2eFlags";
+import { RiverGiftSystem } from "../systems/riverGifts";
 
 /** How close (units) the victim must get before the drag is called complete. */
 const ARRIVAL_THRESHOLD = 100;
@@ -67,7 +68,12 @@ export class modifier_pudge_hook_drag extends BaseModifierMotionHorizontal {
             if (e2eEnabled()) {
                 print(Marker.dragComplete(me.entindex(), caster.GetPlayerOwnerID()));
             }
+            // A dragged river gift pays out on arrival (spec 006). Destroy the
+            // modifier FIRST: redeem() removes the unit, and releasing the
+            // motion controller on a removed entity is a stale-handle crash.
+            const isGift = RiverGiftSystem.isGift(me);
             this.Destroy();
+            if (isGift) RiverGiftSystem.redeem(me, caster);
         }
     }
 

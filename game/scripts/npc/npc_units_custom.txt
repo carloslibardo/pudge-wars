@@ -5,4 +5,32 @@
 // "Cannot create an entity because entity class is NULL".
 "DOTAUnits"
 {
+	// River gift chest (spec 006): spawned mid-river, collected only by hook.
+	// BaseClass is REQUIRED (see header). Ground-move capability is kept (speed
+	// is never used) because the hook drag is a horizontal MOTION CONTROLLER --
+	// a MOVE_NONE unit can reject ApplyHorizontalMotionController and the drag
+	// modifier would silently self-destroy.
+	"npc_pudge_river_gift"
+	{
+		"BaseClass"              "npc_dota_creature"
+		"Model"                  "models/props_debris/merchant_debris_chest001.vmdl"
+		"ModelScale"             "1.1"
+		"Level"                  "1"
+		"HasInventory"           "0"
+		"StatusHealth"           "300"
+		"StatusHealthRegen"      "0"
+		"StatusMana"             "0"
+		"ArmorPhysical"          "0"
+		"MagicalResistance"      "0"
+		"AttackCapabilities"     "DOTA_UNIT_CAP_NO_ATTACK"
+		"MovementCapabilities"   "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"          "1"
+		"MovementTurnRate"       "1.0"
+		"BoundsHullName"         "DOTA_HULL_SIZE_SMALL"
+		"RingRadius"             "70"
+		"HealthBarOffset"        "120"
+		"VisionDaytimeRange"     "0"
+		"VisionNighttimeRange"   "0"
+		"UnitLabel"              "river_gift"
+	}
 }
