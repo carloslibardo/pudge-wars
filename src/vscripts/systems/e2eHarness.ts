@@ -27,6 +27,8 @@
 import { heroForPlayer } from "../lib/heroResolve";
 import { firstHookTarget, hookDirection, type HookCandidate } from "../lib/hook";
 import { teamForSeat } from "../lib/botTeams";
+import { nextAbilitySlot } from "../lib/botSkillPlan";
+import { nextPurchase } from "../lib/botShopping";
 import { Marker } from "../lib/markers";
 
 const MAX_PLAYER_SLOTS = 24;
@@ -48,6 +50,8 @@ export function e2eKillTarget(fallback: number): number {
 export class E2EHarness {
     private seated = false;
     private started = false;
+    /** Per-bot item counts, mirroring lib/shop's PurchaseState.owned. */
+    private owned: Partial<Record<number, Record<string, number>>> = {};
 
     /**
      * Seat the fake clients during CUSTOM_GAME_SETUP — before hero selection
@@ -117,28 +121,57 @@ export class E2EHarness {
     }
 
     /**
-     * Spend the bot's ability points, hook first. Nothing else in the game
-     * levels bot abilities — a fresh hero holds its point forever, the hook
-     * sits at level 0, IsFullyCastable() is never true, and the bots just
-     * walk into each other for the whole run (2026-07-26 smoke #2: nine live
-     * Pudges, river buffs flowing, zero [HOOK] lines). Runs every think so
-     * respawns and XP levels get spent too. e2e bots only — a real player
-     * levels their own hook.
+     * Spend the bot's ability points. Nothing else in the game levels bot
+     * abilities — a fresh hero holds its point forever, the hook sits at
+     * level 0, IsFullyCastable() is never true, and the bots just walk into
+     * each other for the whole run (2026-07-26 smoke #2: nine live Pudges,
+     * river buffs flowing, zero [HOOK] lines). Points are SPREAD
+     * lowest-level-first (lib/botSkillPlan): the first version leveled by
+     * slot order, maxed the hook, and Rot never left level 0 — an entire
+     * ability shipped with zero tier-2 evidence (run 4: 0 [ROT] ticks).
+     * Runs every think so respawns and XP levels get spent too. e2e bots
+     * only — a real player levels their own hook.
      */
     private levelAbilities(id: PlayerID, hero: CDOTA_BaseNPC_Hero): void {
         let guard = 8; // points per think, bounded
         while (hero.GetAbilityPoints() > 0 && guard-- > 0) {
-            let upgraded = false;
-            for (const idx of [0, 1, 2]) {
-                const ability = hero.GetAbilityByIndex(idx);
-                if (!ability || ability.GetLevel() >= ability.GetMaxLevel()) continue;
-                hero.UpgradeAbility(ability);
-                print(Marker.botAbilityLeveled(id, ability.GetAbilityName(), ability.GetLevel()));
-                upgraded = true;
-                break;
-            }
-            if (!upgraded) return; // everything maxed, stop burning the guard
+            const slots = [0, 1, 2].map(i => hero.GetAbilityByIndex(i));
+            const pick = nextAbilitySlot(
+                slots.map(a => (a ? a.GetLevel() : 0)),
+                slots.map(a => (a ? a.GetMaxLevel() : 0)),
+            );
+            if (pick === undefined) return; // everything maxed
+            const ability = slots[pick]!;
+            hero.UpgradeAbility(ability);
+            print(Marker.botAbilityLeveled(id, ability.GetAbilityName(), ability.GetLevel()));
         }
+    }
+
+    /**
+     * Spend the bot's gold in the shop, one item per think.
+     *
+     * Fake clients have no game client, so the NATIVE shop path (client UI →
+     * purchase order → `dota_item_purchased` event) can never fire for them.
+     * Instead the pick runs through the same pure `purchase()` catalog rule
+     * (cost + stack caps, lib/botShopping), the grant/charge mirrors a real
+     * transaction (grant first — AddItemByName returns nil on a full
+     * inventory, and charging anyway would silently burn the gold), and the
+     * harness prints the [SHOP] marker itself. GameMode's event listener
+     * still covers real-player buys.
+     */
+    private shop(id: PlayerID, hero: CDOTA_BaseNPC_Hero): void {
+        let owned = this.owned[id];
+        if (!owned) {
+            owned = {};
+            this.owned[id] = owned;
+        }
+        const pick = nextPurchase({ gold: PlayerResource.GetGold(id), owned }, id);
+        if (!pick) return;
+        const granted = hero.AddItemByName(pick.item.name);
+        if (!granted || granted.IsNull()) return; // no free slot; retry next think
+        PlayerResource.SpendGold(id, pick.item.cost, ModifyGoldReason.PURCHASE_ITEM);
+        owned[pick.item.name] = (owned[pick.item.name] ?? 0) + 1;
+        print(Marker.itemPurchased(pick.item.name, id));
     }
 
     private think(): number {
@@ -149,6 +182,7 @@ export class E2EHarness {
             const hero = heroForPlayer(id);
             if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
             this.levelAbilities(id, hero);
+            this.shop(id, hero);
 
             const enemies = this.enemyHeroesOf(hero);
             if (enemies.length === 0) continue;
