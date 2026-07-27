@@ -40,8 +40,8 @@
 		"AbilityValues"
 		{
 			"rot_radius"				"275"
-			"rot_damage"				"30"
-			"rot_self_damage"			"15"
+			"rot_damage"				"12 16 20 24"
+			"rot_self_damage"			"8"
 			"tick_interval"				"0.5"
 			// Enemy move slow, in percent (read as a negative bonus in TS).
 			"rot_slow"					"20"

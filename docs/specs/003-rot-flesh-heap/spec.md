@@ -18,8 +18,8 @@ with no cap. A fed Pudge is a wall.
 | Value | Number | Source |
 |---|---|---|
 | Rot radius | 275 u | DESIGN-FRESH (Dota Rot is 250) |
-| Rot enemy damage / tick | 30 | DESIGN-FRESH |
-| Rot self-damage / tick | 15 | DESIGN-FRESH |
+| Rot enemy damage / tick | 12/16/20/24 (per level) | DESIGN-FRESH rev 2026-07-27: tier-2 run 10 measured a ~23s match — stacked 60 DPS clouds plus a global 30 HP/s self-bleed gave a ~6s TTK in a scrum. Retuned for a ~30s solo-Rot TTK on a ~850 HP Pudge: Rot softens and finishes, the hook stars. |
+| Rot self-damage / tick | 8 | DESIGN-FRESH rev 2026-07-27 (same measurement) |
 | Rot tick interval | 0.5 s | DESIGN-FRESH |
 | Rot move slow | 20 % | DESIGN-FRESH |
 | Flesh Heap HP / stack | 40 | DESIGN-FRESH (Dota is ~14) |
