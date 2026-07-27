@@ -1,0 +1,82 @@
+/**
+ * Engine shell for the uncrossable river (lib/sideLock.ts):
+ *
+ *  1. An execute-order filter clamps every MOVE_TO_POSITION target to the
+ *     mover's own bank — humans and harness bots alike (ExecuteOrderFromTable
+ *     passes through the filter too), so nobody walks across.
+ *  2. A sweep returns stranded heroes: a victim dragged across by a hook is
+ *     legitimately on the wrong side — it gets a grace window to fight or die
+ *     there, then is teleported back to its own bank so the match keeps
+ *     flowing instead of leaving a lost Pudge behind enemy lines.
+ */
+import { sideForTeam } from "../lib/battleLines";
+import { clampMoveX, onWrongSide } from "../lib/sideLock";
+import { RIVER_BAND } from "../config";
+import { Marker } from "../lib/markers";
+import { e2eEnabled } from "./e2eFlags";
+
+/** Walkable margin between the river edge and the closest allowed stand. */
+const BANK_MARGIN = 50;
+/** Seconds a dragged hero may stay on the enemy field before being sent home. */
+const STRANDED_GRACE = 3;
+const SWEEP_INTERVAL = 0.5;
+
+export class SideLockSystem {
+    /** entindex -> game time the hero was first seen stranded. */
+    private strandedSince = new Map<EntityIndex, number>();
+
+    constructor() {
+        GameRules.GetGameModeEntity().SetExecuteOrderFilter(
+            order => this.filterOrder(order),
+            this,
+        );
+        Timers.CreateTimer(SWEEP_INTERVAL, () => {
+            this.sweep();
+            return SWEEP_INTERVAL;
+        });
+    }
+
+    private riverHalfWidth(): number {
+        return RIVER_BAND.max; // band is symmetric around 0
+    }
+
+    private filterOrder(order: ExecuteOrderFilterEvent): boolean {
+        if (order.order_type !== UnitOrder.MOVE_TO_POSITION) return true;
+        const unit = EntIndexToHScript(order.units["0"]) as CDOTA_BaseNPC | undefined;
+        if (!unit || !unit.IsRealHero()) return true;
+        const side = sideForTeam(unit.GetTeamNumber());
+        if (side === undefined) return true;
+        order.position_x = clampMoveX(side, order.position_x, this.riverHalfWidth(), BANK_MARGIN);
+        return true;
+    }
+
+    private sweep(): void {
+        const now = GameRules.GetGameTime();
+        const half = this.riverHalfWidth();
+        const count = HeroList.GetHeroCount();
+        for (let i = 0; i < count; i++) {
+            const hero = HeroList.GetHero(i);
+            if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
+            const side = sideForTeam(hero.GetTeamNumber());
+            if (side === undefined) continue;
+            const ent = hero.entindex();
+            // Mid-drag heroes are the hook's business, not ours.
+            if (hero.IsCurrentlyHorizontalMotionControlled() || !onWrongSide(side, hero.GetAbsOrigin().x, half)) {
+                this.strandedSince.delete(ent);
+                continue;
+            }
+            const since = this.strandedSince.get(ent);
+            if (since === undefined) {
+                this.strandedSince.set(ent, now);
+                continue;
+            }
+            if (now - since < STRANDED_GRACE) continue;
+            this.strandedSince.delete(ent);
+            const y = hero.GetAbsOrigin().y;
+            const home = GetGroundPosition(Vector(side * (half + BANK_MARGIN * 2), y, 0), hero);
+            FindClearSpaceForUnit(hero, home, true);
+            hero.Stop();
+            if (e2eEnabled()) print(Marker.sideReturned(hero.entindex()));
+        }
+    }
+}

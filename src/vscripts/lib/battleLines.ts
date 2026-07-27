@@ -28,3 +28,14 @@ export function battleLinePosition(
     const y = (slot - (slots - 1) / 2) * spacing;
     return [x, y];
 }
+
+/**
+ * Which side of the river a team fights from. Raw team numbers so this stays
+ * pure and Node-testable: 2 = DOTA_TEAM_GOODGUYS (Radiant, negative X),
+ * 3 = DOTA_TEAM_BADGUYS (Dire, positive X).
+ */
+export function sideForTeam(team: number): Side | undefined {
+    if (team === 2) return -1;
+    if (team === 3) return 1;
+    return undefined;
+}

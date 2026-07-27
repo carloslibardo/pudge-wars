@@ -71,6 +71,10 @@ if (Get-Command ffmpeg -ErrorAction SilentlyContinue) {
 $args = @(
   "-novid","-tools","-addon",$Addon,"-condebug","-nominidumps","-nocrashdialog",
   "-windowed","-w","1280","-h","720",
+  # Locked camera on the host hero -- the harness parks that hero mid-river
+  # as an invisible tripod, so the recording frames both banks (the only
+  # camera technique that reliably moves the tools client in a match run).
+  "+dota_camera_lock","1",
   "+pudge_wars_e2e","1","+pudge_wars_e2e_kills","$Kills",
   "+dota_launch_custom_game","$Addon","$Map"
 )

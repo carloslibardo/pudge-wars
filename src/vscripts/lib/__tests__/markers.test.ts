@@ -20,6 +20,10 @@ describe("Marker", () => {
         expect(Marker.riverRemoved(18)).toBe("[RIVER] buff removed from 18");
     });
 
+    it("pins the side-lock return marker", () => {
+        expect(Marker.sideReturned(42)).toBe("[SIDE] stranded hero 42 returned home");
+    });
+
     it("builds the shop + score markers", () => {
         expect(Marker.itemPurchased("item_pudge_hook_chain", 0)).toBe(
             "[SHOP] purchased item_pudge_hook_chain by 0",

@@ -3,6 +3,7 @@ import { ScoreTracker } from "./lib/score";
 import { Marker } from "./lib/markers";
 import { SpawnPositions } from "./systems/spawnPositions";
 import { RiverSystem } from "./systems/riverBand";
+import { SideLockSystem } from "./systems/sideLock";
 import { E2EHarness, e2eEnabled, e2eKillTarget } from "./systems/e2eHarness";
 import { KILL_BOUNTY, KILLS_TO_WIN, PLAYERS_PER_TEAM, RESPAWN_SECONDS, STARTING_GOLD } from "./config";
 import type { Side } from "./lib/battleLines";
@@ -71,6 +72,7 @@ export class GameMode {
         // The river down the middle is a coordinate band, buffing whoever stands
         // in it (spec 004). Pure membership check + thin scanner.
         new RiverSystem();
+        new SideLockSystem();
     }
 
     private configure(): void {

@@ -26,6 +26,7 @@
  */
 import { heroForPlayer } from "../lib/heroResolve";
 import { firstHookTarget, hookDirection, type HookCandidate } from "../lib/hook";
+import { sideForTeam } from "../lib/battleLines";
 import { teamForSeat } from "../lib/botTeams";
 import { nextAbilitySlot } from "../lib/botSkillPlan";
 import { nextPurchase } from "../lib/botShopping";
@@ -39,6 +40,10 @@ const MAX_PLAYER_SLOTS = 24;
 const THINK_INTERVAL = 0.5;
 /** Toggle Rot on when an enemy is at least this close. */
 const ROT_TOGGLE_RANGE = 350;
+/** Where a bot holds: its own river bank (river 400 + margin), never across. */
+const BANK_HOLD_X = 450;
+/** Y range a bot will slide along its bank while mirroring its target. */
+const BANK_HOLD_Y_MAX = 1000;
 
 export class E2EHarness {
     private seated = false;
@@ -106,6 +111,21 @@ export class E2EHarness {
                     hero.AddExperience(1300, ModifyXpReason.UNSPECIFIED, false, true, 0);
                 }
             }
+        });
+        // Camera tripod (e2e only): the rig launches with +dota_camera_lock 1,
+        // which follows the HOST's hero — park that hero mid-river as an
+        // invisible, invulnerable tripod so the locked camera frames both
+        // banks and every hook crossing. Engine-convar lock is the ONE
+        // camera technique that reliably moves the tools client in a match
+        // recording (archer-wars frame audits 2026-07-09/11/14: both the
+        // server SetCameraTarget and the client GameUI routes stayed parked).
+        Timers.CreateTimer(2, () => {
+            const host = heroForPlayer(0 as PlayerID);
+            if (!host || host.IsNull()) return;
+            host.AddNewModifier(host, undefined, "modifier_invulnerable", {});
+            host.AddNoDraw();
+            FindClearSpaceForUnit(host, GetGroundPosition(Vector(0, 0, 0), host), true);
+            host.Stop();
         });
         // Perma-day. The day/night cycle renders night rounds near-black, which
         // makes every screenshot the rig captures worthless (landmine L15).
@@ -252,11 +272,22 @@ export class E2EHarness {
                 }
             }
 
-            // Otherwise close the distance to line up a hook.
+            // Otherwise hold the own bank, sliding along Y to mirror the
+            // target — the traditional Pudge Wars duel: two lines of Pudges
+            // trading hooks across the river, never walking into it. (The
+            // old executor chased the nearest enemy into a mid-river melee
+            // scrum — run 11's video showed a brawl, not a hook war. The
+            // side-lock order filter would clamp a chase anyway; this aims
+            // the bot at the right place to begin with.)
+            const side = sideForTeam(hero.GetTeamNumber()) ?? -1;
+            const holdY = Math.max(
+                -BANK_HOLD_Y_MAX,
+                Math.min(BANK_HOLD_Y_MAX, target.GetAbsOrigin().y),
+            );
             ExecuteOrderFromTable({
                 UnitIndex: hero.entindex(),
                 OrderType: UnitOrder.MOVE_TO_POSITION,
-                Position: target.GetAbsOrigin(),
+                Position: GetGroundPosition(Vector(side * BANK_HOLD_X, holdY, 0), hero),
                 Queue: false,
             });
         }
@@ -270,6 +301,10 @@ export class E2EHarness {
             const other = HeroList.GetHero(i);
             if (!other || other.IsNull() || !other.IsAlive()) continue;
             if (other.GetTeamNumber() === hero.GetTeamNumber()) continue;
+            // Bots fight bots: the host's hero is the invisible camera tripod
+            // parked mid-river, not a target — without this the whole enemy
+            // team hooks at an invulnerable ghost all match.
+            if (!PlayerResource.IsFakeClient(other.GetPlayerOwnerID())) continue;
             enemies.push(other);
         }
         return enemies;

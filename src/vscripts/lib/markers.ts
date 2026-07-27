@@ -24,6 +24,7 @@ export const Marker = {
         `[FLESH] stack ${stacks} on ${heroEnt}`,
     riverApplied: (heroEnt: number): string => `[RIVER] buff applied to ${heroEnt}`,
     riverRemoved: (heroEnt: number): string => `[RIVER] buff removed from ${heroEnt}`,
+    sideReturned: (heroEnt: number): string => `[SIDE] stranded hero ${heroEnt} returned home`,
     itemPurchased: (itemName: string, pid: number): string =>
         `[SHOP] purchased ${itemName} by ${pid}`,
     killScored: (team: number, total: number): string =>

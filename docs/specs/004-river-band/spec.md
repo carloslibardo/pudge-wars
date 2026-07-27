@@ -19,6 +19,17 @@ tick.
 | River HP regen bonus | 30 hp/s | DESIGN-FRESH |
 | River scan interval | 0.25 s | DESIGN-FRESH |
 
+**Rev 2026-07-27 — the river is UNCROSSABLE on foot (traditional rule).**
+The original Pudge Wars (WC3 and the Dota 2 workshop remakes) splits the map
+into two fields with an uncrossable river: you reach the enemy only through
+hooks. v1 shipped the river as a walk-in gamble zone, and the first recorded
+tier-2 match showed why that is wrong — both teams walked across and the game
+became a mid-river melee brawl, not a hook war. `lib/sideLock.ts` +
+`systems/sideLock.ts` now clamp movement orders at each team's bank (humans
+and bots alike) and return hook-stranded survivors home after a 3s grace
+(`[SIDE]` marker). The buff-while-inside rule of this spec still applies to
+whoever is in the band — in practice dragged victims passing over it.
+
 ## Out of scope
 
 - Map geometry / an actual water texture — the band is a coordinate check in
