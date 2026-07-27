@@ -27,6 +27,7 @@
 import { heroForPlayer } from "../lib/heroResolve";
 import { firstHookTarget, hookDirection, type HookCandidate } from "../lib/hook";
 import { sideForTeam } from "../lib/battleLines";
+import { onWrongSide } from "../lib/sideLock";
 import { teamForSeat } from "../lib/botTeams";
 import { nextAbilitySlot } from "../lib/botSkillPlan";
 import { nextPurchase } from "../lib/botShopping";
@@ -34,7 +35,7 @@ import { anchorY, holdY } from "../lib/botFormation";
 import { addTravel, isStuck, AUDIT_WINDOW_THINKS, STUCK_THRESHOLD } from "../lib/motionLiveness";
 import { giftHunter } from "../lib/riverGift";
 import { Marker } from "../lib/markers";
-import { SPAWN_SPACING } from "../config";
+import { RIVER_BAND, SPAWN_SPACING } from "../config";
 import { modifier_pudge_wars_rot } from "../modifiers/modifier_pudge_wars_rot";
 import { RiverGiftSystem } from "./riverGifts";
 import { e2eEnabled, e2eKillTarget } from "./e2eFlags";
@@ -47,6 +48,8 @@ const THINK_INTERVAL = 0.5;
 const ROT_TOGGLE_RANGE = 350;
 /** Where a bot holds: its own river bank (river 400 + margin), never across. */
 const BANK_HOLD_X = 450;
+/** A caught enemy within this range pulls the whole team onto it (spec 007). */
+const SWARM_RANGE = 1500;
 
 export class E2EHarness {
     private seated = false;
@@ -296,20 +299,6 @@ export class E2EHarness {
             this.aliveThinks[id] = (this.aliveThinks[id] ?? 0) + 1;
 
             const hook = hero.GetAbilityByIndex(0);
-
-            // Gift hunting (spec 006): the team's best-placed bot hooks the
-            // chest the moment its hook is up — the mid-river prize duel.
-            if (gift && hunters.has(id) && hook && hook.IsFullyCastable()) {
-                ExecuteOrderFromTable({
-                    UnitIndex: hero.entindex(),
-                    OrderType: UnitOrder.CAST_POSITION,
-                    AbilityIndex: hook.entindex(),
-                    Position: gift.GetAbsOrigin(),
-                    Queue: false,
-                });
-                continue;
-            }
-
             const enemies = this.enemyHeroesOf(hero);
             if (enemies.length === 0) continue;
             const target = this.nearest(hero, enemies);
@@ -339,6 +328,57 @@ export class E2EHarness {
                 } else if (distance >= ROT_TOGGLE_RANGE * 2 && rotOn) {
                     hero.RemoveModifierByName("modifier_pudge_wars_rot");
                 }
+            }
+
+            // Gift hunting (spec 006): the team's best-placed bot hooks the
+            // chest the moment its hook is up — the mid-river prize duel.
+            // AFTER the rot toggle on purpose: run 13's hunters skipped the
+            // rot-off branch every think and self-bled 8 hp/s all match
+            // (5716 hit-0 rot ticks).
+            if (gift && hunters.has(id) && hook && hook.IsFullyCastable()) {
+                ExecuteOrderFromTable({
+                    UnitIndex: hero.entindex(),
+                    OrderType: UnitOrder.CAST_POSITION,
+                    AbilityIndex: hook.entindex(),
+                    Position: gift.GetAbsOrigin(),
+                    Queue: false,
+                });
+                continue;
+            }
+
+            // Swarm the catch (spec 007 rev): a hooked enemy landing on OUR
+            // field is the kill window of the whole game — every bot converges
+            // on it (rot toggles on by proximity above) instead of holding
+            // formation. Run 13 proved a lone rot can never finish a catch:
+            // 198 drags, 0 kills. The side-lock filter clamps the chase to our
+            // bank, and the stranded grace bounds the window.
+            const targetSide = sideForTeam(target.GetTeamNumber());
+            const intruder =
+                targetSide !== undefined &&
+                onWrongSide(targetSide, target.GetAbsOrigin().x, RIVER_BAND.max) &&
+                distance < SWARM_RANGE;
+            if (intruder) {
+                // Re-hook the catch when possible: the river is uncrossable by
+                // ORDERS, not physics, so a freed victim just walks home
+                // through the water — a fresh hook re-drags it deeper and adds
+                // burst. Otherwise close in so Rot bites.
+                if (hook && hook.IsFullyCastable() && !target.HasModifier("modifier_pudge_hook_drag")) {
+                    ExecuteOrderFromTable({
+                        UnitIndex: hero.entindex(),
+                        OrderType: UnitOrder.CAST_POSITION,
+                        AbilityIndex: hook.entindex(),
+                        Position: target.GetAbsOrigin(),
+                        Queue: false,
+                    });
+                } else {
+                    ExecuteOrderFromTable({
+                        UnitIndex: hero.entindex(),
+                        OrderType: UnitOrder.MOVE_TO_POSITION,
+                        Position: target.GetAbsOrigin(),
+                        Queue: false,
+                    });
+                }
+                continue;
             }
 
             // Fire Meat Hook (slot 0) only when a straight hook at the nearest

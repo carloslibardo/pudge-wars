@@ -33,6 +33,19 @@ a travel audit; the smoke gate fails on any stuck bot.
 | Strafe period | 4 thinks (2 s) | DESIGN-FRESH |
 | Liveness window | 30 s | DESIGN-FRESH |
 | Stuck threshold | < 300 units travelled per window | DESIGN-FRESH (strafe alone yields ~3600) |
+| Swarm range | 1500 | DESIGN-FRESH (run-13 rev: whole team collapses on a caught enemy) |
+| Stranded grace | 8 s (was 3) | DESIGN-FRESH (run-13 rev: grace must outlast the pack kill) |
+
+### Run-13 revision: swarm the catch
+
+Run 13 proved formation play alone starves kills: 198 completed drags, ZERO
+kills in nine minutes. A caught victim landed at ONE bot (one Rot ≈ 24 dps),
+and either the 3 s stranded sweep or a walk home through the water (the river
+is uncrossable by ORDERS, not physics) freed it long before death. Fix, in
+traditional Pudge Wars terms: a hooked enemy on your field is the team's kill
+window — every bot within swarm range converges, re-hooks it deeper when its
+hook is up, and Rot does the rest. Grace raised to 8 s so the window can
+actually close.
 
 ## Out of scope
 

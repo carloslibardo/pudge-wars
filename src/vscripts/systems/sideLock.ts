@@ -17,8 +17,11 @@ import { e2eEnabled } from "./e2eFlags";
 
 /** Walkable margin between the river edge and the closest allowed stand. */
 const BANK_MARGIN = 50;
-/** Seconds a dragged hero may stay on the enemy field before being sent home. */
-const STRANDED_GRACE = 3;
+/** Seconds a dragged hero may stay on the enemy field before being sent home.
+ *  8s, up from 3 (run 13): with formation play a caught Pudge lands at ONE
+ *  enemy, and 3s of a single Rot could never kill — 0 kills in 9 minutes. The
+ *  grace must outlast the pack's collapse-and-kill (spec 007 swarm). */
+const STRANDED_GRACE = 8;
 const SWEEP_INTERVAL = 0.5;
 
 export class SideLockSystem {

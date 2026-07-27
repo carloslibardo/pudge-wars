@@ -200,3 +200,42 @@ river, five Pudges per bank, hooks visibly crossing the water with dragged
 victims. Playbook v1.1 items: port tiers 3-4 (frame evidence) BEFORE calling
 any visual mode done; add "vanilla-map smoke is a bootstrap, not a
 deliverable" to the testrig chapter.
+
+## Tier-2 addendum, part 4: the reference-game checklist and liveness gates (2026-07-27, run 13)
+
+Run 12 fixed the map and the melee brawl — and the reviewer STILL rejected the
+video, correctly: both teams stood in one motionless stack each, nothing ever
+spawned in the river, and no purchase was visible anywhere on screen. Three
+distinct process failures, three new rules:
+
+1. **A reference game is a feature CHECKLIST, not a vibe.** "Traditional Pudge
+   Wars" was researched for run 12, but only the pieces already broken (map,
+   river, sides) were extracted from that research. The river-item mechanic —
+   as canonical as the hook itself — was never even specced, so no gate could
+   miss it. Rule: when a build claims to remake game X, the research pass must
+   produce an explicit feature inventory of X, and every line gets a spec, a
+   deliberate out-of-scope entry, or a user decision. Unwritten = unshipped =
+   undetectable.
+2. **Behavior needs LIVENESS gates, not just event gates.** Every marker is an
+   event counter; a match where all ten bots stand still after t+30s fires
+   every event the contract lists. The executor bug (each bot mirrored its
+   nearest enemy's Y — a positive feedback loop that collapses both teams into
+   stacks) shipped precisely because nothing measured motion over time. Rule:
+   any autonomous actor gets a liveness audit — the harness samples positions
+   every think and prints per-bot travel per 30s window (`[MOTION] audit`,
+   spec 007); `[MOTION] STUCK` is a forbidden pattern. Static-but-green can no
+   longer pass.
+3. **"The system works" must be visible IN THE VIDEO, or it does not count as
+   shipped.** Purchases were real (gold debited, items in bot inventories,
+   hook bonuses live) and utterly invisible in the recording — which is what
+   the user was reviewing. Rule: every player-facing system names, in its
+   spec, the on-screen artifact a frame reviewer must be able to point at
+   (overhead gold alert for buys, a glowing chest mid-river for gifts, spread
+   formations for bot play), and the marker contract's frame-windows section
+   says WHEN to look.
+
+The harness side of the same lesson: the e2e executor is part of the product's
+evidence chain. If the bots do not exercise a mechanic (hunt the chest, hold a
+formation, spend gold on screen), tier-4 review cannot see it — bot behavior
+gaps become invisible feature gaps. Budget executor work as feature work, not
+as test plumbing.
