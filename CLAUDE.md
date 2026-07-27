@@ -147,6 +147,16 @@ place.
   emphasis). Any particle path written without running the client is a guess:
   `modifier_pudge_river` uses `particles/generic_gameplay/rune_haste_owner.vpcf`,
   UNVERIFIED. Confirm every `.vpcf` path in a tier-4 frame pass before trusting it.
+- **The "uncrossable" river is enforced by ORDER FILTERING, not physics.** Water
+  tiles are walkable; `SetExecuteOrderFilter` clamps move targets to the mover's
+  own bank, so nobody can *order* a crossing — but a unit already on the wrong
+  side (hook-dragged) walks home straight through the water. Any design that
+  assumes a caught victim is trapped must trap it explicitly (run 13: 198
+  completed drags, zero kills, because every catch just walked out).
+- **macOS BSD `grep` reads pulled Dota console.logs as BINARY** (stray control
+  bytes) and returns zero matches with exit 1 — no warning with `-c`. Every
+  marker census on a pulled log must use `grep -a`, or a perfectly green run
+  scans as all-zeros (run 13 diagnosis detour).
 
 ## Testing strategy
 

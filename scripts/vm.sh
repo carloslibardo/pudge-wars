@@ -124,11 +124,23 @@ case "${1:-}" in
     scp -P 2222 -i "$KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
       "builder@localhost:C:/pw-shots/*.png" "$OUTDIR/" 2>/dev/null || true
     # The match recording (tens of MB over the IAP tunnel — worth the wait).
-    scp -P 2222 -i "$KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-      builder@localhost:C:/pw-record.mp4 "$OUTDIR/" 2>/dev/null || true
-    [ -f "$OUTDIR/pw-record.mp4" ] \
-      && echo "recording: $OUTDIR/pw-record.mp4 ($(du -h "$OUTDIR/pw-record.mp4" | cut -f1))" \
-      || echo "recording: NOT pulled"
+    # VERIFY the byte size: run 14's pull silently truncated 61MB -> 16MB
+    # behind the masked scp exit, and the review lost the match's second half.
+    REMOTE_MP4=$(ssh "${SSH_OPTS[@]}" builder@localhost '(Get-Item C:\pw-record.mp4).Length' 2>/dev/null | tr -dc 0-9)
+    for pull in 1 2 3; do
+      scp -P 2222 -i "$KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+        builder@localhost:C:/pw-record.mp4 "$OUTDIR/" 2>/dev/null || true
+      LOCAL_MP4=$(stat -f%z "$OUTDIR/pw-record.mp4" 2>/dev/null || echo 0)
+      [ -n "$REMOTE_MP4" ] && [ "$LOCAL_MP4" = "$REMOTE_MP4" ] && break
+      echo "recording pull short ($LOCAL_MP4/$REMOTE_MP4 bytes) -- retry $pull/3"
+    done
+    if [ -f "$OUTDIR/pw-record.mp4" ]; then
+      echo "recording: $OUTDIR/pw-record.mp4 ($(du -h "$OUTDIR/pw-record.mp4" | cut -f1), remote $REMOTE_MP4 bytes)"
+      [ -n "$REMOTE_MP4" ] && [ "$(stat -f%z "$OUTDIR/pw-record.mp4")" != "$REMOTE_MP4" ] \
+        && echo "WARNING: recording TRUNCATED -- review only up to the last complete fragment"
+    else
+      echo "recording: NOT pulled"
+    fi
 
     echo "--- SMOKE SUMMARY ($OUTDIR/pw-smoke-result.txt) ---"
     grep -E "SMOKE PASS|SMOKE FAIL|smoke done" "$OUTDIR/pw-smoke-result.txt" 2>/dev/null || echo "(result file not pulled)"

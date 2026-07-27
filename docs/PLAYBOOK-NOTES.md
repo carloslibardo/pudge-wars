@@ -201,7 +201,7 @@ victims. Playbook v1.1 items: port tiers 3-4 (frame evidence) BEFORE calling
 any visual mode done; add "vanilla-map smoke is a bootstrap, not a
 deliverable" to the testrig chapter.
 
-## Tier-2 addendum, part 4: the reference-game checklist and liveness gates (2026-07-27, run 13)
+## Tier-2 addendum, part 4: the reference-game checklist and liveness gates (2026-07-27, runs 13-14)
 
 Run 12 fixed the map and the melee brawl — and the reviewer STILL rejected the
 video, correctly: both teams stood in one motionless stack each, nothing ever
@@ -239,3 +239,31 @@ evidence chain. If the bots do not exercise a mechanic (hunt the chest, hold a
 formation, spend gold on screen), tier-4 review cannot see it — bot behavior
 gaps become invisible feature gaps. Budget executor work as feature work, not
 as test plumbing.
+
+**Run 13 (FAIL, by design):** every new gate went green on its own subsystem —
+21 gifts spawned/hooked/redeemed, 153 motion audits with zero STUCK, 9/9
+inventories, 193 hook latches — and the run still failed on the WIN gate:
+ZERO kills in nine minutes. Formation play had removed the accidental
+kill-engine (run 12's death-clump), a caught victim landed at one lone Rot,
+and the 3 s stranded sweep (or a walk home through the water — the river is
+uncrossable by ORDERS, not physics) freed it every time. Also caught: gift
+hunters skipped the rot-off branch and self-bled 8 hp/s all match (5716
+hit-0 rot ticks). A fix landing one gate while silently breaking another is
+exactly what the full-set gate exists for.
+
+**Run 14 (PASS):** swarm-the-catch (every bot within 1500 converges on a
+hooked intruder and re-hooks it deeper) + 8 s grace + rot-off ordering. WIN
+in 2:20 of match with a contested 2-1 scoreline, 5/5 gifts collected, 72
+hooks / 48 latched, 667 rot ticks with victims in the cloud, 12 buys + 9/9
+inventory audits, 10 stranded returns, zero STUCK, zero script errors.
+Frame strip: the chest RENDERS mid-river (real model, not an ERROR mesh),
+a hooked chest slides across the water with a STUNNED drag and a +855 heal
+popup, and both teams hold spread, visibly moving lines. Evidence:
+artifacts/smoke/20260727T184835Z.
+
+Rig lore added this arc: macOS BSD grep silently treats a console.log with
+stray control bytes as binary and reports ZERO matches with exit 1 — always
+`grep -a` when scanning pulled Dota logs, or the census reads all-zeros on a
+perfectly good run. And vm.sh's evidence pulls must verify byte sizes: scp
+over the IAP tunnel truncated a 61 MB recording to 16 MB behind a masked
+exit code.
