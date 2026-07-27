@@ -192,15 +192,20 @@ export class E2EHarness {
 
             // Toggle Rot (slot 1) on when an enemy is in range and it is off, so
             // hooked victims dragged into the cloud actually die and the run
-            // reaches the win condition.
+            // reaches the win condition. DIRECT ToggleAbility(), not a
+            // CAST_TOGGLE order: the same think issues a hook-cast or move
+            // order with Queue:false right after, which clobbered the queued
+            // toggle every time — seven bots with Rot leveled produced ZERO
+            // [ROT] ticks across a full run (2026-07-27 run 5).
             const rot = hero.GetAbilityByIndex(1);
-            if (rot && distance < ROT_TOGGLE_RANGE && !rot.GetToggleState() && rot.IsFullyCastable()) {
-                ExecuteOrderFromTable({
-                    UnitIndex: hero.entindex(),
-                    OrderType: UnitOrder.CAST_TOGGLE,
-                    AbilityIndex: rot.entindex(),
-                    Queue: false,
-                });
+            if (rot && distance < ROT_TOGGLE_RANGE && rot.GetLevel() > 0 && !rot.GetToggleState()) {
+                rot.ToggleAbility();
+                // Belt and braces: if the engine flipped the state without
+                // routing through the lua OnToggle, apply the modifier the
+                // same way OnToggle does.
+                if (rot.GetToggleState() && !hero.HasModifier("modifier_pudge_rot")) {
+                    (rot as unknown as { OnToggle(): void }).OnToggle();
+                }
             }
 
             // Fire Meat Hook (slot 0) only when a straight hook at the nearest

@@ -25,8 +25,10 @@ param(
   [string]$Addon  = "pudge_wars",
   [string]$Map    = "dota",   # stock map until pudge_wars.vmap exists
   [int]$Kills     = 3,        # e2e win-threshold override (bounded smoke run)
-  [int]$LoadSeconds = 480     # GPU/asset warmup (~2min) + time for bots to reach $Kills
-                              # (measured 2026-07-26: first kill lands ~t+215s, then ~1 per 20-25s)
+  [int]$LoadSeconds = 600     # GPU/asset warmup (~2min) + time for bots to reach $Kills.
+                              # 600s since run 5: bots now BUY STAT ITEMS at the horn, so
+                              # Pudges are tankier and kills come slower than the 2026-07-26
+                              # hook-only pace (~1 per 20-25s). Early-exit on WIN trims this.
 )
 $ErrorActionPreference = "Continue"
 $win64  = Join-Path $Dota "game\bin\win64"
