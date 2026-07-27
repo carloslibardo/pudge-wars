@@ -67,3 +67,38 @@ line" — which is the skill doing its job. Verdict: the playbook gets you to a
 *compiles + unit-tested + contracted* build reliably; the last mile (does it
 render, does it feel right) is exactly the part it is honest about not being able
 to close without a GPU host, and that honesty is its best feature.
+
+## Tier-2 addendum — the VM smoke, run for real (2026-07-26)
+
+The GPU-host gap above got closed: the archer-wars rig was ported
+(`scripts/vm.sh smoke`, `vm-smoke.ps1`, `vm-link.ps1` — shared VM, reused
+`aw_qgate` Interactive task, stock `dota` map since no `.vmap` exists yet).
+Four runs to green, and every red run was a REAL bug the tier-1 build could
+not see — which is the strongest possible argument for the rig:
+
+1. **Run 1: two-team seating gap.** `dota_create_fake_clients` seats clients
+   with no team. Archer-wars' 10-teams-of-one auto-assigned every joiner; on a
+   two-team game the nine bots sat out hero selection unassigned, and
+   `SetCustomGameForceHero` never touched them. Nine seated bots, one hero,
+   zero kills. Fix: explicit balanced `SetCustomTeamAssignment` sweep in the
+   setup window + `CreateHeroForPlayer` fallback at engage. **Feeds the
+   playbook's FFA→2-team seam note (gap 6): the seam is deeper than KV — it
+   reaches bot seating.**
+2. **Run 2: nobody levels a bot's abilities.** Nine live Pudges converged
+   (river buffs flowing — the coordinate band works on a stock map, as
+   designed) but zero [HOOK] lines: the hook sat at level 0 and
+   `IsFullyCastable()` is false at level 0. Nothing in the template or skills
+   mentions this; every bot-driven e2e will hit it. **Playbook v1.1: the
+   e2e-harness chapter needs an "ability points don't spend themselves" line.**
+3. **Run 3: clock, not code.** First kill lands ~t+215s (GPU warmup + convergence),
+   then ~1 per 20-25s; a 300s window can't fit three-per-team. 480s + an
+   early-exit-on-WIN check can.
+4. **Run 4: PASS.** `[E2E] WIN team 2 reached 3 kills`, 117 hooks fired, 18
+   full drags, 21 river buff applications, zero script errors.
+
+Still honest about what this is NOT: the smoke proves the mechanics fire and
+kill in-engine on a stock map. It does not prove they LOOK right (frames are
+tools-mode with the Asset Browser over the game window), the rot toggle never
+engaged (the leveling loop maxes hook before touching Rot — follow-up), and
+`pudge_wars.vmap` still does not exist. Frame-quality evidence is the next
+mode to port (`match`/`showcase`), after the map.
