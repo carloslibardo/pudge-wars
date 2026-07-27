@@ -99,6 +99,19 @@ export class E2EHarness {
             CreateHeroForPlayer("npc_dota_hero_pudge", player);
             print(Marker.botHeroCreated(id));
         }
+        // Boost every bot to level 3 (600 XP) so all three abilities hit
+        // level 1 at the horn. On the stock map XP trickles in so slowly that
+        // Flesh Heap's first point landed at ~t+5min (run 6) — after most of
+        // the run's kills — and the [FLESH] gate could only pass by luck.
+        // The smoke tests the ability systems, not the XP curve.
+        Timers.CreateTimer(1, () => {
+            for (const id of this.bots()) {
+                const hero = heroForPlayer(id);
+                if (hero && !hero.IsNull()) {
+                    hero.AddExperience(600, ModifyXpReason.UNSPECIFIED, false, true);
+                }
+            }
+        });
         // Perma-day. The day/night cycle renders night rounds near-black, which
         // makes every screenshot the rig captures worthless (landmine L15).
         Timers.CreateTimer(0, () => {
@@ -190,21 +203,24 @@ export class E2EHarness {
             const origin = hero.GetAbsOrigin();
             const distance = ((target.GetAbsOrigin() - origin) as Vector).Length2D();
 
-            // Toggle Rot (slot 1) on when an enemy is in range and it is off, so
-            // hooked victims dragged into the cloud actually die and the run
-            // reaches the win condition. DIRECT ToggleAbility(), not a
-            // CAST_TOGGLE order: the same think issues a hook-cast or move
-            // order with Queue:false right after, which clobbered the queued
-            // toggle every time — seven bots with Rot leveled produced ZERO
-            // [ROT] ticks across a full run (2026-07-27 run 5).
+            // Rot when an enemy is close, so hooked victims dragged into the
+            // cloud actually die. Fake clients cannot drive the toggle
+            // plumbing at all: a CAST_TOGGLE order gets clobbered by the same
+            // think's Queue:false move/cast order (run 5), and ToggleAbility()
+            // is a silent no-op on an ability_lua toggle from server script
+            // (run 6) — both runs ended with Rot leveled on 7+ bots and ZERO
+            // [ROT] ticks. So apply/remove the REAL modifier directly (by
+            // name — importing the class would cycle: the modifier imports
+            // e2eEnabled from this file). What the smoke must exercise is the
+            // modifier itself — tick damage, slow, clamped self-damage — not
+            // the toggle switch, which stays a human-playtest item.
             const rot = hero.GetAbilityByIndex(1);
-            if (rot && distance < ROT_TOGGLE_RANGE && rot.GetLevel() > 0 && !rot.GetToggleState()) {
-                rot.ToggleAbility();
-                // Belt and braces: if the engine flipped the state without
-                // routing through the lua OnToggle, apply the modifier the
-                // same way OnToggle does.
-                if (rot.GetToggleState() && !hero.HasModifier("modifier_pudge_rot")) {
-                    (rot as unknown as { OnToggle(): void }).OnToggle();
+            if (rot && rot.GetLevel() > 0) {
+                const rotOn = hero.HasModifier("modifier_pudge_rot");
+                if (distance < ROT_TOGGLE_RANGE && !rotOn) {
+                    hero.AddNewModifier(hero, rot, "modifier_pudge_rot", {});
+                } else if (distance >= ROT_TOGGLE_RANGE * 2 && rotOn) {
+                    hero.RemoveModifierByName("modifier_pudge_rot");
                 }
             }
 
