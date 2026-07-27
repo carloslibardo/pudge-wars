@@ -162,3 +162,8 @@ Still open: `pudge_wars.vmap` (smoke runs on the stock map by design),
 match/showcase modes for curated frame-quality evidence, and Rot balance
 itself (3 rot-fed kills in half a minute says the numbers need a design pass
 once a human plays).
+
+**Rot balance closed (run 11, 2026-07-27):** 12/16/20/24 per tick + self 8
+(spec 003 rev). Horn→WIN went 23s → 43s; the kill feed is hook-led again
+(12 drags feeding 4 kills, 460 rot ticks softening instead of deciding).
+Evidence: artifacts/smoke/20260727T125733Z.
