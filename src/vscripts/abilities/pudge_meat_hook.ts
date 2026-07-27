@@ -1,7 +1,7 @@
 import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
 import { hookDirection, sumHookBonuses, type HookBonus } from "../lib/hook";
 import { Marker } from "../lib/markers";
-import { e2eEnabled } from "../systems/e2eHarness";
+import { e2eEnabled } from "../systems/e2eFlags";
 import { modifier_pudge_hook_drag } from "../modifiers/modifier_pudge_hook_drag";
 
 const HOOK_FX = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf";

@@ -1,7 +1,7 @@
 import { BaseModifierMotionHorizontal, registerModifier } from "../lib/dota_ts_adapter";
 import { dragStep, hasArrived } from "../lib/hook";
 import { Marker } from "../lib/markers";
-import { e2eEnabled } from "../systems/e2eHarness";
+import { e2eEnabled } from "../systems/e2eFlags";
 
 /** How close (units) the victim must get before the drag is called complete. */
 const ARRIVAL_THRESHOLD = 100;

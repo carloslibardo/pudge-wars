@@ -30,22 +30,15 @@ import { teamForSeat } from "../lib/botTeams";
 import { nextAbilitySlot } from "../lib/botSkillPlan";
 import { nextPurchase } from "../lib/botShopping";
 import { Marker } from "../lib/markers";
+import { modifier_pudge_rot } from "../modifiers/modifier_pudge_rot";
+import { e2eEnabled, e2eKillTarget } from "./e2eFlags";
+
+export { e2eEnabled, e2eKillTarget };
 
 const MAX_PLAYER_SLOTS = 24;
 const THINK_INTERVAL = 0.5;
 /** Toggle Rot on when an enemy is at least this close. */
 const ROT_TOGGLE_RANGE = 350;
-
-export function e2eEnabled(): boolean {
-    return IsInToolsMode() && (Convars.GetInt("pudge_wars_e2e") ?? 0) > 0;
-}
-
-/** The real win threshold, unless a smaller smoke-run override is set. */
-export function e2eKillTarget(fallback: number): number {
-    if (!e2eEnabled()) return fallback;
-    const override = Convars.GetInt("pudge_wars_e2e_kills") ?? 0;
-    return override > 0 ? override : fallback;
-}
 
 export class E2EHarness {
     private seated = false;
@@ -99,16 +92,18 @@ export class E2EHarness {
             CreateHeroForPlayer("npc_dota_hero_pudge", player);
             print(Marker.botHeroCreated(id));
         }
-        // Boost every bot to level 3 (600 XP) so all three abilities hit
-        // level 1 at the horn. On the stock map XP trickles in so slowly that
-        // Flesh Heap's first point landed at ~t+5min (run 6) — after most of
-        // the run's kills — and the [FLESH] gate could only pass by luck.
-        // The smoke tests the ability systems, not the XP curve.
+        // Boost every bot to level 4 (1300 XP; the L3 curve step is 640, so
+        // 600 bought only two points in run 7) — all three abilities hit
+        // level 1 at the horn, hook gets its second point. On the stock map
+        // XP trickles in so slowly that Flesh Heap's first point landed at
+        // ~t+5min (run 6) — after most of the run's kills — and the [FLESH]
+        // gate could only pass by luck. The smoke tests the ability systems,
+        // not the XP curve.
         Timers.CreateTimer(1, () => {
             for (const id of this.bots()) {
                 const hero = heroForPlayer(id);
                 if (hero && !hero.IsNull()) {
-                    hero.AddExperience(600, ModifyXpReason.UNSPECIFIED, false, true, 0);
+                    hero.AddExperience(1300, ModifyXpReason.UNSPECIFIED, false, true, 0);
                 }
             }
         });
@@ -206,19 +201,24 @@ export class E2EHarness {
             // Rot when an enemy is close, so hooked victims dragged into the
             // cloud actually die. Fake clients cannot drive the toggle
             // plumbing at all: a CAST_TOGGLE order gets clobbered by the same
-            // think's Queue:false move/cast order (run 5), and ToggleAbility()
-            // is a silent no-op on an ability_lua toggle from server script
-            // (run 6) — both runs ended with Rot leveled on 7+ bots and ZERO
-            // [ROT] ticks. So apply/remove the REAL modifier directly (by
-            // name — importing the class would cycle: the modifier imports
-            // e2eEnabled from this file). What the smoke must exercise is the
-            // modifier itself — tick damage, slow, clamped self-damage — not
-            // the toggle switch, which stays a human-playtest item.
+            // think's Queue:false move/cast order (run 5), ToggleAbility() is
+            // a silent no-op on an ability_lua toggle from server script
+            // (run 6), and AddNewModifier-by-name silently created nothing
+            // (run 7) — zero [ROT] ticks all three times. So call the
+            // registered class's own apply(), the EXACT call pudge_rot's
+            // OnToggle makes for a human toggle (importing the class here is
+            // why e2eEnabled moved to e2eFlags — it was an import cycle).
+            // What the smoke must exercise is the modifier itself — tick
+            // damage, slow, clamped self-damage; the toggle switch stays a
+            // human-playtest item.
             const rot = hero.GetAbilityByIndex(1);
             if (rot && rot.GetLevel() > 0) {
                 const rotOn = hero.HasModifier("modifier_pudge_rot");
                 if (distance < ROT_TOGGLE_RANGE && !rotOn) {
-                    hero.AddNewModifier(hero, rot, "modifier_pudge_rot", {});
+                    modifier_pudge_rot.apply(hero, hero, rot, {});
+                    print(
+                        `[E2E] rot applied to bot ${id} dist ${Math.floor(distance)} ok ${hero.HasModifier("modifier_pudge_rot")}`,
+                    );
                 } else if (distance >= ROT_TOGGLE_RANGE * 2 && rotOn) {
                     hero.RemoveModifierByName("modifier_pudge_rot");
                 }

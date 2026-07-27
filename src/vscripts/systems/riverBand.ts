@@ -1,7 +1,7 @@
 import { isInRiver } from "../lib/river";
 import { Marker } from "../lib/markers";
 import { RIVER_BAND, RIVER_SCAN_INTERVAL } from "../config";
-import { e2eEnabled } from "./e2eHarness";
+import { e2eEnabled } from "./e2eFlags";
 
 const RIVER_MODIFIER = "modifier_pudge_river";
 

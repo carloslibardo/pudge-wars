@@ -1,7 +1,7 @@
 import { BaseModifier, registerModifier } from "../lib/dota_ts_adapter";
 import { rotSelfDamage } from "../lib/combat";
 import { Marker } from "../lib/markers";
-import { e2eEnabled } from "../systems/e2eHarness";
+import { e2eEnabled } from "../systems/e2eFlags";
 import { modifier_pudge_rot_slow } from "./modifier_pudge_rot_slow";
 
 const ROT_FX = "particles/units/heroes/hero_pudge/pudge_rot.vpcf";
