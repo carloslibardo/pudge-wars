@@ -267,3 +267,32 @@ stray control bytes as binary and reports ZERO matches with exit 1 — always
 perfectly good run. And vm.sh's evidence pulls must verify byte sizes: scp
 over the IAP tunnel truncated a 61 MB recording to 16 MB behind a masked
 exit code.
+
+## Tier-2 addendum, part 5: liveness gates as a debugging engine (2026-07-28, runs 15-20)
+
+Six-item field-report iteration (river-parking bug, tactics port, hook-chain
+legibility, three new actives, shop listing, real 10-kill win). Five smoke
+runs failed before run 20 went green, and every failure was a REAL defect the
+gates converted from "invisible in a green run" to "named line in a log":
+
+- Run 15: retreat-camp (STUCK) — threshold flap parked bots at the entry HP.
+- Run 16: kill starvation (no WIN at 7 kills) + travel-0 bots — the archer
+  no-op-move landmine, plus survivability stacking (hysteresis+heals+gut).
+- Run 17: perma-brawl (STUCK) — re-hooks reset the stranded clock forever;
+  the sweep must PAUSE during motion control, never reset.
+- Run 18: pace still short (9 kills) — three new skills diluted the
+  lowest-first level spread; L1 combat can't close against L1 escapes.
+- Run 19: residual micro-lock — a FindClearSpace nudge at the bot's own
+  position is itself a no-op; watchdogs must escalate to a DIFFERENT place.
+
+Lessons for playbook v1.1: (1) every behavior fix gets re-judged by the FULL
+gate set — four of five regressions were introduced by the previous fix;
+(2) survivability features (escapes, immortality, heals) silently tax the
+win-condition pace — pin a pace gate (kills inside the window) whenever you
+add them; (3) watchdog actions must be provably different from the state
+they rescue (nudge-to-self is a no-op); (4) engine truth: CAST_POSITION
+bypasses order filters and walks casters into range — range-gate every
+scripted cast. Green: run 20 — 16 kills to a 10-6 Dire Victory, 336 hooks,
+34 gifts, 29 vanish / 41 gut / 319 sprint, 0 STUCK, 0 lingerers, frame strip
+verified (vanish puff, chain+dragged victim over water, empty river, victory
+banner). Evidence: artifacts/smoke/20260728T140245Z.
