@@ -63,8 +63,13 @@ export class SideLockSystem {
             const side = sideForTeam(hero.GetTeamNumber());
             if (side === undefined) continue;
             const ent = hero.entindex();
+            // "Stranded" = not standing on your own field: across the river OR
+            // parked inside the water band (spec 008 — the river is never a
+            // resting state; run 14 ended with three heroes idling in it).
             // Mid-drag heroes are the hook's business, not ours.
-            if (hero.IsCurrentlyHorizontalMotionControlled() || !onWrongSide(side, hero.GetAbsOrigin().x, half)) {
+            const x = hero.GetAbsOrigin().x;
+            const offOwnField = onWrongSide(side, x, half) || Math.abs(x) <= half;
+            if (hero.IsCurrentlyHorizontalMotionControlled() || !offOwnField) {
                 this.strandedSince.delete(ent);
                 continue;
             }

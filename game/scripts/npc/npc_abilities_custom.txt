@@ -63,4 +63,55 @@
 			"resist_cap"				"60"
 		}
 	}
+
+	// ---- Spec 010: the three new actives. All numbers DESIGN-FRESH. ----
+
+	"pudge_wars_vanish"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"abilities/pudge_wars_skills"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityTextureName"			"bounty_hunter_wind_walk"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"20"
+		"AbilityManaCost"				"50"
+		"MaxLevel"						"1"
+		"AbilityValues"
+		{
+			"duration"					"1.0"
+		}
+	}
+
+	"pudge_wars_iron_gut"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"abilities/pudge_wars_skills"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityTextureName"			"abaddon_borrowed_time"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"45"
+		"AbilityManaCost"				"75"
+		"MaxLevel"						"1"
+		"AbilityValues"
+		{
+			"duration"					"2.0"
+		}
+	}
+
+	"pudge_wars_sprint"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"abilities/pudge_wars_skills"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityTextureName"			"dark_seer_surge"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"25"
+		"MaxLevel"						"1"
+		"AbilityValues"
+		{
+			"duration"					"3.0"
+			"speed_bonus_pct"			"40"
+		}
+	}
 }

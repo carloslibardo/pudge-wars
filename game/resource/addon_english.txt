@@ -37,6 +37,14 @@
 		"DOTA_Tooltip_ability_pudge_flesh_heap_hp_per_stack"	"HEALTH PER STACK:"
 		"DOTA_Tooltip_ability_pudge_flesh_heap_resist_per_stack"	"MAGIC RESIST PER STACK:"
 
+		// Spec 010 actives.
+		"DOTA_Tooltip_ability_pudge_wars_vanish"				"Vanish"
+		"DOTA_Tooltip_ability_pudge_wars_vanish_Description"	"Disappear in a puff of smoke: 1 second of true invisibility. Vanish as the hook flies."
+		"DOTA_Tooltip_ability_pudge_wars_iron_gut"				"Iron Gut"
+		"DOTA_Tooltip_ability_pudge_wars_iron_gut_Description"	"Steel yourself: 2 seconds of immortality. Hooks cannot latch you while it runs."
+		"DOTA_Tooltip_ability_pudge_wars_sprint"				"Sprint"
+		"DOTA_Tooltip_ability_pudge_wars_sprint_Description"	"A burst of speed: +40% move speed for 3 seconds. Close a kill or flee one."
+
 		// --- Shop items (spec 005) ---
 		"DOTA_Tooltip_ability_item_pudge_hook_chain"				"Hook Chain"
 		"DOTA_Tooltip_ability_item_pudge_hook_chain_Description"		"Extra links. Your Meat Hook reaches +250 units farther. Stacks."

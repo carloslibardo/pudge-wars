@@ -38,6 +38,13 @@ describe("Marker", () => {
         expect(Marker.giftRedeemed("gold", 3)).toBe("[GIFT] redeemed gold by 3");
     });
 
+    it("builds the tactics + skills markers (specs 008-010)", () => {
+        expect(Marker.riverLingerers(0)).toBe("[RIVER] audit lingerers 0");
+        expect(Marker.dodgeSidestep(4)).toBe("[DODGE] sidestep by 4");
+        expect(Marker.retreat(4, 28)).toBe("[RETREAT] bot 4 hp 28");
+        expect(Marker.skillUsed("pudge_wars_vanish", 4)).toBe("[SKILL] used pudge_wars_vanish by 4");
+    });
+
     it("builds the liveness audit markers (spec 007)", () => {
         expect(Marker.motionAudit(3, 2145, 30)).toBe("[MOTION] audit bot 3 travelled 2145 in 30s");
         expect(Marker.motionStuck(3)).toBe("[MOTION] STUCK bot 3");

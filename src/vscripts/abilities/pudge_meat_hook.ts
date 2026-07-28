@@ -1,5 +1,6 @@
 import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
 import { hookDirection, sumHookBonuses, type HookBonus } from "../lib/hook";
+import { trackHook } from "../lib/hookThreats";
 import { Marker } from "../lib/markers";
 import { e2eEnabled } from "../systems/e2eFlags";
 import { modifier_pudge_hook_drag } from "../modifiers/modifier_pudge_hook_drag";
@@ -79,6 +80,18 @@ export class pudge_meat_hook extends BaseAbility {
             iVisionRadius: 300,
         });
         caster.EmitSound("Hero_Pudge.AttackHookExtend");
+
+        // Spec 009: every hook self-registers as a dodgeable threat — the
+        // engine has no API to enumerate live projectiles (archer pattern).
+        trackHook({
+            origin: [origin.x, origin.y],
+            dir: [dx, dy],
+            speed,
+            range,
+            radius: width,
+            firedAt: GameRules.GetGameTime(),
+            team: caster.GetTeamNumber(),
+        });
 
         if (e2eEnabled()) {
             print(Marker.hookFired(caster.GetPlayerOwnerID(), round2(dx), round2(dy)));

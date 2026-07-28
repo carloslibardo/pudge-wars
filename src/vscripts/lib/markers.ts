@@ -35,6 +35,10 @@ export const Marker = {
     motionAudit: (pid: number, units: number, windowSeconds: number): string =>
         `[MOTION] audit bot ${pid} travelled ${units} in ${windowSeconds}s`,
     motionStuck: (pid: number): string => `[MOTION] STUCK bot ${pid}`,
+    riverLingerers: (count: number): string => `[RIVER] audit lingerers ${count}`,
+    dodgeSidestep: (pid: number): string => `[DODGE] sidestep by ${pid}`,
+    retreat: (pid: number, hpPct: number): string => `[RETREAT] bot ${pid} hp ${hpPct}`,
+    skillUsed: (name: string, pid: number): string => `[SKILL] used ${name} by ${pid}`,
     killScored: (team: number, total: number): string =>
         `[E2E] kill scored team ${team} -> ${total}`,
     botTeamAssigned: (pid: number, team: number): string =>

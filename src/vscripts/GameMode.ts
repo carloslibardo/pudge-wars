@@ -23,6 +23,10 @@ import "./modifiers/modifier_pudge_wars_flesh_heap";
 import "./modifiers/modifier_pudge_river";
 import "./abilities/pudge_items";
 import "./modifiers/modifier_pudge_stat_item";
+import "./abilities/pudge_wars_skills";
+import "./modifiers/modifier_pudge_wars_vanish";
+import "./modifiers/modifier_pudge_wars_iron_gut";
+import "./modifiers/modifier_pudge_wars_sprint";
 
 declare global {
     interface CDOTAGameRules {
@@ -60,6 +64,9 @@ export class GameMode {
         PrecacheUnitByNameSync("npc_pudge_river_gift", context);
         PrecacheResource("model", "models/props_debris/merchant_debris_chest001.vmdl", context);
         PrecacheResource("particle", "particles/generic_gameplay/rune_doubledamage.vpcf", context);
+        // Spec 010 skill tells (all VPK-verified paths).
+        PrecacheResource("particle", "particles/items_fx/blink_dagger_start.vpcf", context);
+        PrecacheResource("particle", "particles/items2_fx/aegis_respawn.vpcf", context);
     }
 
     public static Activate(this: void) {

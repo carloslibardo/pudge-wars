@@ -1,0 +1,19 @@
+// Native shop layout (spec 005 rev2). Without this file the custom items are
+// PURCHASABLE (universal shop mode) but never LISTED — the shop UI shows only
+// stock Dota items and a human player reasonably concludes there is no shop.
+// Categories follow the default custom-game shop grouping.
+"dota_shops"
+{
+	"basics"
+	{
+		"item"		"item_pudge_greased_hook"
+		"item"		"item_pudge_flesh_boots"
+		"item"		"item_pudge_rancid_flask"
+	}
+	"upgrades"
+	{
+		"item"		"item_pudge_hook_chain"
+		"item"		"item_pudge_barbed_hook"
+		"item"		"item_pudge_gut_stitch"
+	}
+}

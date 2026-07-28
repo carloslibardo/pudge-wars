@@ -31,9 +31,22 @@ import { onWrongSide } from "../lib/sideLock";
 import { teamForSeat } from "../lib/botTeams";
 import { nextAbilitySlot } from "../lib/botSkillPlan";
 import { nextPurchase } from "../lib/botShopping";
-import { anchorY, holdY } from "../lib/botFormation";
+import { anchorY, TRACK_CLAMP } from "../lib/botFormation";
 import { addTravel, isStuck, AUDIT_WINDOW_THINKS, STUCK_THRESHOLD } from "../lib/motionLiveness";
 import { giftHunter } from "../lib/riverGift";
+import { isInRiver } from "../lib/river";
+import { activeThreats, dodgeStep, incomingThreat } from "../lib/hookThreats";
+import {
+    dodgeRoll,
+    estimateVelocity,
+    interceptPoint,
+    personaFor,
+    personaStrafe,
+    pickTarget,
+    shouldRetreat,
+    RETREAT_DEPTH,
+    type TargetCandidate,
+} from "../lib/botTactics";
 import { Marker } from "../lib/markers";
 import { RIVER_BAND, SPAWN_SPACING } from "../config";
 import { modifier_pudge_wars_rot } from "../modifiers/modifier_pudge_wars_rot";
@@ -63,6 +76,16 @@ export class E2EHarness {
     private prevPos: Partial<Record<number, [number, number]>> = {};
     /** Thinks this window the bot was alive — dead bots are not audited. */
     private aliveThinks: Partial<Record<number, number>> = {};
+    /** Tick a bot was first seen inside the river band (spec 008 lingering). */
+    private riverSince: Partial<Record<number, number>> = {};
+    /** Velocity per bot, estimated each think (spec 009 intercept aim). */
+    private velocity: Partial<Record<number, [number, number]>> = {};
+    /** Current target entindex per bot (archer stickiness). */
+    private targetOf: Partial<Record<number, number>> = {};
+    /** Last tick a hook cast order was issued (archer castHold: 1 s). */
+    private lastCastTick: Partial<Record<number, number>> = {};
+    /** Whether the bot is currently in a retreat episode (marker throttle). */
+    private retreating: Partial<Record<number, boolean>> = {};
 
     /**
      * Seat the fake clients during CUSTOM_GAME_SETUP — before hero selection
@@ -121,7 +144,9 @@ export class E2EHarness {
             for (const id of this.bots()) {
                 const hero = heroForPlayer(id);
                 if (hero && !hero.IsNull()) {
-                    hero.AddExperience(1300, ModifyXpReason.UNSPECIFIED, false, true, 0);
+                    // 4000 XP ≈ level 7: seven ability points, one for each of
+                    // the six abilities (spec 010 added three) plus hook L2.
+                    hero.AddExperience(4000, ModifyXpReason.UNSPECIFIED, false, true, 0);
                 }
             }
         });
@@ -176,7 +201,7 @@ export class E2EHarness {
     private levelAbilities(id: PlayerID, hero: CDOTA_BaseNPC_Hero): void {
         let guard = 8; // points per think, bounded
         while (hero.GetAbilityPoints() > 0 && guard-- > 0) {
-            const slots = [0, 1, 2].map(i => hero.GetAbilityByIndex(i));
+            const slots = [0, 1, 2, 3, 4, 5].map(i => hero.GetAbilityByIndex(i));
             const pick = nextAbilitySlot(
                 slots.map(a => (a ? a.GetLevel() : 0)),
                 slots.map(a => (a ? a.GetMaxLevel() : 0)),
@@ -251,6 +276,15 @@ export class E2EHarness {
             this.aliveThinks[id] = 0;
         }
         print(Marker.shopAudit(withItems, total));
+
+        // Spec 008: nobody may treat the river as a resting state. Grace is
+        // 16 thinks (8 s) — same as the stranded sweep.
+        let lingerers = 0;
+        for (const id of bots) {
+            const since = this.riverSince[id];
+            if (since !== undefined && this.tick - since > 16) lingerers++;
+        }
+        print(Marker.riverLingerers(lingerers));
     }
 
     private think(): number {
@@ -283,6 +317,26 @@ export class E2EHarness {
             }
         }
 
+        // Sampling pass BEFORE decisions: velocity (intercept aim reads a
+        // consistent 0.5 s-old sample for every hero regardless of seat
+        // order), travel liveness, and river-linger tracking (spec 008).
+        const now = GameRules.GetGameTime();
+        for (const id of bots) {
+            const hero = heroForPlayer(id);
+            if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
+            const p: [number, number] = [hero.GetAbsOrigin().x, hero.GetAbsOrigin().y];
+            this.velocity[id] = estimateVelocity(this.prevPos[id], p, THINK_INTERVAL);
+            this.travel[id] = addTravel(this.travel[id] ?? 0, this.prevPos[id], p);
+            this.prevPos[id] = p;
+            this.aliveThinks[id] = (this.aliveThinks[id] ?? 0) + 1;
+            if (isInRiver(p[0], p[1], RIVER_BAND)) {
+                if (this.riverSince[id] === undefined) this.riverSince[id] = this.tick;
+            } else {
+                delete this.riverSince[id];
+            }
+        }
+        const threats = activeThreats(now);
+
         for (const id of bots) {
             // NOT PlayerResource.GetSelectedHeroEntity — it returns nil for
             // every bot, because bots get heroes ASSIGNED rather than selected
@@ -293,16 +347,26 @@ export class E2EHarness {
             this.shop(id, hero);
 
             const origin = hero.GetAbsOrigin();
-            // Liveness sampling (spec 007): travel accumulates while alive.
-            this.travel[id] = addTravel(this.travel[id] ?? 0, this.prevPos[id], [origin.x, origin.y]);
-            this.prevPos[id] = [origin.x, origin.y];
-            this.aliveThinks[id] = (this.aliveThinks[id] ?? 0) + 1;
-
             const hook = hero.GetAbilityByIndex(0);
+            const side = sideForTeam(hero.GetTeamNumber()) ?? -1;
             const enemies = this.enemyHeroesOf(hero);
-            if (enemies.length === 0) continue;
-            const target = this.nearest(hero, enemies);
-            const distance = ((target.GetAbsOrigin() - origin) as Vector).Length2D();
+
+            // Target via the archer scoring — wounded beats near, finisher
+            // bonus at ≤25%, stickiness to the current target (spec 009) —
+            // instead of run 14's plain nearest.
+            let target: CDOTA_BaseNPC_Hero | undefined;
+            if (enemies.length > 0) {
+                const candidates: TargetCandidate[] = enemies.map(e => {
+                    const ep = e.GetAbsOrigin();
+                    return { id: e.entindex(), pos: [ep.x, ep.y] as const, hpPct: e.GetHealthPercent() / 100 };
+                });
+                const picked = pickTarget([origin.x, origin.y], candidates, this.targetOf[id]);
+                if (picked !== undefined) this.targetOf[id] = picked;
+                target = enemies.find(e => e.entindex() === picked) ?? enemies[0];
+            }
+            const distance = target
+                ? ((target.GetAbsOrigin() - origin) as Vector).Length2D()
+                : 99999;
 
             // Rot when an enemy is close, so hooked victims dragged into the
             // cloud actually die. Fake clients cannot drive the toggle
@@ -330,105 +394,165 @@ export class E2EHarness {
                 }
             }
 
-            // Gift hunting (spec 006): the team's best-placed bot hooks the
-            // chest the moment its hook is up — the mid-river prize duel.
-            // AFTER the rot toggle on purpose: run 13's hunters skipped the
-            // rot-off branch every think and self-bled 8 hp/s all match
-            // (5716 hit-0 rot ticks).
-            if (gift && hunters.has(id) && hook && hook.IsFullyCastable()) {
-                ExecuteOrderFromTable({
-                    UnitIndex: hero.entindex(),
-                    OrderType: UnitOrder.CAST_POSITION,
-                    AbilityIndex: hook.entindex(),
-                    Position: gift.GetAbsOrigin(),
-                    Queue: false,
-                });
+            // 1) RIVER EGRESS (spec 008): the water is never a resting state.
+            // A bot standing in the band (and not mid-drag) leaves NOW, before
+            // any other decision can strand it there.
+            if (isInRiver(origin.x, origin.y, RIVER_BAND) && !hero.IsCurrentlyHorizontalMotionControlled()) {
+                this.move(hero, side * BANK_HOLD_X, origin.y);
                 continue;
             }
 
-            // Swarm the catch (spec 007 rev): a hooked enemy landing on OUR
-            // field is the kill window of the whole game — every bot converges
-            // on it (rot toggles on by proximity above) instead of holding
-            // formation. Run 13 proved a lone rot can never finish a catch:
-            // 198 drags, 0 kills. The side-lock filter clamps the chase to our
-            // bank, and the stranded grace bounds the window.
+            // 2) DODGE reflex (spec 009): sidestep an inbound enemy hook —
+            // or Vanish out of it when the own hook is down anyway.
+            const threat = incomingThreat([origin.x, origin.y], hero.GetTeamNumber(), threats, now);
+            if (threat && dodgeRoll(id, this.tick)) {
+                const vanish = hero.GetAbilityByIndex(3);
+                if (vanish && vanish.IsFullyCastable() && (!hook || !hook.IsFullyCastable())) {
+                    hero.CastAbilityNoTarget(vanish, id);
+                } else {
+                    const [ex, ey] = dodgeStep([origin.x, origin.y], threat);
+                    this.move(hero, ex, ey); // side-lock clamps the step to our bank
+                    print(Marker.dodgeSidestep(id));
+                }
+                continue;
+            }
+
+            const hpPct = hero.GetHealthPercent() / 100;
+
+            // 3) IRON GUT panic button (spec 010): the pack is closing.
+            const gut = hero.GetAbilityByIndex(4);
+            if (gut && gut.IsFullyCastable() && hpPct < 0.25 && distance < 900) {
+                hero.CastAbilityNoTarget(gut, id);
+                continue;
+            }
+
+            // 4) RETREAT (spec 009): break off deep into the own field, Sprint
+            // if it's up. Marker prints once per episode, not per think.
+            if (shouldRetreat(hpPct, enemies.length > 0)) {
+                if (!this.retreating[id]) {
+                    this.retreating[id] = true;
+                    print(Marker.retreat(id, Math.floor(hpPct * 100)));
+                }
+                const sprint = hero.GetAbilityByIndex(5);
+                if (sprint && sprint.IsFullyCastable()) hero.CastAbilityNoTarget(sprint, id);
+                this.move(hero, side * (BANK_HOLD_X + RETREAT_DEPTH), origin.y);
+                continue;
+            }
+            this.retreating[id] = false;
+
+            if (!target) continue;
+
+            // 5) Gift hunting (spec 006), RANGE-GATED (spec 008): run 13's
+            // hunters cast at chests beyond range and CAST_POSITION walked
+            // them into the water (the order filter clamps only
+            // MOVE_TO_POSITION). Out of range → slide along the OWN bank to
+            // the chest's Y and wait for the shot.
+            if (gift && hunters.has(id) && hook) {
+                const gp = gift.GetAbsOrigin();
+                const gdist = ((gp - origin) as Vector).Length2D();
+                const range = hook.GetSpecialValueFor("hook_range") * 0.95;
+                if (hook.IsFullyCastable() && gdist <= range && this.canCast(id)) {
+                    this.castHookAt(hero, hook, gp, id);
+                    continue;
+                }
+                if (gdist > range || !hook.IsFullyCastable()) {
+                    this.move(hero, side * BANK_HOLD_X, gp.y);
+                    continue;
+                }
+            }
+
+            // 6) Swarm the catch (spec 007 rev): a hooked enemy on OUR field
+            // is the team's kill window — converge, Sprint in, re-hook it
+            // deeper when in range (run 13: a lone rot never finishes).
             const targetSide = sideForTeam(target.GetTeamNumber());
             const intruder =
                 targetSide !== undefined &&
                 onWrongSide(targetSide, target.GetAbsOrigin().x, RIVER_BAND.max) &&
                 distance < SWARM_RANGE;
             if (intruder) {
-                // Re-hook the catch when possible: the river is uncrossable by
-                // ORDERS, not physics, so a freed victim just walks home
-                // through the water — a fresh hook re-drags it deeper and adds
-                // burst. Otherwise close in so Rot bites.
-                if (hook && hook.IsFullyCastable() && !target.HasModifier("modifier_pudge_hook_drag")) {
-                    ExecuteOrderFromTable({
-                        UnitIndex: hero.entindex(),
-                        OrderType: UnitOrder.CAST_POSITION,
-                        AbilityIndex: hook.entindex(),
-                        Position: target.GetAbsOrigin(),
-                        Queue: false,
-                    });
+                const sprint = hero.GetAbilityByIndex(5);
+                if (sprint && sprint.IsFullyCastable()) hero.CastAbilityNoTarget(sprint, id);
+                const range = hook ? hook.GetSpecialValueFor("hook_range") * 0.95 : 0;
+                if (
+                    hook &&
+                    hook.IsFullyCastable() &&
+                    distance <= range &&
+                    this.canCast(id) &&
+                    !target.HasModifier("modifier_pudge_hook_drag")
+                ) {
+                    this.castHookAt(hero, hook, target.GetAbsOrigin(), id);
                 } else {
-                    ExecuteOrderFromTable({
-                        UnitIndex: hero.entindex(),
-                        OrderType: UnitOrder.MOVE_TO_POSITION,
-                        Position: target.GetAbsOrigin(),
-                        Queue: false,
-                    });
+                    this.move(hero, target.GetAbsOrigin().x, target.GetAbsOrigin().y);
                 }
                 continue;
             }
 
-            // Fire Meat Hook (slot 0) only when a straight hook at the nearest
-            // enemy would actually connect — the SAME pure selection math the
-            // engine's collision implements (lib/hook firstHookTarget). Aiming
-            // this way makes the headless run reliably produce [HOOK] markers.
-            if (hook && hook.IsFullyCastable()) {
-                const [dx, dy] = hookDirection(
+            // 7) Fire Meat Hook with INTERCEPT AIM (spec 009): lead the shot
+            // by the target's sampled velocity (archer aim.ts solve), checked
+            // against the same pure collision the engine implements. Cast
+            // orders respect the 1 s cast hold — re-ordering every think
+            // cancels the windup forever (archer war story).
+            if (hook && hook.IsFullyCastable() && this.canCast(id)) {
+                const tp = target.GetAbsOrigin();
+                const vel = this.velocity[target.GetPlayerOwnerID()] ?? [0, 0];
+                const aim = interceptPoint(
                     [origin.x, origin.y],
-                    [target.GetAbsOrigin().x, target.GetAbsOrigin().y],
+                    [tp.x, tp.y],
+                    vel,
+                    hook.GetSpecialValueFor("hook_speed"),
                 );
+                const [dx, dy] = hookDirection([origin.x, origin.y], aim);
                 const range = hook.GetSpecialValueFor("hook_range");
                 const width = hook.GetSpecialValueFor("hook_width");
                 const candidates: HookCandidate[] = enemies.map(e => {
-                    const p = e.GetAbsOrigin();
-                    return { id: e.entindex(), pos: [p.x, p.y] };
+                    const ep = e.GetAbsOrigin();
+                    return { id: e.entindex(), pos: [ep.x, ep.y] };
                 });
                 if (firstHookTarget([origin.x, origin.y], [dx, dy], range, width, candidates) === target.entindex()) {
-                    ExecuteOrderFromTable({
-                        UnitIndex: hero.entindex(),
-                        OrderType: UnitOrder.CAST_POSITION,
-                        AbilityIndex: hook.entindex(),
-                        Position: target.GetAbsOrigin(),
-                        Queue: false,
-                    });
+                    this.castHookAt(hero, hook, GetGroundPosition(Vector(aim[0], aim[1], 0), hero), id);
                     continue;
                 }
             }
 
-            // Otherwise hold FORMATION on the own bank (spec 007): a per-slot
-            // anchor spread along the river, clamped tracking toward the
-            // target, and a constant strafe. Run 12's rule — mirror the
-            // nearest enemy's Y — was a positive-feedback loop that collapsed
-            // each team into one motionless stack; the anchor term is what
-            // makes that impossible now.
-            const side = sideForTeam(hero.GetTeamNumber()) ?? -1;
+            // 8) FORMATION hold (spec 007) with the spec-009 persona strafe:
+            // per-slot anchor + clamped tracking + a rhythm unique to this bot
+            // (amplitude/period/phase from its seeded persona) — no lockstep.
             const roster = rosters.get(hero.GetTeamNumber()) ?? [id];
             const slot = Math.max(0, roster.indexOf(id));
             const anchor = anchorY(slot, roster.length, SPAWN_SPACING);
-            const y = holdY(anchor, target.GetAbsOrigin().y, this.tick);
-            ExecuteOrderFromTable({
-                UnitIndex: hero.entindex(),
-                OrderType: UnitOrder.MOVE_TO_POSITION,
-                Position: GetGroundPosition(Vector(side * BANK_HOLD_X, y, 0), hero),
-                Queue: false,
-            });
+            const track = Math.max(-TRACK_CLAMP, Math.min(TRACK_CLAMP, target.GetAbsOrigin().y - anchor));
+            const y = anchor + track + personaStrafe(this.tick, personaFor(id));
+            this.move(hero, side * BANK_HOLD_X, y);
         }
 
         if (this.tick % AUDIT_WINDOW_THINKS === 0) this.audit(bots);
         return THINK_INTERVAL;
+    }
+
+    /** MOVE_TO_POSITION shorthand — always passes the side-lock order filter. */
+    private move(hero: CDOTA_BaseNPC_Hero, x: number, y: number): void {
+        ExecuteOrderFromTable({
+            UnitIndex: hero.entindex(),
+            OrderType: UnitOrder.MOVE_TO_POSITION,
+            Position: GetGroundPosition(Vector(x, y, 0), hero),
+            Queue: false,
+        });
+    }
+
+    /** Archer castHold: at most one hook cast order per second per bot. */
+    private canCast(id: PlayerID): boolean {
+        return this.tick - (this.lastCastTick[id] ?? -99) >= 2;
+    }
+
+    private castHookAt(hero: CDOTA_BaseNPC_Hero, hook: CDOTABaseAbility, pos: Vector, id: PlayerID): void {
+        this.lastCastTick[id] = this.tick;
+        ExecuteOrderFromTable({
+            UnitIndex: hero.entindex(),
+            OrderType: UnitOrder.CAST_POSITION,
+            AbilityIndex: hook.entindex(),
+            Position: pos,
+            Queue: false,
+        });
     }
 
     private enemyHeroesOf(hero: CDOTA_BaseNPC_Hero): CDOTA_BaseNPC_Hero[] {

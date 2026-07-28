@@ -133,7 +133,9 @@ place.
   unless a panel genuinely needs clicks.
 - **TSTL does not polyfill all of `Math`/`Number`.** `Math.hypot` errors the
   build outright (`TSTL: Math.hypot is unsupported`) — spell the length out as
-  `Math.sqrt(dx*dx + dy*dy)`. `Number.POSITIVE_INFINITY`/`Infinity` sentinels
+  `Math.sqrt(dx*dx + dy*dy)`. Same for `Math.imul` (hit porting mulberry32) —
+  use a 16-bit split multiply (`lib/botTactics.ts` `imul32`); a naive `a * b`
+  silently loses bits past 2^53 instead of erroring. `Number.POSITIVE_INFINITY`/`Infinity` sentinels
   are risky too; track "the first/best so far" with an `undefined` guard instead.
   This one is LOUD (build-time), unlike most here — but it is non-obvious and
   cost a build. Discovered live building Meat Hook's geometry.
