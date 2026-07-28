@@ -148,9 +148,11 @@ export class E2EHarness {
             for (const id of this.bots()) {
                 const hero = heroForPlayer(id);
                 if (hero && !hero.IsNull()) {
-                    // 4000 XP ≈ level 7: seven ability points, one for each of
-                    // the six abilities (spec 010 added three) plus hook L2.
-                    hero.AddExperience(4000, ModifyXpReason.UNSPECIFIED, false, true, 0);
+                    // 6500 XP ≈ level 9: one point in all six abilities plus
+                    // hook/rot/flesh L2. Runs 15-18: the three spec-010 skills
+                    // diluted the lowest-first spread and L1 combat abilities
+                    // could not close a 10-kill match inside the window.
+                    hero.AddExperience(6500, ModifyXpReason.UNSPECIFIED, false, true, 0);
                 }
             }
         });
@@ -495,7 +497,10 @@ export class E2EHarness {
                     continue;
                 }
                 if (gdist > range || !hook.IsFullyCastable()) {
-                    this.move(hero, side * BANK_HOLD_X, gp.y);
+                    // Strafe while lining up — a hunter parked exactly at the
+                    // chest's Y read as frozen to the watchdog (run 18: 1500+
+                    // false unstick fires).
+                    this.move(hero, side * BANK_HOLD_X, gp.y + personaStrafe(this.tick, personaFor(id)));
                     continue;
                 }
             }
