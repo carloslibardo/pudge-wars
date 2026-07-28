@@ -19,7 +19,7 @@ on-screen tell:
 | Skill | Duration | Cooldown | Mana | Max level | FX (VPK-verified) |
 |---|---|---|---|---|---|
 | `pudge_wars_vanish` | 1 s | 20 s | 50 | 1 | `particles/items_fx/blink_dagger_start.vpcf` + engine invis state |
-| `pudge_wars_iron_gut` | 2 s | 45 s | 75 | 1 | `particles/items2_fx/aegis_respawn.vpcf` |
+| `pudge_wars_iron_gut` | 2 s | 45 s | 75 | 1 | `particles/items_fx/aegis_respawn.vpcf` (run-20 rev: items2_fx was wrong and invisible) |
 | `pudge_wars_sprint` | 3 s | 15 s | 25 | 1 | `particles/generic_gameplay/rune_haste_owner.vpcf` |
 
 Hero gets Ability4/5/6; e2e XP boost rises so bots can afford one point in

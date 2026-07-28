@@ -1,6 +1,9 @@
 import { BaseModifier, registerModifier } from "../lib/dota_ts_adapter";
 
-const AEGIS_FX = "particles/items2_fx/aegis_respawn.vpcf";
+// items_fx, NOT items2_fx: verified against the VPK index (the basename block
+// for aegis_respawn sits under the particles/items_fx directory entry). The
+// items2_fx guess rendered NOTHING, silently — caught by run-20 frame review.
+const AEGIS_FX = "particles/items_fx/aegis_respawn.vpcf";
 
 /**
  * Iron Gut (spec 010): 2 s of immortality. INVULNERABLE also means hooks
