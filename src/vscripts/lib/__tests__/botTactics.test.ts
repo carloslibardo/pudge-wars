@@ -37,6 +37,7 @@ describe("retreat", () => {
     it("holds the retreat until healed past the exit threshold (hysteresis)", () => {
         expect(retreatState(false, 0.3, true)).toBe(true); // enter
         expect(retreatState(true, 0.4, true)).toBe(true); // 40% — stay out (run 15 flapped here)
+        expect(retreatState(true, 0.5, true)).toBe(false); // 50% — back in (run 16: 55% starved kills)
         expect(retreatState(true, 0.6, true)).toBe(false); // healed — rejoin
         expect(retreatState(false, 0.4, true)).toBe(false); // never entered
         expect(retreatState(true, 0.2, false)).toBe(false); // nobody visible

@@ -57,8 +57,10 @@ export { e2eEnabled, e2eKillTarget };
 
 const MAX_PLAYER_SLOTS = 24;
 const THINK_INTERVAL = 0.5;
-/** Toggle Rot on when an enemy is at least this close. */
-const ROT_TOGGLE_RANGE = 350;
+/** Toggle Rot on when an enemy is at least this close. 500 since run 16:
+ *  swarmers flipped Rot on too late for the burst to land inside the catch
+ *  window (7 kills in 900s). */
+const ROT_TOGGLE_RANGE = 500;
 /** Where a bot holds: its own river bank (river 400 + margin), never across. */
 const BANK_HOLD_X = 450;
 /** A caught enemy within this range pulls the whole team onto it (spec 007). */
@@ -86,6 +88,8 @@ export class E2EHarness {
     private lastCastTick: Partial<Record<number, number>> = {};
     /** Whether the bot is currently in a retreat episode (marker throttle). */
     private retreating: Partial<Record<number, boolean>> = {};
+    /** Position snapshot every 4 thinks — the no-op-move watchdog probe. */
+    private probePos: Partial<Record<number, [number, number]>> = {};
 
     /**
      * Seat the fake clients during CUSTOM_GAME_SETUP — before hero selection
@@ -329,9 +333,31 @@ export class E2EHarness {
                 // stale velocity must not lead hooks at a respawned ghost.
                 delete this.riverSince[id];
                 delete this.velocity[id];
+                delete this.probePos[id];
                 continue;
             }
             const p: [number, number] = [hero.GetAbsOrigin().x, hero.GetAbsOrigin().y];
+            // Archer huntNav watchdog: an unpathable or body-blocked move
+            // order silently NO-OPS and freezes the bot (run 16: two bots at
+            // travel 0 for whole windows while ordered every think). Under 50
+            // units of progress across 2 s → nudge free onto the own bank.
+            if (this.tick % 4 === 0) {
+                const probe = this.probePos[id];
+                if (probe) {
+                    const dx = p[0] - probe[0];
+                    const dy = p[1] - probe[1];
+                    if (Math.sqrt(dx * dx + dy * dy) < 50) {
+                        const side = sideForTeam(hero.GetTeamNumber()) ?? -1;
+                        FindClearSpaceForUnit(
+                            hero,
+                            GetGroundPosition(Vector(side * BANK_HOLD_X, p[1], 0), hero),
+                            true,
+                        );
+                        print(`[MOTION] unstick bot ${id}`);
+                    }
+                }
+                this.probePos[id] = p;
+            }
             this.velocity[id] = estimateVelocity(this.prevPos[id], p, THINK_INTERVAL);
             this.travel[id] = addTravel(this.travel[id] ?? 0, this.prevPos[id], p);
             this.prevPos[id] = p;

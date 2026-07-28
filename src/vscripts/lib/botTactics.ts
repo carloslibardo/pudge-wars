@@ -50,8 +50,11 @@ export function shouldRetreat(hpPct: number, enemyVisible: boolean): boolean {
 }
 
 /** HP at which a retreating bot rejoins the line (hysteresis — run 15's
- *  retreaters oscillated around the entry threshold and camped forever). */
-export const RETREAT_EXIT_HP_PCT = 0.55;
+ *  retreaters oscillated around the entry threshold and camped forever).
+ *  0.45, down from 0.55: run 16 proved 55% returns bots too tanky to finish
+ *  and the kill pace collapsed 17 → 7. 10 points above entry still kills
+ *  the flap without turning retreat into a health-reset button. */
+export const RETREAT_EXIT_HP_PCT = 0.45;
 
 /**
  * Whether the bot should be retreating THIS think, given whether it already
