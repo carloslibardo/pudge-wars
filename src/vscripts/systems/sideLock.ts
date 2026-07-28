@@ -62,6 +62,10 @@ export class SideLockSystem {
             if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
             const side = sideForTeam(hero.GetTeamNumber());
             if (side === undefined) continue;
+            // e2e only: the host's hero is the invisible camera TRIPOD parked
+            // mid-river on purpose — washing it to a bank (run 15) would
+            // deframe the entire recording. Real players are always swept.
+            if (e2eEnabled() && !PlayerResource.IsFakeClient(hero.GetPlayerOwnerID())) continue;
             const ent = hero.entindex();
             // "Stranded" = not standing on your own field: across the river OR
             // parked inside the water band (spec 008 — the river is never a

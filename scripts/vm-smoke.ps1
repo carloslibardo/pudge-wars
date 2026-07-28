@@ -56,6 +56,10 @@ if (Get-Command ffmpeg -ErrorAction SilentlyContinue) {
   # streak (frame audit) — 24 makes the signature skillshot legible on review.
   $ffArgs = @(
     "-y","-f","gdigrab","-framerate","24","-i","desktop",
+    # Downscale to 1280 wide: a full 900s desktop grab at 24fps was 245MB and
+    # the IAP-tunnel pull truncated it twice (run 15) — half the pixels, same
+    # review value.
+    "-vf","scale=1280:-2",
     "-t","$recSeconds","-c:v","libx264","-preset","ultrafast","-crf","28",
     "-pix_fmt","yuv420p","-movflags","frag_keyframe+empty_moov",$video
   )

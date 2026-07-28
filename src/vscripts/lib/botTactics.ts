@@ -49,6 +49,21 @@ export function shouldRetreat(hpPct: number, enemyVisible: boolean): boolean {
     return enemyVisible && hpPct < RETREAT_HP_PCT;
 }
 
+/** HP at which a retreating bot rejoins the line (hysteresis — run 15's
+ *  retreaters oscillated around the entry threshold and camped forever). */
+export const RETREAT_EXIT_HP_PCT = 0.55;
+
+/**
+ * Whether the bot should be retreating THIS think, given whether it already
+ * was. Enter below RETREAT_HP_PCT, leave only above RETREAT_EXIT_HP_PCT or
+ * when no enemy is visible — never flap in between.
+ */
+export function retreatState(wasRetreating: boolean, hpPct: number, enemyVisible: boolean): boolean {
+    if (!enemyVisible) return false;
+    if (wasRetreating) return hpPct < RETREAT_EXIT_HP_PCT;
+    return hpPct < RETREAT_HP_PCT;
+}
+
 /** 32-bit multiply via 16-bit split — TSTL rejects Math.imul (like Math.hypot),
  *  and a naive `a * b` overflows double precision at 2^64. Archer's imul32. */
 export function imul32(a: number, b: number): number {

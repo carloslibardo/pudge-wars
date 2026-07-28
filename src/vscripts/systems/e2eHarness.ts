@@ -43,7 +43,7 @@ import {
     personaFor,
     personaStrafe,
     pickTarget,
-    shouldRetreat,
+    retreatState,
     RETREAT_DEPTH,
     type TargetCandidate,
 } from "../lib/botTactics";
@@ -323,7 +323,14 @@ export class E2EHarness {
         const now = GameRules.GetGameTime();
         for (const id of bots) {
             const hero = heroForPlayer(id);
-            if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
+            if (!hero || hero.IsNull() || !hero.IsAlive()) {
+                // A bot that DIED in the river must not haunt the linger audit
+                // (run 15: a corpse's stale stamp read as `lingerers 1`), and
+                // stale velocity must not lead hooks at a respawned ghost.
+                delete this.riverSince[id];
+                delete this.velocity[id];
+                continue;
+            }
             const p: [number, number] = [hero.GetAbsOrigin().x, hero.GetAbsOrigin().y];
             this.velocity[id] = estimateVelocity(this.prevPos[id], p, THINK_INTERVAL);
             this.travel[id] = addTravel(this.travel[id] ?? 0, this.prevPos[id], p);
@@ -427,15 +434,21 @@ export class E2EHarness {
             }
 
             // 4) RETREAT (spec 009): break off deep into the own field, Sprint
-            // if it's up. Marker prints once per episode, not per think.
-            if (shouldRetreat(hpPct, enemies.length > 0)) {
+            // if it's up. HYSTERESIS (run 15): enter under 35%, rejoin only
+            // past 55% — the flapping band camped bots at the entry line with
+            // zero travel (STUCK). While retreating, strafe on the persona at
+            // depth so the liveness gate still sees motion. Marker prints once
+            // per episode, not per think.
+            const inRetreat = retreatState(this.retreating[id] === true, hpPct, enemies.length > 0);
+            if (inRetreat) {
                 if (!this.retreating[id]) {
                     this.retreating[id] = true;
                     print(Marker.retreat(id, Math.floor(hpPct * 100)));
                 }
                 const sprint = hero.GetAbilityByIndex(5);
                 if (sprint && sprint.IsFullyCastable()) hero.CastAbilityNoTarget(sprint, id);
-                this.move(hero, side * (BANK_HOLD_X + RETREAT_DEPTH), origin.y);
+                const deepY = origin.y + personaStrafe(this.tick, personaFor(id)) * 2;
+                this.move(hero, side * (BANK_HOLD_X + RETREAT_DEPTH), deepY);
                 continue;
             }
             this.retreating[id] = false;

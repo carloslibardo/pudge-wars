@@ -6,6 +6,7 @@ import {
     personaFor,
     personaStrafe,
     pickTarget,
+    retreatState,
     shouldRetreat,
     targetScore,
 } from "../botTactics";
@@ -31,6 +32,14 @@ describe("retreat", () => {
         expect(shouldRetreat(0.3, true)).toBe(true);
         expect(shouldRetreat(0.3, false)).toBe(false);
         expect(shouldRetreat(0.5, true)).toBe(false);
+    });
+
+    it("holds the retreat until healed past the exit threshold (hysteresis)", () => {
+        expect(retreatState(false, 0.3, true)).toBe(true); // enter
+        expect(retreatState(true, 0.4, true)).toBe(true); // 40% — stay out (run 15 flapped here)
+        expect(retreatState(true, 0.6, true)).toBe(false); // healed — rejoin
+        expect(retreatState(false, 0.4, true)).toBe(false); // never entered
+        expect(retreatState(true, 0.2, false)).toBe(false); // nobody visible
     });
 });
 
