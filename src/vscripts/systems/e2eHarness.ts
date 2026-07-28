@@ -521,7 +521,13 @@ export class E2EHarness {
                 ) {
                     this.castHookAt(hero, hook, target.GetAbsOrigin(), id);
                 } else {
-                    this.move(hero, target.GetAbsOrigin().x, target.GetAbsOrigin().y);
+                    // ORBIT the catch, don't stand on it: move-to-target at
+                    // point blank is a zero-displacement order — run 17's
+                    // "stuck" bots were swarmers grinding on top of their
+                    // victim (hooks at dist 66, travel 0).
+                    const tp = target.GetAbsOrigin();
+                    const orbit = (this.tick % 4 < 2 ? 1 : -1) * 150;
+                    this.move(hero, tp.x, tp.y + orbit);
                 }
                 continue;
             }

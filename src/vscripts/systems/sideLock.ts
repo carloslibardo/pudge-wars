@@ -73,7 +73,12 @@ export class SideLockSystem {
             // Mid-drag heroes are the hook's business, not ours.
             const x = hero.GetAbsOrigin().x;
             const offOwnField = onWrongSide(side, x, half) || Math.abs(x) <= half;
-            if (hero.IsCurrentlyHorizontalMotionControlled() || !offOwnField) {
+            // Mid-drag heroes are the hook's business — but only PAUSE the
+            // clock, never reset it: run 17 showed a swarm re-hooking its
+            // catch every few seconds, resetting the timer forever and locking
+            // a permanent point-blank brawl (the travel-0 "stuck" bots).
+            if (hero.IsCurrentlyHorizontalMotionControlled()) continue;
+            if (!offOwnField) {
                 this.strandedSince.delete(ent);
                 continue;
             }

@@ -60,7 +60,7 @@ if (Get-Command ffmpeg -ErrorAction SilentlyContinue) {
     # the IAP-tunnel pull truncated it twice (run 15) — half the pixels, same
     # review value.
     "-vf","scale=1280:-2",
-    "-t","$recSeconds","-c:v","libx264","-preset","ultrafast","-crf","28",
+    "-t","$recSeconds","-c:v","libx264","-preset","ultrafast","-crf","31",
     "-pix_fmt","yuv420p","-movflags","frag_keyframe+empty_moov",$video
   )
   $ff = Start-Process -FilePath "ffmpeg" -ArgumentList $ffArgs -PassThru -WindowStyle Hidden
