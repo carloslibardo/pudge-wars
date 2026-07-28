@@ -52,7 +52,10 @@ $rc = Join-Path $win64 "resourcecompiler.exe"
 #    ffmpeg is on PATH on the VM (installed for archer-wars recorded smokes).
 $ff = $null
 if (Get-Command ffmpeg -ErrorAction SilentlyContinue) {
-  $recSeconds = $LoadSeconds + 30
+  # +120, not +30: the -t is only the FALLBACK bound (the poll loop stops
+  # ffmpeg ~10s after WIN), and run 22's match won at LoadSeconds+8 — the
+  # fallback cut the recording just before the victory banner.
+  $recSeconds = $LoadSeconds + 120
   # 24 fps since run 14: at 15 fps the flying hook chain smears into a faint
   # streak (frame audit) — 24 makes the signature skillshot legible on review.
   $ffArgs = @(
