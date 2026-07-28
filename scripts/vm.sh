@@ -131,7 +131,9 @@ case "${1:-}" in
       scp -P 2222 -i "$KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
         builder@localhost:C:/pw-record.mp4 "$OUTDIR/" 2>/dev/null || true
       LOCAL_MP4=$(stat -f%z "$OUTDIR/pw-record.mp4" 2>/dev/null || echo 0)
-      [ -n "$REMOTE_MP4" ] && [ "$LOCAL_MP4" = "$REMOTE_MP4" ] && break
+      # >= not ==: the remote size is sampled before ffmpeg's final flush, so
+      # a complete pull can be slightly LARGER than the sample (run 19).
+      [ -n "$REMOTE_MP4" ] && [ "$LOCAL_MP4" -ge "$REMOTE_MP4" ] && break
       echo "recording pull short ($LOCAL_MP4/$REMOTE_MP4 bytes) -- retry $pull/3"
     done
     if [ -f "$OUTDIR/pw-record.mp4" ]; then

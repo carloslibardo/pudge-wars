@@ -90,6 +90,8 @@ export class E2EHarness {
     private retreating: Partial<Record<number, boolean>> = {};
     /** Position snapshot every 4 thinks — the no-op-move watchdog probe. */
     private probePos: Partial<Record<number, [number, number]>> = {};
+    /** Consecutive no-op nudges — 3 escalates to an anchor relocation. */
+    private unstickStreak: Partial<Record<number, number>> = {};
 
     /**
      * Seat the fake clients during CUSTOM_GAME_SETUP — before hero selection
@@ -350,12 +352,27 @@ export class E2EHarness {
                     const dy = p[1] - probe[1];
                     if (Math.sqrt(dx * dx + dy * dy) < 50) {
                         const side = sideForTeam(hero.GetTeamNumber()) ?? -1;
+                        // Escalate on the 3rd consecutive no-op: a nudge to
+                        // the CURRENT spot is itself a no-op when the bot
+                        // already stands in clear space (run 19: 188 nudges,
+                        // 269 units) — relocate to the formation anchor,
+                        // which is guaranteed to be a different place.
+                        this.unstickStreak[id] = (this.unstickStreak[id] ?? 0) + 1;
+                        let ty = p[1];
+                        if ((this.unstickStreak[id] ?? 0) >= 3) {
+                            const roster = rosters.get(hero.GetTeamNumber()) ?? [id];
+                            const anchor = anchorY(Math.max(0, roster.indexOf(id)), roster.length, SPAWN_SPACING);
+                            ty = Math.abs(p[1] - anchor) < 200 ? anchor + 400 : anchor;
+                            this.unstickStreak[id] = 0;
+                        }
                         FindClearSpaceForUnit(
                             hero,
-                            GetGroundPosition(Vector(side * BANK_HOLD_X, p[1], 0), hero),
+                            GetGroundPosition(Vector(side * BANK_HOLD_X, ty, 0), hero),
                             true,
                         );
                         print(`[MOTION] unstick bot ${id}`);
+                    } else {
+                        this.unstickStreak[id] = 0;
                     }
                 }
                 this.probePos[id] = p;
