@@ -56,6 +56,11 @@ export const SHOP_PAD_RADIUS = 400;
 
 /** River gift dwell (spec 014): bots may not hook a chest younger than this. */
 export const GIFT_HUNT_DELAY = 6;
+/** A chest is MATERIALIZING (beacon phase) and unhookable — for everyone —
+ *  until this age. Run 24: a combat hook accidentally crossed the river and
+ *  latched a 2 s chest; intent-gating bots cannot stop a stray projectile,
+ *  so the chest itself refuses the latch. */
+export const GIFT_MATERIALIZE_SECONDS = 5;
 
 /** River gifts (spec 006): a hookable chest mid-river on an interval. */
 export const GIFT_SPAWN_INTERVAL = 25;

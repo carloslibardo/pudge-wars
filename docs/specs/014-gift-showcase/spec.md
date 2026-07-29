@@ -19,7 +19,7 @@ hunters hooked most within ~1 s of spawn; the chest barely existed on screen.)
 | Beacon FX at spawn | verified `particles/items_fx/` beacon/column (VPK adjacency check first) | spec 010 landmine rule |
 | Global spawn sound | `Rune.Bounty` | already shipped for redeem; reuse at spawn |
 | Hunt delay (bots) | 6 s after spawn | DESIGN-FRESH — guaranteed on-screen dwell |
-| Human players | may hook immediately | dwell is a bot restraint, not a rule |
+| Materialize phase | unhookable < 5 s, EVERYONE | run-24 rev: a stray combat hook latched a 2 s chest; intent-gating cannot stop a projectile, so the chest refuses the latch (projectile flies on) |
 
 ## Out of scope
 

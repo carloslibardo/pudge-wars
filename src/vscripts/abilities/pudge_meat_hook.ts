@@ -2,6 +2,7 @@ import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
 import { hookDirection, sumHookBonuses, type HookBonus } from "../lib/hook";
 import { trackHook } from "../lib/hookThreats";
 import { Marker } from "../lib/markers";
+import { GIFT_MATERIALIZE_SECONDS } from "../config";
 import { e2eEnabled } from "../systems/e2eFlags";
 import { modifier_pudge_hook_drag } from "../modifiers/modifier_pudge_hook_drag";
 import { HookChain } from "../systems/hookChain";
@@ -118,6 +119,10 @@ export class pudge_meat_hook extends BaseAbility {
         // River gift chest (spec 006): no damage, no steal — just latch and
         // drag it home; the drag modifier redeems it on arrival.
         if (RiverGiftSystem.isGift(target)) {
+            // Materializing chest (spec 014): the beacon phase is look, don't
+            // touch — the projectile flies on to whatever is behind it.
+            const chestAge = RiverGiftSystem.age();
+            if (chestAge !== undefined && chestAge < GIFT_MATERIALIZE_SECONDS) return false;
             if (target.HasModifier("modifier_pudge_hook_drag")) {
                 // Already claimed mid-drag by someone else — our hook got nothing.
                 HookChain.retract(caster, this.GetSpecialValueFor("hook_speed") * 2);
