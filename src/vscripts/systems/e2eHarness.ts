@@ -72,6 +72,13 @@ const SWARM_RANGE = 1500;
 const ROAM_BOUNDS: RoamBounds = { bankX: BANK_HOLD_X, maxX: 2400, maxY: 2000 };
 /** Meteor slam range — item cast range 1200 with a safety margin. */
 const METEOR_RANGE = 1100;
+/** Hazard liveness probe (spec 012): bots CANNOT walk into the river (the
+ *  side-lock order filter clamps every move), so the burn would sit dormant
+ *  in a healthy run and its gate could never pass. At this tick one bot is
+ *  TELEPORTED mid-river and held for the window — long enough to burn on
+ *  camera (grace 4 s), short enough to escape the 6 s river sweep. */
+const HAZARD_PROBE_TICK = 240;
+const HAZARD_PROBE_THINKS = 10;
 
 export class E2EHarness {
     private seated = false;
@@ -108,6 +115,10 @@ export class E2EHarness {
     private tripPhase: Partial<Record<number, "none" | "going" | "buying">> = {};
     /** Chests whose dwell-ok marker already printed (spec 014). */
     private dwellPrinted = new Set<EntityIndex>();
+    /** Hazard probe state (spec 012). */
+    private probeBot: PlayerID | undefined;
+    private probeStartTick = 0;
+    private probeDone = false;
 
     /**
      * Seat the fake clients during CUSTOM_GAME_SETUP — before hero selection
@@ -362,7 +373,7 @@ export class E2EHarness {
             // travel 0 for whole windows while ordered every think). Under 50
             // units of progress across 2 s → nudge free onto the own bank.
             if (this.tick % 4 === 0) {
-                const probe = this.probePos[id];
+                const probe = id === this.probeBot ? undefined : this.probePos[id];
                 if (probe) {
                     const dx = p[0] - probe[0];
                     const dy = p[1] - probe[1];
@@ -405,12 +416,36 @@ export class E2EHarness {
         }
         const threats = activeThreats(now);
 
+        // Hazard liveness probe (spec 012): plant one bot mid-river, let it
+        // burn on camera, release it before the sweep would wash it.
+        if (!this.probeDone && this.probeBot === undefined && this.tick >= HAZARD_PROBE_TICK) {
+            for (const id of bots) {
+                const h = heroForPlayer(id);
+                if (!h || h.IsNull() || !h.IsAlive() || h.IsCurrentlyHorizontalMotionControlled()) continue;
+                const y = Math.max(-1000, Math.min(1000, h.GetAbsOrigin().y));
+                FindClearSpaceForUnit(h, GetGroundPosition(Vector(0, y, 0), h), true);
+                h.Stop();
+                this.probeBot = id;
+                this.probeStartTick = this.tick;
+                print(`[E2E] hazard probe start bot ${id}`);
+                break;
+            }
+        }
+        if (this.probeBot !== undefined && this.tick - this.probeStartTick >= HAZARD_PROBE_THINKS) {
+            print(`[E2E] hazard probe end bot ${this.probeBot}`);
+            this.probeBot = undefined;
+            this.probeDone = true;
+        }
+
         for (const id of bots) {
             // NOT PlayerResource.GetSelectedHeroEntity — it returns nil for
             // every bot, because bots get heroes ASSIGNED rather than selected
             // (landmine L5). heroForPlayer() walks all three fallbacks.
             const hero = heroForPlayer(id);
             if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
+            // The probe bot STANDS in the water, burning — no decisions
+            // (especially not river egress) until the window closes.
+            if (id === this.probeBot) continue;
             this.levelAbilities(id, hero);
             // Buying happens ON THE PAD now (spec 013) — see the trip branch.
 
@@ -579,13 +614,27 @@ export class E2EHarness {
                     onWrongSide(targetSide, target.GetAbsOrigin().x, RIVER_BAND.max) &&
                     distance < SWARM_RANGE;
                 if (intruder) {
+                    // METEOR (spec 013) — never at a mid-drag victim (it moves
+                    // ~900 units during the fall delay: guaranteed miss); lead
+                    // a walking one by its sampled velocity over the delay.
                     const meteor = this.findMeteor(hero);
-                    if (meteor && meteor.IsFullyCastable() && distance <= METEOR_RANGE) {
+                    if (
+                        meteor &&
+                        meteor.IsFullyCastable() &&
+                        distance <= METEOR_RANGE &&
+                        !target.HasModifier("modifier_pudge_hook_drag")
+                    ) {
+                        const delay = meteor.GetSpecialValueFor("delay");
+                        const vel = this.velocity[target.GetPlayerOwnerID()] ?? [0, 0];
+                        const tp = target.GetAbsOrigin();
                         ExecuteOrderFromTable({
                             UnitIndex: hero.entindex(),
                             OrderType: UnitOrder.CAST_POSITION,
                             AbilityIndex: meteor.entindex(),
-                            Position: target.GetAbsOrigin(),
+                            Position: GetGroundPosition(
+                                Vector(tp.x + vel[0] * delay, tp.y + vel[1] * delay, 0),
+                                hero,
+                            ),
                             Queue: false,
                         });
                         continue;
