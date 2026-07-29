@@ -26,6 +26,10 @@ export class RiverSystem {
         for (let i = 0; i < count; i++) {
             const hero = HeroList.GetHero(i);
             if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
+            // e2e only: the host's hero is the invisible camera tripod parked
+            // mid-river — it must never wear the burn FX at frame center
+            // (spec 012 carve-out; same rule as the sideLock sweep).
+            if (e2eEnabled() && !PlayerResource.IsFakeClient(hero.GetPlayerOwnerID())) continue;
 
             const origin = hero.GetAbsOrigin();
             const inside = isInRiver(origin.x, origin.y, RIVER_BAND);

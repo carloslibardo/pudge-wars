@@ -25,6 +25,12 @@ and the code cannot drift: the test asserts the exact prefixes below.
 | 9 | `[GIFT] redeemed` | a hooked chest arrives and pays out | `Marker.giftRedeemed` |
 | 10 | `[MOTION] audit` | per-bot travel audit each liveness window (spec 007) | `Marker.motionAudit` |
 | 11 | `[SHOP] audit` | bots-holding-items count each window; final must be `n/n` | `Marker.shopAudit` |
+| 12 | `[CHAIN] attached/released` | hook chain particle lifecycle; ≥20 attached, imbalance ≤2 (spec 011) | `Marker.chainAttached/Released` |
+| 13 | `[ROAM] waypoint` | a bot picked a roam waypoint; ≥40 across the match (spec 012) | `Marker.roamWaypoint` |
+| 14 | `[HAZARD] tick` | river burn damaged a lingerer; ≥1 required, `lethal` forbidden (spec 012) | `Marker.hazardTick` |
+| 15 | `[SHOP] trip start/arrive` | bot walked to the shop pad; ≥6 arrives (spec 013) | `Marker.shopTripStart/Arrive` |
+| 16 | `[METEOR] cast/impact` | meteor item used; ≥1 cast + ≥1 nonzero impact (spec 013) | `Marker.meteorCast/Impact` |
+| 17 | `[GIFT] dwell ok` | first hook attempt on a chest aged ≥6 s; ≥3 (spec 014) | `Marker.giftDwellOk` |
 
 Full example lines (verbatim shapes the rig greps):
 
@@ -54,6 +60,8 @@ Full example lines (verbatim shapes the rig greps):
   static-blob failure; spec 007)
 - `Cannot create an entity because entity class is NULL` (unit KV missing
   `BaseClass`)
+- `[HAZARD] lethal` (the river killed someone — the 1 HP floor broke; spec 012)
+- `[GIFT] dwell violation` (a bot sniped a chest younger than 5 s; spec 014)
 
 ## Known-benign noise
 

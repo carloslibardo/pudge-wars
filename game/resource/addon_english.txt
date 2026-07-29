@@ -58,5 +58,7 @@
 		"DOTA_Tooltip_ability_item_pudge_rancid_flask_Description"	"+12 health regen — outlast your own Rot."
 		"DOTA_Tooltip_ability_item_pudge_gut_stitch"				"Gut Stitch"
 		"DOTA_Tooltip_ability_item_pudge_gut_stitch_Description"		"+350 maximum health. More meat on the hook."
+		"DOTA_Tooltip_ability_item_pudge_meteor"					"Meteor Hook"
+		"DOTA_Tooltip_ability_item_pudge_meteor_Description"		"Call a meteor onto a point: after a short warning, it crashes down for 200 damage and a 1.5s stun in a 300 radius. Best served onto a freshly hooked victim."
 	}
 }

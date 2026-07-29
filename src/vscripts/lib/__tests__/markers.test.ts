@@ -43,6 +43,15 @@ describe("Marker", () => {
         expect(Marker.dodgeSidestep(4)).toBe("[DODGE] sidestep by 4");
         expect(Marker.retreat(4, 28)).toBe("[RETREAT] bot 4 hp 28");
         expect(Marker.skillUsed("pudge_wars_vanish", 4)).toBe("[SKILL] used pudge_wars_vanish by 4");
+        expect(Marker.chainAttached(3)).toBe("[CHAIN] attached 3");
+        expect(Marker.chainReleased(3, "miss")).toBe("[CHAIN] released 3 miss");
+        expect(Marker.roamWaypoint(2, 41)).toBe("[ROAM] waypoint bot 2 n 41");
+        expect(Marker.hazardTick(40, 300)).toBe("[HAZARD] tick 40 on 300");
+        expect(Marker.shopTripStart(5, 1200)).toBe("[SHOP] trip start bot 5 gold 1200");
+        expect(Marker.shopTripArrive(5)).toBe("[SHOP] trip arrive bot 5");
+        expect(Marker.meteorCast(5)).toBe("[METEOR] cast by 5");
+        expect(Marker.meteorImpact(2)).toBe("[METEOR] impact victims 2");
+        expect(Marker.giftDwellOk(7)).toBe("[GIFT] dwell ok age 7");
     });
 
     it("builds the liveness audit markers (spec 007)", () => {

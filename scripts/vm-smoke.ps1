@@ -182,6 +182,8 @@ if (Test-Path $log) {
 
   "--- GIFT / MOTION / TACTICS MARKERS ---" | Add-Content $result
   ($lines | Select-String -Pattern "\[GIFT\]|\[MOTION\]|\[DODGE\]|\[RETREAT\]|\[SKILL\]" | ForEach-Object { $_.Line } | Select-Object -First 80) | Add-Content $result
+  "--- CHAIN / ROAM / HAZARD / METEOR / TRIP MARKERS (specs 011-014) ---" | Add-Content $result
+  ($lines | Select-String -Pattern "\[CHAIN\]|\[ROAM\]|\[HAZARD\]|\[METEOR\]|\[SHOP\] trip" | ForEach-Object { $_.Line } | Select-Object -First 80) | Add-Content $result
 
   "--- GAMERULES STATE ---" | Add-Content $result
   ($lines | Select-String -Pattern "entering state 'DOTA_GAMERULES" | ForEach-Object { $_.Line }) | Add-Content $result
@@ -212,6 +214,19 @@ if (Test-Path $log) {
   elseif (($lines | Select-String -Pattern "\[MOTION\] audit").Count -lt 12) {
     $fail = "motion audit thin ($(($lines | Select-String -Pattern '\[MOTION\] audit').Count) lines < 12) -- liveness not measured across the match"
   }
+  # Specs 011-014 gates (2026-07-29 field report: chains, dynamism, gifts seen, shop trips, meteor).
+  elseif (($lines | Select-String -Pattern "\[CHAIN\] attached").Count -lt 20) { $fail = "hook chain thin -- <20 [CHAIN] attached (spec 011)" }
+  elseif ([Math]::Abs((($lines | Select-String -Pattern "\[CHAIN\] attached").Count) - (($lines | Select-String -Pattern "\[CHAIN\] released").Count)) -gt 2) {
+    $fail = "chain attach/release imbalance -- leaked chain particles (spec 011)"
+  }
+  elseif (($lines | Select-String -Pattern "\[ROAM\] waypoint").Count -lt 40) { $fail = "roam thin -- <40 [ROAM] waypoints, movement not dynamic (spec 012)" }
+  elseif ($logText -notmatch "\[HAZARD\] tick")     { $fail = "no [HAZARD] tick -- river hazard never fired (spec 012)" }
+  elseif ($logText -match "\[HAZARD\] lethal")      { $fail = "[HAZARD] lethal -- the river killed someone, 1 HP floor broke (spec 012)" }
+  elseif (($lines | Select-String -Pattern "\[SHOP\] trip arrive").Count -lt 6) { $fail = "shop trips thin -- <6 [SHOP] trip arrive (spec 013)" }
+  elseif ($logText -notmatch "\[METEOR\] cast")     { $fail = "no [METEOR] cast -- meteor item never used (spec 013)" }
+  elseif ($logText -notmatch "\[METEOR\] impact victims [1-9]") { $fail = "meteor never hit anyone (spec 013)" }
+  elseif (($lines | Select-String -Pattern "\[GIFT\] dwell ok").Count -lt 3)   { $fail = "gift dwell thin -- <3 [GIFT] dwell ok (spec 014)" }
+  elseif ($logText -match "\[GIFT\] dwell violation") { $fail = "gift dwell violation -- a bot sniped a chest young (spec 014)" }
   elseif (-not (Test-Path $video))                  { $fail = "no recording produced (ffmpeg missing or died)" }
   else {
     # Final inventory audit must be n/n: every living bot holds >=1 item.

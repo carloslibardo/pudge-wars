@@ -10,7 +10,7 @@ describe("shoppingPreference", () => {
     });
 
     it("wraps seats past the catalog size", () => {
-        expect(shoppingPreference(7)[0].name).toBe(SHOP_ITEMS[1].name);
+        expect(shoppingPreference(8)[0].name).toBe(SHOP_ITEMS[1].name);
     });
 });
 
@@ -23,11 +23,25 @@ describe("nextPurchase", () => {
     });
 
     it("falls through to a cheaper item when the preferred is unaffordable", () => {
-        // Seat 5 prefers gut_stitch (900); with 500 gold the pick must be a
+        // Seat 2 prefers barbed_hook (700); with 500 gold the pick must be a
         // later, affordable entry in its rotation.
-        const pick = nextPurchase({ gold: 500, owned: {} }, 5);
+        const pick = nextPurchase({ gold: 500, owned: {} }, 2);
         expect(pick).toBeDefined();
         expect(pick!.item.cost).toBeLessThanOrEqual(500);
+    });
+
+    it("a designated meteor buyer SAVES until the meteor is affordable (spec 013)", () => {
+        // Seat 5 (5 % 4 === 1) puts the active first and hoards for it.
+        expect(shoppingPreference(5)[0].name).toBe("item_pudge_meteor");
+        expect(nextPurchase({ gold: 1100, owned: {} }, 5)).toBeUndefined();
+        const pick = nextPurchase({ gold: 1200, owned: {} }, 5);
+        expect(pick?.item.name).toBe("item_pudge_meteor");
+    });
+
+    it("a meteor owner resumes the normal rotation", () => {
+        const pick = nextPurchase({ gold: 500, owned: { item_pudge_meteor: 1 } }, 5);
+        expect(pick).toBeDefined();
+        expect(pick!.item.name).not.toBe("item_pudge_meteor");
     });
 
     it("respects stack caps via the shared purchase() rule", () => {

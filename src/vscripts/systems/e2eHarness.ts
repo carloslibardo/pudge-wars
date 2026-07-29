@@ -31,7 +31,7 @@ import { onWrongSide } from "../lib/sideLock";
 import { teamForSeat } from "../lib/botTeams";
 import { nextAbilitySlot } from "../lib/botSkillPlan";
 import { nextPurchase } from "../lib/botShopping";
-import { anchorY, TRACK_CLAMP } from "../lib/botFormation";
+import { anchorY } from "../lib/botFormation";
 import { addTravel, isStuck, AUDIT_WINDOW_THINKS, STUCK_THRESHOLD } from "../lib/motionLiveness";
 import { giftHunter } from "../lib/riverGift";
 import { isInRiver } from "../lib/river";
@@ -40,6 +40,7 @@ import {
     dodgeRoll,
     estimateVelocity,
     interceptPoint,
+    mulberry32,
     personaFor,
     personaStrafe,
     pickTarget,
@@ -47,10 +48,12 @@ import {
     RETREAT_DEPTH,
     type TargetCandidate,
 } from "../lib/botTactics";
+import { holdThinks, reachedWaypoint, roamMood, roamWaypoint, type RoamBounds } from "../lib/botRoam";
 import { Marker } from "../lib/markers";
-import { RIVER_BAND, SPAWN_SPACING } from "../config";
+import { GIFT_HUNT_DELAY, RIVER_BAND, SPAWN_SPACING } from "../config";
 import { modifier_pudge_wars_rot } from "../modifiers/modifier_pudge_wars_rot";
 import { RiverGiftSystem } from "./riverGifts";
+import { ShopPads } from "./shopPads";
 import { e2eEnabled, e2eKillTarget } from "./e2eFlags";
 
 export { e2eEnabled, e2eKillTarget };
@@ -65,6 +68,10 @@ const ROT_TOGGLE_RANGE = 500;
 const BANK_HOLD_X = 450;
 /** A caught enemy within this range pulls the whole team onto it (spec 007). */
 const SWARM_RANGE = 1500;
+/** Roam area (spec 012): own bank to deep field, most of the court's height. */
+const ROAM_BOUNDS: RoamBounds = { bankX: BANK_HOLD_X, maxX: 2400, maxY: 2000 };
+/** Meteor slam range — item cast range 1200 with a safety margin. */
+const METEOR_RANGE = 1100;
 
 export class E2EHarness {
     private seated = false;
@@ -92,6 +99,15 @@ export class E2EHarness {
     private probePos: Partial<Record<number, [number, number]>> = {};
     /** Consecutive no-op nudges — 3 escalates to an anchor relocation. */
     private unstickStreak: Partial<Record<number, number>> = {};
+    /** Roam state (spec 012): current waypoint, forced-repick tick, seeded rng. */
+    private roamWp: Partial<Record<number, [number, number]>> = {};
+    private roamRepickAt: Partial<Record<number, number>> = {};
+    private roamRng: Partial<Record<number, () => number>> = {};
+    private roamTotal = 0;
+    /** Shop trip phase per bot (spec 013). */
+    private tripPhase: Partial<Record<number, "none" | "going" | "buying">> = {};
+    /** Chests whose dwell-ok marker already printed (spec 014). */
+    private dwellPrinted = new Set<EntityIndex>();
 
     /**
      * Seat the fake clients during CUSTOM_GAME_SETUP — before hero selection
@@ -396,7 +412,7 @@ export class E2EHarness {
             const hero = heroForPlayer(id);
             if (!hero || hero.IsNull() || !hero.IsAlive()) continue;
             this.levelAbilities(id, hero);
-            this.shop(id, hero);
+            // Buying happens ON THE PAD now (spec 013) — see the trip branch.
 
             const origin = hero.GetAbsOrigin();
             const hook = hero.GetAbilityByIndex(0);
@@ -498,102 +514,181 @@ export class E2EHarness {
             }
             this.retreating[id] = false;
 
-            if (!target) continue;
+            // 5) SHOP TRIP (spec 013): gold burning a hole in the pocket →
+            // physically walk to the home pad, buy there, walk back. Yields to
+            // everything above (egress/dodge/panic/retreat keep their priority).
+            if (this.wantsPurchase(id)) {
+                const phase = this.tripPhase[id] ?? "none";
+                if (ShopPads.onPad(hero)) {
+                    if (phase !== "buying") {
+                        this.tripPhase[id] = "buying";
+                        print(Marker.shopTripArrive(id));
+                    }
+                    this.shop(id, hero);
+                    continue; // stand on the pad while the purchase lands
+                }
+                if (phase !== "going") {
+                    this.tripPhase[id] = "going";
+                    print(Marker.shopTripStart(id, PlayerResource.GetGold(id)));
+                }
+                const pad = ShopPads.padFor(hero.GetTeamNumber());
+                if (pad) {
+                    this.move(hero, pad.x, pad.y + personaStrafe(this.tick, personaFor(id)));
+                    continue;
+                }
+            } else {
+                this.tripPhase[id] = "none";
+            }
 
-            // 5) Gift hunting (spec 006), RANGE-GATED (spec 008): run 13's
-            // hunters cast at chests beyond range and CAST_POSITION walked
-            // them into the water (the order filter clamps only
-            // MOVE_TO_POSITION). Out of range → slide along the OWN bank to
-            // the chest's Y and wait for the shot.
-            if (gift && hunters.has(id) && hook) {
+            // 6) Gift hunting (spec 006), RANGE-GATED (spec 008) and now
+            // DWELL-GATED (spec 014): the chest must sit visibly on the water
+            // ≥6 s before a bot may snipe it — line up on the bank meanwhile.
+            const giftAge = RiverGiftSystem.age();
+            if (gift && hunters.has(id) && hook && giftAge !== undefined) {
                 const gp = gift.GetAbsOrigin();
                 const gdist = ((gp - origin) as Vector).Length2D();
                 const range = hook.GetSpecialValueFor("hook_range") * 0.95;
-                if (hook.IsFullyCastable() && gdist <= range && this.canCast(id)) {
+                if (
+                    giftAge >= GIFT_HUNT_DELAY &&
+                    hook.IsFullyCastable() &&
+                    gdist <= range &&
+                    this.canCast(id)
+                ) {
+                    if (!this.dwellPrinted.has(gift.entindex())) {
+                        this.dwellPrinted.add(gift.entindex());
+                        print(Marker.giftDwellOk(Math.floor(giftAge)));
+                    }
                     this.castHookAt(hero, hook, gp, id);
                     continue;
                 }
-                if (gdist > range || !hook.IsFullyCastable()) {
-                    // Strafe while lining up — a hunter parked exactly at the
-                    // chest's Y read as frozen to the watchdog (run 18: 1500+
-                    // false unstick fires).
-                    this.move(hero, side * BANK_HOLD_X, gp.y + personaStrafe(this.tick, personaFor(id)));
-                    continue;
-                }
-            }
-
-            // 6) Swarm the catch (spec 007 rev): a hooked enemy on OUR field
-            // is the team's kill window — converge, Sprint in, re-hook it
-            // deeper when in range (run 13: a lone rot never finishes).
-            const targetSide = sideForTeam(target.GetTeamNumber());
-            const intruder =
-                targetSide !== undefined &&
-                onWrongSide(targetSide, target.GetAbsOrigin().x, RIVER_BAND.max) &&
-                distance < SWARM_RANGE;
-            if (intruder) {
-                const sprint = hero.GetAbilityByIndex(5);
-                if (sprint && sprint.IsFullyCastable()) hero.CastAbilityNoTarget(sprint, id);
-                const range = hook ? hook.GetSpecialValueFor("hook_range") * 0.95 : 0;
-                if (
-                    hook &&
-                    hook.IsFullyCastable() &&
-                    distance <= range &&
-                    this.canCast(id) &&
-                    !target.HasModifier("modifier_pudge_hook_drag")
-                ) {
-                    this.castHookAt(hero, hook, target.GetAbsOrigin(), id);
-                } else {
-                    // ORBIT the catch, don't stand on it: move-to-target at
-                    // point blank is a zero-displacement order — run 17's
-                    // "stuck" bots were swarmers grinding on top of their
-                    // victim (hooks at dist 66, travel 0).
-                    const tp = target.GetAbsOrigin();
-                    const orbit = (this.tick % 4 < 2 ? 1 : -1) * 150;
-                    this.move(hero, tp.x, tp.y + orbit);
-                }
+                // Waiting out the dwell, out of range, or hook down: slide
+                // along the OWN bank to the chest's Y, strafing (a hunter
+                // parked exactly there read as frozen to the watchdog, run 18).
+                this.move(hero, side * BANK_HOLD_X, gp.y + personaStrafe(this.tick, personaFor(id)));
                 continue;
             }
 
-            // 7) Fire Meat Hook with INTERCEPT AIM (spec 009): lead the shot
-            // by the target's sampled velocity (archer aim.ts solve), checked
-            // against the same pure collision the engine implements. Cast
-            // orders respect the 1 s cast hold — re-ordering every think
-            // cancels the windup forever (archer war story).
-            if (hook && hook.IsFullyCastable() && this.canCast(id)) {
-                const tp = target.GetAbsOrigin();
-                const vel = this.velocity[target.GetPlayerOwnerID()] ?? [0, 0];
-                const aim = interceptPoint(
-                    [origin.x, origin.y],
-                    [tp.x, tp.y],
-                    vel,
-                    hook.GetSpecialValueFor("hook_speed"),
-                );
-                const [dx, dy] = hookDirection([origin.x, origin.y], aim);
-                const range = hook.GetSpecialValueFor("hook_range");
-                const width = hook.GetSpecialValueFor("hook_width");
-                const candidates: HookCandidate[] = enemies.map(e => {
-                    const ep = e.GetAbsOrigin();
-                    return { id: e.entindex(), pos: [ep.x, ep.y] };
-                });
-                if (firstHookTarget([origin.x, origin.y], [dx, dy], range, width, candidates) === target.entindex()) {
-                    this.castHookAt(hero, hook, GetGroundPosition(Vector(aim[0], aim[1], 0), hero), id);
+            if (target) {
+                // 7) Swarm the catch (spec 007 rev): a hooked enemy on OUR
+                // field is the team's kill window — Meteor it (spec 013),
+                // Sprint in, re-hook it deeper (run 13: a lone rot never
+                // finishes).
+                const targetSide = sideForTeam(target.GetTeamNumber());
+                const intruder =
+                    targetSide !== undefined &&
+                    onWrongSide(targetSide, target.GetAbsOrigin().x, RIVER_BAND.max) &&
+                    distance < SWARM_RANGE;
+                if (intruder) {
+                    const meteor = this.findMeteor(hero);
+                    if (meteor && meteor.IsFullyCastable() && distance <= METEOR_RANGE) {
+                        ExecuteOrderFromTable({
+                            UnitIndex: hero.entindex(),
+                            OrderType: UnitOrder.CAST_POSITION,
+                            AbilityIndex: meteor.entindex(),
+                            Position: target.GetAbsOrigin(),
+                            Queue: false,
+                        });
+                        continue;
+                    }
+                    const sprint = hero.GetAbilityByIndex(5);
+                    if (sprint && sprint.IsFullyCastable()) hero.CastAbilityNoTarget(sprint, id);
+                    const range = hook ? hook.GetSpecialValueFor("hook_range") * 0.95 : 0;
+                    if (
+                        hook &&
+                        hook.IsFullyCastable() &&
+                        distance <= range &&
+                        this.canCast(id) &&
+                        !target.HasModifier("modifier_pudge_hook_drag")
+                    ) {
+                        this.castHookAt(hero, hook, target.GetAbsOrigin(), id);
+                    } else {
+                        // ORBIT the catch, don't stand on it: move-to-target at
+                        // point blank is a zero-displacement order — run 17's
+                        // "stuck" bots were swarmers grinding on top of their
+                        // victim (hooks at dist 66, travel 0).
+                        const tp = target.GetAbsOrigin();
+                        const orbit = (this.tick % 4 < 2 ? 1 : -1) * 150;
+                        this.move(hero, tp.x, tp.y + orbit);
+                    }
                     continue;
+                }
+
+                // 8) Fire Meat Hook with INTERCEPT AIM (spec 009): lead the
+                // shot by the target's sampled velocity, checked against the
+                // same pure collision the engine implements. Cast orders
+                // respect the 1 s cast hold — re-ordering every think cancels
+                // the windup forever (archer war story).
+                if (hook && hook.IsFullyCastable() && this.canCast(id)) {
+                    const tp = target.GetAbsOrigin();
+                    const vel = this.velocity[target.GetPlayerOwnerID()] ?? [0, 0];
+                    const aim = interceptPoint(
+                        [origin.x, origin.y],
+                        [tp.x, tp.y],
+                        vel,
+                        hook.GetSpecialValueFor("hook_speed"),
+                    );
+                    const [dx, dy] = hookDirection([origin.x, origin.y], aim);
+                    const range = hook.GetSpecialValueFor("hook_range");
+                    const width = hook.GetSpecialValueFor("hook_width");
+                    const candidates: HookCandidate[] = enemies.map(e => {
+                        const ep = e.GetAbsOrigin();
+                        return { id: e.entindex(), pos: [ep.x, ep.y] };
+                    });
+                    if (firstHookTarget([origin.x, origin.y], [dx, dy], range, width, candidates) === target.entindex()) {
+                        this.castHookAt(hero, hook, GetGroundPosition(Vector(aim[0], aim[1], 0), hero), id);
+                        continue;
+                    }
                 }
             }
 
-            // 8) FORMATION hold (spec 007) with the spec-009 persona strafe:
-            // per-slot anchor + clamped tracking + a rhythm unique to this bot
-            // (amplitude/period/phase from its seeded persona) — no lockstep.
-            const roster = rosters.get(hero.GetTeamNumber()) ?? [id];
-            const slot = Math.max(0, roster.indexOf(id));
-            const anchor = anchorY(slot, roster.length, SPAWN_SPACING);
-            const track = Math.max(-TRACK_CLAMP, Math.min(TRACK_CLAMP, target.GetAbsOrigin().y - anchor));
-            const y = anchor + track + personaStrafe(this.tick, personaFor(id));
-            this.move(hero, side * BANK_HOLD_X, y);
+            // 9) ROAM (spec 012) — the anti-robotic default. Waypoints in the
+            // own field picked by mood (push/poke/lurk), spaced away from
+            // teammates, held for the persona's period; the old formation
+            // picket line is gone.
+            const roamPos: [number, number] = [origin.x, origin.y];
+            let wp = this.roamWp[id];
+            if (!wp || this.tick >= (this.roamRepickAt[id] ?? 0) || reachedWaypoint(roamPos, wp)) {
+                let rng = this.roamRng[id];
+                if (!rng) {
+                    rng = mulberry32(id * 7919 + 12345);
+                    this.roamRng[id] = rng;
+                }
+                const persona = personaFor(id);
+                const roster = rosters.get(hero.GetTeamNumber()) ?? [id];
+                const mates: Array<readonly [number, number]> = [];
+                for (const mateId of roster) {
+                    if (mateId === id) continue;
+                    const mate = heroForPlayer(mateId);
+                    if (!mate || mate.IsNull() || !mate.IsAlive()) continue;
+                    const mp = mate.GetAbsOrigin();
+                    mates.push([mp.x, mp.y]);
+                }
+                wp = roamWaypoint(rng, side as -1 | 1, ROAM_BOUNDS, roamMood(rng(), persona.aggression), mates);
+                this.roamWp[id] = wp;
+                this.roamRepickAt[id] = this.tick + holdThinks(persona.period, THINK_INTERVAL);
+                this.roamTotal++;
+                print(Marker.roamWaypoint(id, this.roamTotal));
+            }
+            this.move(hero, wp[0], wp[1]);
         }
 
         if (this.tick % AUDIT_WINDOW_THINKS === 0) this.audit(bots);
         return THINK_INTERVAL;
+    }
+
+    /** Is there anything in the catalog this bot can afford and still stack? */
+    private wantsPurchase(id: PlayerID): boolean {
+        const owned = this.owned[id] ?? {};
+        return nextPurchase({ gold: PlayerResource.GetGold(id), owned }, id) !== undefined;
+    }
+
+    /** The bot's Meteor item, if it bought one (spec 013). */
+    private findMeteor(hero: CDOTA_BaseNPC_Hero): CDOTA_Item | undefined {
+        for (let slot = 0; slot < 9; slot++) {
+            const item = hero.GetItemInSlot(slot as InventorySlot);
+            if (item && item.GetAbilityName() === "item_pudge_meteor") return item;
+        }
+        return undefined;
     }
 
     /** MOVE_TO_POSITION shorthand — always passes the side-lock order filter. */

@@ -102,4 +102,30 @@
 			"bonus_health"			"350"
 		}
 	}
+
+	// Spec 013: the top-shelf ACTIVE — point-target meteor: warning glow,
+	// falling infernal, AoE damage + 1.5s stun. Behavior lives in
+	// abilities/pudge_meteor.ts; numbers mirror lib/shop.ts + spec 013.
+	"item_pudge_meteor"
+	{
+		"BaseClass"					"item_lua"
+		"ScriptFile"				"abilities/pudge_meteor"
+		"AbilityTextureName"		"item_meteor_hammer"
+		"ItemCost"					"1200"
+		"ItemPurchasable"			"1"
+		"ItemShopTags"				"damage"
+		"ItemQuality"				"epic"
+		"MaxLevel"					"1"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityCastRange"			"1200"
+		"AbilityCastPoint"			"0.2"
+		"AbilityCooldown"			"20"
+		"AbilityValues"
+		{
+			"delay"					"0.9"
+			"radius"				"300"
+			"damage"				"200"
+			"stun_duration"			"1.5"
+		}
+	}
 }

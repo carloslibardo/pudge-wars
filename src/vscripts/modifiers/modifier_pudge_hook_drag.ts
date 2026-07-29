@@ -2,6 +2,7 @@ import { BaseModifierMotionHorizontal, registerModifier } from "../lib/dota_ts_a
 import { dragStep, hasArrived } from "../lib/hook";
 import { Marker } from "../lib/markers";
 import { e2eEnabled } from "../systems/e2eFlags";
+import { HookChain } from "../systems/hookChain";
 import { RiverGiftSystem } from "../systems/riverGifts";
 
 /** How close (units) the victim must get before the drag is called complete. */
@@ -63,6 +64,8 @@ export class modifier_pudge_hook_drag extends BaseModifierMotionHorizontal {
         const step = this.dragSpeed * dt;
         const [nx, ny] = dragStep([here.x, here.y], [home.x, home.y], step);
         me.SetAbsOrigin(GetGroundPosition(Vector(nx, ny, 0), me));
+        // Spec 011: the chain stays taut on the victim all the way home.
+        HookChain.updateHead(caster, me.GetAbsOrigin());
 
         if (hasArrived([nx, ny], [home.x, home.y], ARRIVAL_THRESHOLD)) {
             if (e2eEnabled()) {
@@ -88,5 +91,9 @@ export class modifier_pudge_hook_drag extends BaseModifierMotionHorizontal {
         if (!this.GetParent().IsNull()) {
             this.GetParent().InterruptMotionControllers(false);
         }
+        // The drag owns the chain's final act (spec 011) — arrival, death, or
+        // interruption all end here, and release is idempotent.
+        const caster = this.GetCaster();
+        if (caster && !caster.IsNull()) HookChain.release(caster, "drag_complete");
     }
 }

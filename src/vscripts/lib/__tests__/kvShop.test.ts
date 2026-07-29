@@ -25,6 +25,12 @@ const tokens = asNode(
 
 const HOOK_BONUS_KEYS = ["bonus_range", "bonus_speed", "bonus_damage"];
 const STAT_BONUS_KEYS = ["bonus_movespeed", "bonus_health", "bonus_health_regen"];
+const ACTIVE_KEYS = ["damage", "radius", "stun_duration", "delay"];
+
+/** Actives carry behavior, so they get their own module (spec 013). */
+function scriptFileFor(kind: string): string {
+    return kind === "active" ? "abilities/pudge_meteor" : "abilities/pudge_items";
+}
 
 describe("shop KV matches the catalog", () => {
     it("has exactly the catalog's items and no stray pudge items", () => {
@@ -43,13 +49,18 @@ describe("shop KV matches the catalog", () => {
 
             it("is purchasable and points at the item module", () => {
                 expect(block["ItemPurchasable"]).toBe("1");
-                expect(block["ScriptFile"]).toBe("abilities/pudge_items");
+                expect(block["ScriptFile"]).toBe(scriptFileFor(item.kind));
                 expect(block["BaseClass"]).toBe("item_lua");
             });
 
             it("carries a bonus matching its kind", () => {
                 const values = asNode(block["AbilityValues"], `${item.name}.AbilityValues`);
-                const keys = item.kind === "hook" ? HOOK_BONUS_KEYS : STAT_BONUS_KEYS;
+                const keys =
+                    item.kind === "hook"
+                        ? HOOK_BONUS_KEYS
+                        : item.kind === "active"
+                          ? ACTIVE_KEYS
+                          : STAT_BONUS_KEYS;
                 const present = keys.filter(k => values[k] !== undefined);
                 expect(present.length).toBeGreaterThan(0);
             });

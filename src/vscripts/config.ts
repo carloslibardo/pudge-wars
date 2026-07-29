@@ -21,6 +21,10 @@ export const SPAWN_SPACING = 500;
 /** Economy: enough starting gold for one cheap item, kills fund the rest. */
 export const STARTING_GOLD = 600;
 export const KILL_BOUNTY = 300;
+/** Spec 013: classic Pudge Wars periodic income — funds the shop economy so
+ *  losing players still shop and the 1200-gold Meteor is reachable. */
+export const PASSIVE_GOLD_AMOUNT = 50;
+export const PASSIVE_GOLD_INTERVAL = 10;
 
 /**
  * The river runs down the middle of the map on the X axis (the two teams split
@@ -29,10 +33,29 @@ export const KILL_BOUNTY = 300;
  */
 export const RIVER_BAND: RiverBand = { axis: "x", min: -400, max: 400 };
 export const RIVER_SCAN_INTERVAL = 0.25;
-/** River buff strength. No KV ability backs the river, so its numbers live here
- *  (the documented home for mode-level values KV has no block for). */
+/** River numbers. No KV ability backs the river, so they live here (the
+ *  documented home for mode-level values KV has no block for).
+ *
+ *  Spec 012 / decision 2026-07-29-river-hazard: the regen is GONE — the river
+ *  is a danger corridor, not a spa. +12% speed stays so crossings are quick;
+ *  standing in the band past the grace burns (escalating, NEVER lethal — the
+ *  1 HP floor keeps kills the enemy team's business). */
 export const RIVER_MOVE_SPEED_PCT = 12;
-export const RIVER_HP_REGEN = 30;
+/** Continuous in-band seconds before the burn starts. Must exceed the honest
+ *  walk-home crossing (~2.6 s at 313 speed over the 800-unit band). */
+export const RIVER_HAZARD_GRACE = 4;
+export const RIVER_HAZARD_DPS = 30;
+/** Extra DPS per full second past grace, capped. */
+export const RIVER_HAZARD_RAMP = 10;
+export const RIVER_HAZARD_CAP = 80;
+export const RIVER_HAZARD_TICK = 0.5;
+
+/** Shop pads (spec 013): buy zone behind each spawn line; bots walk there. */
+export const SHOP_PAD_X = 3650;
+export const SHOP_PAD_RADIUS = 400;
+
+/** River gift dwell (spec 014): bots may not hook a chest younger than this. */
+export const GIFT_HUNT_DELAY = 6;
 
 /** River gifts (spec 006): a hookable chest mid-river on an interval. */
 export const GIFT_SPAWN_INTERVAL = 25;

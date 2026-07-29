@@ -6,7 +6,15 @@ import { RiverSystem } from "./systems/riverBand";
 import { RiverGiftSystem } from "./systems/riverGifts";
 import { SideLockSystem } from "./systems/sideLock";
 import { E2EHarness, e2eEnabled, e2eKillTarget } from "./systems/e2eHarness";
-import { KILL_BOUNTY, KILLS_TO_WIN, PLAYERS_PER_TEAM, RESPAWN_SECONDS, STARTING_GOLD } from "./config";
+import {
+    KILL_BOUNTY,
+    KILLS_TO_WIN,
+    PASSIVE_GOLD_AMOUNT,
+    PASSIVE_GOLD_INTERVAL,
+    PLAYERS_PER_TEAM,
+    RESPAWN_SECONDS,
+    STARTING_GOLD,
+} from "./config";
 import type { Side } from "./lib/battleLines";
 
 // Abilities and modifiers are imported for their @register* decorator SIDE
@@ -27,6 +35,9 @@ import "./abilities/pudge_wars_skills";
 import "./modifiers/modifier_pudge_wars_vanish";
 import "./modifiers/modifier_pudge_wars_iron_gut";
 import "./modifiers/modifier_pudge_wars_sprint";
+import "./abilities/pudge_meteor";
+import "./modifiers/modifier_pudge_meteor_stun";
+import { ShopPads } from "./systems/shopPads";
 
 declare global {
     interface CDOTAGameRules {
@@ -67,6 +78,12 @@ export class GameMode {
         // Spec 010 skill tells (all VPK-verified paths).
         PrecacheResource("particle", "particles/items_fx/blink_dagger_start.vpcf", context);
         PrecacheResource("particle", "particles/items_fx/aegis_respawn.vpcf", context);
+        // Specs 012-014 (all VPK-verified 2026-07-29).
+        PrecacheResource("particle", "particles/units/heroes/hero_venomancer/venomancer_poison_debuff.vpcf", context);
+        PrecacheResource("particle", "particles/generic_gameplay/generic_stunned.vpcf", context);
+        PrecacheResource("particle", "particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf", context);
+        PrecacheResource("particle", "particles/items2_fx/teleport_end.vpcf", context);
+        PrecacheResource("particle", "particles/generic_gameplay/rune_regeneration.vpcf", context);
     }
 
     public static Activate(this: void) {
@@ -87,6 +104,7 @@ export class GameMode {
         new RiverSystem();
         new RiverGiftSystem();
         new SideLockSystem();
+        new ShopPads();
     }
 
     private configure(): void {
@@ -127,6 +145,15 @@ export class GameMode {
         }
         if (state === GameState.GAME_IN_PROGRESS) {
             this.grantStartingGold();
+            // Spec 013: classic periodic income — everyone shops, all match.
+            Timers.CreateTimer(PASSIVE_GOLD_INTERVAL, () => {
+                for (let i = 0; i < 24; i++) {
+                    const pid = i as PlayerID;
+                    if (!PlayerResource.IsValidPlayerID(pid)) continue;
+                    PlayerResource.ModifyGold(pid, PASSIVE_GOLD_AMOUNT, true, ModifyGoldReason.UNSPECIFIED);
+                }
+                return PASSIVE_GOLD_INTERVAL;
+            });
             this.e2e.start();
         }
     }

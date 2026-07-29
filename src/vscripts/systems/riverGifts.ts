@@ -17,10 +17,22 @@ import { e2eEnabled } from "./e2eFlags";
 
 const GIFT_UNIT = "npc_pudge_river_gift";
 const GLOW_FX = "particles/generic_gameplay/rune_doubledamage.vpcf";
+/** Spec 014: a spawn must be an EVENT — the TP-scroll light column, VPK-verified
+ *  2026-07-29 (`teleport_end` under `particles/items2_fx`). */
+const BEACON_FX = "particles/items2_fx/teleport_end.vpcf";
+const BEACON_SECONDS = 5;
+const GIFT_MODEL_SCALE = 1.6;
 
 export class RiverGiftSystem {
     private static current: CDOTA_BaseNPC | undefined;
     private static glow: ParticleID | undefined;
+    private static spawnedAt = 0;
+
+    /** Seconds the live chest has existed, or undefined without one. */
+    public static age(): number | undefined {
+        if (!RiverGiftSystem.currentGift()) return undefined;
+        return GameRules.GetGameTime() - RiverGiftSystem.spawnedAt;
+    }
 
     constructor() {
         Timers.CreateTimer(GIFT_SPAWN_INTERVAL, () => this.spawn());
@@ -48,12 +60,27 @@ export class RiverGiftSystem {
         if (!chest || chest.IsNull()) return GIFT_SPAWN_INTERVAL;
         chest.SetIdleAcquire(false);
         chest.Stop();
+        chest.SetModelScale(GIFT_MODEL_SCALE);
         RiverGiftSystem.current = chest;
+        RiverGiftSystem.spawnedAt = GameRules.GetGameTime();
         RiverGiftSystem.glow = ParticleManager.CreateParticle(
             GLOW_FX,
             ParticleAttachment.ABSORIGIN_FOLLOW,
             chest,
         );
+        // Spec 014: announce the spawn — light column + global chime. The
+        // column is destroyed on a timer (some TP particles loop forever).
+        const beacon = ParticleManager.CreateParticle(
+            BEACON_FX,
+            ParticleAttachment.CUSTOMORIGIN,
+            undefined,
+        );
+        ParticleManager.SetParticleControl(beacon, 0, pos);
+        Timers.CreateTimer(BEACON_SECONDS, () => {
+            ParticleManager.DestroyParticle(beacon, false);
+            ParticleManager.ReleaseParticleIndex(beacon);
+        });
+        EmitGlobalSound("Rune.Bounty");
         if (e2eEnabled()) print(Marker.giftSpawned(y));
         return GIFT_SPAWN_INTERVAL;
     }

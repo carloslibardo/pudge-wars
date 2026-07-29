@@ -12,11 +12,19 @@
  */
 import { SHOP_ITEMS, purchase, type PurchaseState, type ShopItem } from "./shop";
 
-/** The catalog rotated so seat N starts at item N % 6. */
+/** The catalog rotated so seat N starts at item N % catalog size. Seats with
+ *  `seatIndex % 4 === 1` are DESIGNATED METEOR BUYERS (spec 013): the active
+ *  goes first in their preference, and `nextPurchase`'s save rule makes them
+ *  hoard gold for it instead of nickel-and-diming the rotation. */
 export function shoppingPreference(seatIndex: number): readonly ShopItem[] {
     const n = SHOP_ITEMS.length;
     const start = ((seatIndex % n) + n) % n;
-    return [...SHOP_ITEMS.slice(start), ...SHOP_ITEMS.slice(0, start)];
+    const rotated = [...SHOP_ITEMS.slice(start), ...SHOP_ITEMS.slice(0, start)];
+    if (seatIndex % 4 === 1) {
+        const active = rotated.find(i => i.kind === "active");
+        if (active) return [active, ...rotated.filter(i => i !== active)];
+    }
+    return rotated;
 }
 
 export interface PurchasePick {
@@ -25,11 +33,23 @@ export interface PurchasePick {
     readonly state: PurchaseState;
 }
 
-/** First affordable, under-cap item in this seat's preference order. */
+/** First affordable, under-cap item in this seat's preference order — with one
+ *  twist (spec 013): when the next uncapped preference is the ACTIVE and only
+ *  gold is missing, the bot SAVES (buys nothing) instead of skipping past it.
+ *  Without this rule no bot ever accumulates the meteor's price. */
 export function nextPurchase(state: PurchaseState, seatIndex: number): PurchasePick | undefined {
     for (const item of shoppingPreference(seatIndex)) {
         const result = purchase(state, item.name);
         if (result.ok) return { item, state: result.state };
+        // purchase() reports gold before caps, so exclude an already-capped
+        // active — otherwise a meteor OWNER would save forever.
+        if (
+            item.kind === "active" &&
+            result.reason === "insufficient_gold" &&
+            (state.owned[item.name] ?? 0) < item.maxStacks
+        ) {
+            return undefined;
+        }
     }
     return undefined;
 }

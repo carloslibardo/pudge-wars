@@ -15,5 +15,6 @@
 		"item"		"item_pudge_hook_chain"
 		"item"		"item_pudge_barbed_hook"
 		"item"		"item_pudge_gut_stitch"
+		"item"		"item_pudge_meteor"
 	}
 }

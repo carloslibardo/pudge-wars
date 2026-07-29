@@ -10,7 +10,7 @@
  * test fails; nobody discovers it from a wrong tooltip weeks later.
  */
 
-export type ItemKind = "hook" | "stat";
+export type ItemKind = "hook" | "stat" | "active";
 
 export interface ShopItem {
     /** KV block key == `@registerAbility` class name == loc token suffix. */
@@ -28,6 +28,8 @@ export const SHOP_ITEMS: readonly ShopItem[] = [
     { name: "item_pudge_flesh_boots", cost: 500, maxStacks: 1, kind: "stat" },
     { name: "item_pudge_rancid_flask", cost: 400, maxStacks: 2, kind: "stat" },
     { name: "item_pudge_gut_stitch", cost: 900, maxStacks: 2, kind: "stat" },
+    // Spec 013: the top-shelf ACTIVE — point-target meteor, AoE damage + stun.
+    { name: "item_pudge_meteor", cost: 1200, maxStacks: 1, kind: "active" },
 ] as const;
 
 export function findItem(name: string): ShopItem | undefined {

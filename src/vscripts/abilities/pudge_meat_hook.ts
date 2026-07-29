@@ -4,9 +4,8 @@ import { trackHook } from "../lib/hookThreats";
 import { Marker } from "../lib/markers";
 import { e2eEnabled } from "../systems/e2eFlags";
 import { modifier_pudge_hook_drag } from "../modifiers/modifier_pudge_hook_drag";
+import { HookChain } from "../systems/hookChain";
 import { RiverGiftSystem } from "../systems/riverGifts";
-
-const HOOK_FX = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf";
 
 /** 2-decimal round for the direction printed in the fired marker (e2e only). */
 function round2(n: number): number {
@@ -62,10 +61,11 @@ export class pudge_meat_hook extends BaseAbility {
         const speed = this.GetSpecialValueFor("hook_speed") + bonus.speed;
         const width = this.GetSpecialValueFor("hook_width");
 
+        // No EffectName: pudge_meathook.vpcf is a CP-driven beam the projectile
+        // system cannot animate (spec 011) — HookChain drives it instead.
         ProjectileManager.CreateLinearProjectile({
             Ability: this,
             Source: caster,
-            EffectName: HOOK_FX,
             vSpawnOrigin: (origin + direction * 80) as Vector,
             fDistance: range,
             fStartRadius: width,
@@ -80,6 +80,7 @@ export class pudge_meat_hook extends BaseAbility {
             iVisionRadius: 300,
         });
         caster.EmitSound("Hero_Pudge.AttackHookExtend");
+        HookChain.attach(caster);
 
         // Spec 009: every hook self-registers as a dodgeable threat — the
         // engine has no API to enumerate live projectiles (archer pattern).
@@ -98,18 +99,40 @@ export class pudge_meat_hook extends BaseAbility {
         }
     }
 
+    /** Engine callback per server tick while the linear projectile flies. */
+    OnProjectileThink(location: Vector): void {
+        HookChain.updateHead(this.GetCaster(), location);
+    }
+
     /** Return true to consume the projectile (the first hero hit stops it). */
     OnProjectileHit(target: CDOTA_BaseNPC | undefined, _location: Vector): boolean {
-        if (!target || target.IsNull()) return true; // max distance, or victim died mid-flight
-
         const caster = this.GetCaster();
+        if (!target || target.IsNull()) {
+            // Max distance, or the victim died mid-flight: reel the chain in.
+            const retractSpeed =
+                (this.GetSpecialValueFor("hook_speed") + this.itemHookBonus(caster).speed) * 2;
+            HookChain.retract(caster, retractSpeed);
+            return true;
+        }
 
         // River gift chest (spec 006): no damage, no steal — just latch and
         // drag it home; the drag modifier redeems it on arrival.
         if (RiverGiftSystem.isGift(target)) {
-            if (target.HasModifier("modifier_pudge_hook_drag")) return true; // already claimed mid-drag
+            if (target.HasModifier("modifier_pudge_hook_drag")) {
+                // Already claimed mid-drag by someone else — our hook got nothing.
+                HookChain.retract(caster, this.GetSpecialValueFor("hook_speed") * 2);
+                return true;
+            }
             target.EmitSound("Hero_Pudge.AttackHookImpact");
-            if (e2eEnabled()) print(Marker.giftHooked(caster.GetPlayerOwnerID()));
+            if (e2eEnabled()) {
+                print(Marker.giftHooked(caster.GetPlayerOwnerID()));
+                // Spec 014 dwell audit: bots are gated to ≥6 s chest age by the
+                // harness; a younger hook here means the gate leaked.
+                const age = RiverGiftSystem.age();
+                if (age !== undefined && age < 5 && PlayerResource.IsFakeClient(caster.GetPlayerOwnerID())) {
+                    print(`[GIFT] dwell violation age ${Math.floor(age)}`);
+                }
+            }
             modifier_pudge_hook_drag.apply(target, caster, this, {});
             return true;
         }

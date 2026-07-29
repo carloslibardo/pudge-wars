@@ -2,10 +2,10 @@ import { describe, expect, it } from "vitest";
 import { canAfford, findItem, purchase, SHOP_ITEMS, type PurchaseState } from "../shop";
 
 describe("catalog", () => {
-    it("has six hook-fantasy items with unique names and positive costs", () => {
-        expect(SHOP_ITEMS).toHaveLength(6);
+    it("has the hook-fantasy catalog with unique names and positive costs", () => {
+        expect(SHOP_ITEMS).toHaveLength(7);
         const names = new Set(SHOP_ITEMS.map(i => i.name));
-        expect(names.size).toBe(6);
+        expect(names.size).toBe(7);
         for (const item of SHOP_ITEMS) {
             expect(item.cost).toBeGreaterThan(0);
             expect(item.maxStacks).toBeGreaterThanOrEqual(1);

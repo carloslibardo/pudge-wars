@@ -22,6 +22,10 @@ const BANK_MARGIN = 50;
  *  enemy, and 3s of a single Rot could never kill — 0 kills in 9 minutes. The
  *  grace must outlast the pack's collapse-and-kill (spec 007 swarm). */
 const STRANDED_GRACE = 10;
+/** In-band (water) grace — a SEPARATE, shorter clock (spec 012): the hazard
+ *  burn starts at 4 s, this sweep is the backstop behind it. Splitting it from
+ *  STRANDED_GRACE keeps the run-13 behind-enemy-lines kill window intact. */
+const RIVER_GRACE = 6;
 const SWEEP_INTERVAL = 0.5;
 
 export class SideLockSystem {
@@ -72,7 +76,8 @@ export class SideLockSystem {
             // resting state; run 14 ended with three heroes idling in it).
             // Mid-drag heroes are the hook's business, not ours.
             const x = hero.GetAbsOrigin().x;
-            const offOwnField = onWrongSide(side, x, half) || Math.abs(x) <= half;
+            const wrongSide = onWrongSide(side, x, half);
+            const offOwnField = wrongSide || Math.abs(x) <= half;
             // Mid-drag heroes are the hook's business — but only PAUSE the
             // clock, never reset it: run 17 showed a swarm re-hooking its
             // catch every few seconds, resetting the timer forever and locking
@@ -87,7 +92,7 @@ export class SideLockSystem {
                 this.strandedSince.set(ent, now);
                 continue;
             }
-            if (now - since < STRANDED_GRACE) continue;
+            if (now - since < (wrongSide ? STRANDED_GRACE : RIVER_GRACE)) continue;
             this.strandedSince.delete(ent);
             const y = hero.GetAbsOrigin().y;
             const home = GetGroundPosition(Vector(side * (half + BANK_MARGIN * 2), y, 0), hero);
