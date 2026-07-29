@@ -45,6 +45,9 @@ export const Marker = {
     giftDwellOk: (age: number): string => `[GIFT] dwell ok age ${age}`,
     chainAttached: (pid: number): string => `[CHAIN] attached ${pid}`,
     chainReleased: (pid: number, reason: string): string => `[CHAIN] released ${pid} ${reason}`,
+    fxTestRow: (row: number, mode: string, fx: string, y: number): string =>
+        `[FXTEST] row ${row} mode ${mode} y ${y} fx ${fx}`,
+    fxTestDone: (rows: number): string => `[FXTEST] panel done ${rows} rows`,
     dodgeSidestep: (pid: number): string => `[DODGE] sidestep by ${pid}`,
     retreat: (pid: number, hpPct: number): string => `[RETREAT] bot ${pid} hp ${hpPct}`,
     skillUsed: (name: string, pid: number): string => `[SKILL] used ${name} by ${pid}`,

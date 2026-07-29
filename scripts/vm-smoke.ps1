@@ -90,6 +90,12 @@ $args = @(
   "+pudge_wars_e2e","1","+pudge_wars_e2e_kills","$Kills",
   "+dota_launch_custom_game","$Addon","$Map"
 )
+# Diagnostic runs only: `touch C:\pw-fxtest.flag` (over SSH) before triggering
+# the task to draw the spec-011 chain-FX candidate panel. File flag, not env:
+# scheduled-task sessions do not inherit the SSH session's environment.
+if (Test-Path "C:\pw-fxtest.flag") {
+  $args = $args[0..($args.Length-3)] + @("+pudge_wars_fxtest","1") + $args[-2..-1]
+}
 $proc = Start-Process -FilePath (Join-Path $win64 "dota2.exe") -ArgumentList $args -PassThru
 
 # Visual evidence: capture a full-screen PNG every 20s while the game runs.

@@ -38,6 +38,7 @@ import "./modifiers/modifier_pudge_wars_sprint";
 import "./abilities/pudge_meteor";
 import "./modifiers/modifier_pudge_meteor_stun";
 import { ShopPads } from "./systems/shopPads";
+import { precacheFxTestPanel, startFxTestPanel } from "./systems/fxTestPanel";
 
 declare global {
     interface CDOTAGameRules {
@@ -87,11 +88,15 @@ export class GameMode {
         PrecacheResource("particle", "particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf", context);
         PrecacheResource("particle", "particles/items2_fx/teleport_end.vpcf", context);
         PrecacheResource("particle", "particles/generic_gameplay/rune_regeneration.vpcf", context);
+        // FX candidate panel (spec 011 diagnostic; only draws with
+        // +pudge_wars_fxtest 1, but un-precached particles render nothing).
+        precacheFxTestPanel(context);
     }
 
     public static Activate(this: void) {
         Convars.RegisterConvar("pudge_wars_e2e", "0", "Engage the headless e2e harness (tools only)", ConVarFlags.NONE);
         Convars.RegisterConvar("pudge_wars_e2e_kills", "0", "e2e win-threshold override (0 = real KILLS_TO_WIN)", ConVarFlags.NONE);
+        Convars.RegisterConvar("pudge_wars_fxtest", "0", "Draw the spec-011 chain-FX candidate panel at match start (tools only)", ConVarFlags.NONE);
         GameRules.Addon = new GameMode();
     }
 
@@ -158,6 +163,7 @@ export class GameMode {
                 return PASSIVE_GOLD_INTERVAL;
             });
             this.e2e.start();
+            startFxTestPanel();
         }
     }
 
