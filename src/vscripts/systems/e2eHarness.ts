@@ -202,6 +202,12 @@ export class E2EHarness {
             FindClearSpaceForUnit(host, GetGroundPosition(Vector(0, 0, 0), host), true);
             host.Stop();
         });
+        // Zoom the locked camera so the WHOLE playfield is on frame (pads at
+        // ±1900, lurk roamers, gift spawns). The `+dota_camera_distance`
+        // launch convar is CHEAT-GATED and silently ignored (run 26: frames
+        // identical to default zoom); the server-side game-mode override is
+        // the reliable route — e2e only, real matches keep stock camera.
+        GameRules.GetGameModeEntity().SetCameraDistanceOverride(2400);
         // Perma-day. The day/night cycle renders night rounds near-black, which
         // makes every screenshot the rig captures worthless (landmine L15).
         Timers.CreateTimer(0, () => {
