@@ -17,8 +17,8 @@ projectile system does not drive those CPs, so nothing rendered.
 
 | Value | Number | Source |
 |---|---|---|
-| Chain particle | `particles/units/heroes/hero_pudge/pudge_meathook.vpcf` | VPK-verified 2026-07-29: basename `pudge_meathook` under dir `particles/units/heroes/hero_pudge` |
-| CP0 anchor | caster ABSORIGIN_FOLLOW | DESIGN-FRESH — attach-point names are not VPK-verifiable (live in model binary); origin-follow is guaranteed to render |
+| Chain particle | `particles/units/heroes/hero_rattletrap/rattletrap_hookshot.vpcf` | run-28 rev: pudge_meathook.vpcf NEVER rendered under manual CP driving (80-frame montage, 268 server chains, zero beams — needs engine-internal CPs); the Clockwerk hookshot chain is a plain two-CP beam, VPK-verified |
+| CP0/CP1 | BOTH driven manually every update, +80 z | run-28 rev — no attachment semantics to trust; reversed CP order draws the same line |
 | CP1 update rate (flight) | every `OnProjectileThink` | engine callback rate |
 | CP1 update rate (drag) | every `UpdateHorizontalMotion` frame | engine callback rate |
 | Retract speed on miss | 2 × hook_speed | DESIGN-FRESH — snappy return, no lingering beam |

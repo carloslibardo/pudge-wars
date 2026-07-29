@@ -17,7 +17,15 @@
 import { Marker } from "../lib/markers";
 import { e2eEnabled } from "./e2eFlags";
 
-const CHAIN_FX = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf";
+/** Clockwerk's hookshot chain — a plain two-CP beam (CP0 anchor, CP1 head).
+ *  VPK-verified 2026-07-29 (`rattletrap_hookshot` under
+ *  `particles/units/heroes/hero_rattletrap`). Pudge's own pudge_meathook.vpcf
+ *  looked right on paper but NEVER rendered under manual CP driving — run-28
+ *  montage: 80 combat frames, 268 server-side chains, zero beams on screen.
+ *  The vanilla asset evidently needs engine-internal CPs beyond 0/1. */
+const CHAIN_FX = "particles/units/heroes/hero_rattletrap/rattletrap_hookshot.vpcf";
+/** Chain height off the ground at both endpoints. */
+const CHAIN_Z = 80;
 const RETRACT_TICK = 0.03;
 
 export type ChainRelease = "hit" | "miss" | "drag_complete" | "interrupted";
@@ -36,24 +44,32 @@ export class HookChain {
     /** Create the chain at hook fire. Any stale chain from a prior cast dies first. */
     public static attach(caster: CDOTA_BaseNPC): void {
         HookChain.release(caster, "interrupted");
+        // CUSTOMORIGIN + BOTH endpoints driven manually every update: no
+        // reliance on attachment semantics, and a reversed CP order draws the
+        // identical line (run-28 lesson: trust nothing you cannot see).
         const particle = ParticleManager.CreateParticle(
             CHAIN_FX,
-            ParticleAttachment.ABSORIGIN_FOLLOW,
-            caster,
+            ParticleAttachment.CUSTOMORIGIN,
+            undefined,
         );
         const origin = caster.GetAbsOrigin();
-        ParticleManager.SetParticleControl(particle, 1, origin);
         HookChain.chains.set(caster.entindex(), { particle, head: origin, retracting: false });
+        HookChain.setEndpoints(particle, origin, origin);
         if (e2eEnabled()) print(Marker.chainAttached(caster.GetPlayerOwnerID()));
     }
 
-    /** Drive CP1 — called from projectile think (flight) and drag motion (return). */
+    private static setEndpoints(particle: ParticleID, anchor: Vector, head: Vector): void {
+        ParticleManager.SetParticleControl(particle, 0, (anchor + Vector(0, 0, CHAIN_Z)) as Vector);
+        ParticleManager.SetParticleControl(particle, 1, (head + Vector(0, 0, CHAIN_Z)) as Vector);
+    }
+
+    /** Drive both CPs — called from projectile think (flight) and drag motion (return). */
     public static updateHead(caster: CDOTA_BaseNPC, pos: Vector): void {
         if (caster.IsNull()) return;
         const chain = HookChain.chains.get(caster.entindex());
         if (!chain || chain.retracting) return;
         chain.head = pos;
-        ParticleManager.SetParticleControl(chain.particle, 1, pos);
+        HookChain.setEndpoints(chain.particle, caster.GetAbsOrigin(), pos);
     }
 
     /** Destroy the chain with a reason. Idempotent — safe on double release. */
@@ -95,7 +111,7 @@ export class HookChain {
                 chain.head.y + (dy / dist) * step,
                 home.z,
             );
-            ParticleManager.SetParticleControl(chain.particle, 1, chain.head);
+            HookChain.setEndpoints(chain.particle, home, chain.head);
             return RETRACT_TICK;
         });
     }
