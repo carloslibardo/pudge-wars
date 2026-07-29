@@ -164,11 +164,15 @@ place.
   stays at the stock distance (run 26: frames pixel-identical to the un-zoomed
   run). Zoom server-side instead:
   `GameRules.GetGameModeEntity().SetCameraDistanceOverride(n)`.
-- **`pudge_meathook.vpcf` never renders under manual CP driving.** It looks like
-  a plain CP0→CP1 beam, but 80 combat frames with 268 live server-side chains
-  showed zero beams (run 28) — the vanilla asset needs engine-internal control
-  points the script API cannot feed. Chain-style tethers you drive yourself need
-  a genuinely two-CP particle: `rattletrap_hookshot.vpcf` works.
+- **`pudge_meathook.vpcf` AND `rattletrap_hookshot.vpcf` never render under
+  script CP driving** — raw `SetParticleControl` or entity-anchored, either way
+  (runs 28/29 + the run-31 candidate panel): those vanilla assets need
+  engine-internal state no script API provides, and they fail SILENTLY. Particles
+  that DO render as plain CP0→CP1 beams, panel-verified on screen:
+  `wisp_tether.vpcf` (the shipped chain), `razor_static_link_beam.vpcf`, and
+  `batrider_flaming_lasso.vpcf` (droop arc). Never swap a tether particle
+  blind — re-run the panel (`systems/fxTestPanel.ts`, `PW_FXTEST=1
+  bash scripts/vm.sh smoke`) and read the frame at horn+50 s.
 - **The IAP tunnel kills any single scp stream around ~59 MB**
   (ConnectionReconnectTimeout; retrying whole-file dies at the same offset).
   Pull big artifacts (match mp4s ~190 MB) chunked: split into ≤40 MB parts on

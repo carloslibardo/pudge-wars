@@ -31,8 +31,13 @@ projectile system does not drive those CPs, so nothing rendered.
 
 ## Acceptance
 
-- [ ] Marker contract written BEFORE implementation
-- [ ] e2e run prints `[CHAIN]` attach/release balanced with hooks fired
-- [ ] Frame evidence: chain links visible mid-flight over the river AND during
-      a drag, at the recording's 1280-wide scale
-- [ ] Any engine surprise recorded in `CLAUDE.md` invariants
+- [x] Marker contract written BEFORE implementation
+- [x] e2e run prints `[CHAIN]` attach/release balanced with hooks fired
+      (run 32: 253 attached / 252 released, one live at the win freeze)
+- [x] Frame evidence: chain visible mid-flight over the river AND during a
+      drag, at the recording's 1280-wide scale (run 32, video 300 s: taut
+      cross-river tether with endpoint orbs; video 505–510 s: diagonal tether
+      streak during a hook — wisp_tether reads clearly at recording scale)
+- [x] Engine surprise recorded in `CLAUDE.md` invariants (three tether
+      particles tested blind failed silently; the run-31 candidate panel
+      `systems/fxTestPanel.ts` is now the required procedure)
