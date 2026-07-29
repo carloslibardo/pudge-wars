@@ -296,3 +296,35 @@ scripted cast. Green: run 20 — 16 kills to a 10-6 Dire Victory, 336 hooks,
 34 gifts, 29 vanish / 41 gut / 319 sprint, 0 STUCK, 0 lingerers, frame strip
 verified (vanish puff, chain+dragged victim over water, empty river, victory
 banner). Evidence: artifacts/smoke/20260728T140245Z.
+
+## Part 6 — the perceptibility pass (2026-07-29, specs 011-014)
+
+Field report on a marker-green, frame-verified build still listed five gaps:
+invisible hook chains, robotic movement, "no items on the river", "nobody
+shops", residual river-stuck. Every one was a PERCEPTIBILITY failure, not a
+logic failure — the mechanisms ran; a human watching could not SEE them.
+
+1. **A feature exists at the speed the viewer can see.** Run 23 spawned 29
+   chests; hunters sniped most within a second — "I didn't see any item on
+   the river." Same for instant shop grants: economically correct, visually
+   nonexistent. Fix class: minimum DWELL (chest sits 6 s) and PHYSICAL
+   ENACTMENT (bots walk to a glowing pad to buy). If a feature's evidence
+   window is shorter than a glance, gate on the window, not the event.
+2. **CP-driven particles are a silent-failure class of their own.** A
+   control-point beam (pudge_meathook.vpcf) passed as a projectile EffectName
+   renders NOTHING — the projectile system never drives CPs. Nobody's log can
+   catch it; only a frame reviewer who knows the chain should be there.
+3. **A liveness gate needs a PROBE when healthy behavior never exercises the
+   mechanism.** The river hazard could never fire in a clean run — the order
+   filter keeps bots out of the water by construction — so its gate was
+   unpassable. The harness now teleports one bot in for 5 s to prove the burn
+   live on camera. Gate on mechanisms you cannot reach = build a probe.
+4. **Incentives beat enforcement.** The river was simultaneously "never a
+   resting state" (spec 008) and +30 HP/s regen (spec 004) — enforcement
+   fighting incentive. The /decide matrix made the contradiction explicit;
+   the hazard flip removed it. Audit for mechanics that reward what another
+   system forbids.
+5. **Weighted decision tables pay off at the amendment level.** Option C won,
+   but the analysts' critical findings (grace < honest crossing time, kill-feed
+   suicides, dual-purpose grace constant) reshaped the numbers before a line
+   was written. The table's value was the forced dig, not the total.
