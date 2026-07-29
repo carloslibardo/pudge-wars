@@ -50,8 +50,10 @@ export const RIVER_HAZARD_RAMP = 10;
 export const RIVER_HAZARD_CAP = 80;
 export const RIVER_HAZARD_TICK = 0.5;
 
-/** Shop pads (spec 013): buy zone behind each spawn line; bots walk there. */
-export const SHOP_PAD_X = 3650;
+/** Shop pads (spec 013): mid-field buy zones, ON CAMERA (run-24 frames: pads
+ *  behind the spawn lines sat outside the locked camera's view — shopping
+ *  happened invisibly, the exact field-report complaint). */
+export const SHOP_PAD_X = 1900;
 export const SHOP_PAD_RADIUS = 400;
 
 /** River gift dwell (spec 014): bots may not hook a chest younger than this. */
@@ -64,5 +66,6 @@ export const GIFT_MATERIALIZE_SECONDS = 5;
 
 /** River gifts (spec 006): a hookable chest mid-river on an interval. */
 export const GIFT_SPAWN_INTERVAL = 25;
-export const GIFT_SPAWN_Y_MAX = 1400;
+/** 1000 (was 1400): every chest inside the zoomed camera frame (spec 014). */
+export const GIFT_SPAWN_Y_MAX = 1000;
 export const GIFT_GOLD_PURSE = 250;

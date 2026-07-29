@@ -18,7 +18,7 @@ on hooked victims mid-swarm.
 
 | Value | Number | Source |
 |---|---|---|
-| Shop pad position | (±3650, 0), radius 400 | DESIGN-FRESH — behind SPAWN_LINE_X 3000, inside court extent ±4096 |
+| Shop pad position | (±1900, 0), radius 400 | run-24 rev: ±3650 sat outside the locked camera — shopping was invisible; mid-field pads put the trip ON CAMERA |
 | Pad FX | `particles/items_fx/aegis_beacon.vpcf` column (VPK-verify before use; fallback rune glow) | VPK adjacency rule (spec 010 landmine) |
 | Bot shop trip trigger | gold ≥ next catalog pick AND not retreating/swarming/hunting | DESIGN-FRESH |
 | Meteor cost | 1200, maxStacks 1 | DESIGN-FRESH — priciest item, post-boots goal |

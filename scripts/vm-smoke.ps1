@@ -82,6 +82,11 @@ $args = @(
   # as an invisible tripod, so the recording frames both banks (the only
   # camera technique that reliably moves the tools client in a match run).
   "+dota_camera_lock","1",
+  # Zoom the locked camera out so the WHOLE playfield fits the frame: shop
+  # pads (x=+-1900), lurk-depth roamers and gift spawns are all on camera.
+  # Default distance (~1200) framed only x in [-1200,1200] -- the run-24
+  # frames showed shopping and deep roam happening entirely off-screen.
+  "+dota_camera_distance","2400",
   "+pudge_wars_e2e","1","+pudge_wars_e2e_kills","$Kills",
   "+dota_launch_custom_game","$Addon","$Map"
 )

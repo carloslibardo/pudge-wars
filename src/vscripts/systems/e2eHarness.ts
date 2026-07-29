@@ -68,8 +68,10 @@ const ROT_TOGGLE_RANGE = 500;
 const BANK_HOLD_X = 450;
 /** A caught enemy within this range pulls the whole team onto it (spec 007). */
 const SWARM_RANGE = 1500;
-/** Roam area (spec 012): own bank to deep field, most of the court's height. */
-const ROAM_BOUNDS: RoamBounds = { bankX: BANK_HOLD_X, maxX: 2400, maxY: 2000 };
+/** Roam area (spec 012): own bank to deep field — bounded to the ZOOMED
+ *  camera's view (run 24: waypoints at 2400/2000 roamed off-screen and the
+ *  video read as an empty map). */
+const ROAM_BOUNDS: RoamBounds = { bankX: BANK_HOLD_X, maxX: 1800, maxY: 1300 };
 /** Meteor slam range — item cast range 1200 with a safety margin. */
 const METEOR_RANGE = 1100;
 /** Hazard liveness probe (spec 012): bots CANNOT walk into the river (the
