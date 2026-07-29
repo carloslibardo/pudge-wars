@@ -17,7 +17,7 @@ projectile system does not drive those CPs, so nothing rendered.
 
 | Value | Number | Source |
 |---|---|---|
-| Chain particle | `particles/units/heroes/hero_rattletrap/rattletrap_hookshot.vpcf` | run-28 rev: pudge_meathook.vpcf NEVER rendered under manual CP driving (80-frame montage, 268 server chains, zero beams — needs engine-internal CPs); the Clockwerk hookshot chain is a plain two-CP beam, VPK-verified |
+| Chain particle | UNDER TEST — run-30 candidate panel | run-28: pudge_meathook.vpcf never rendered under manual CP driving; run-29: rattletrap_hookshot.vpcf ALSO invisible (drag + flight frames clean, 225 balanced [CHAIN] markers). Same CUSTOMORIGIN+SetParticleControl pattern DOES render teleport_end (gift beacon), so the failure is per-particle, not the driving pattern. `systems/fxTestPanel.ts` draws wisp_tether / razor_static_link(_beam) / batrider_flaming_lasso raw + ent-anchored re-tests in one recorded run |
 | CP0/CP1 | BOTH driven manually every update, +80 z | run-28 rev — no attachment semantics to trust; reversed CP order draws the same line |
 | CP1 update rate (flight) | every `OnProjectileThink` | engine callback rate |
 | CP1 update rate (drag) | every `UpdateHorizontalMotion` frame | engine callback rate |
