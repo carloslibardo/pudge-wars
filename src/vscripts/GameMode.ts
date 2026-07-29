@@ -69,9 +69,11 @@ export class GameMode {
         // Un-precached particles render NOTHING, silently (L3/L12). Precaching
         // the hero covers most Pudge assets, but pin the hook chain explicitly.
         PrecacheResource("particle", "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", context);
-        // Spec 011 chain (rattletrap tether — pudge_meathook never rendered
-        // under manual CP driving; see systems/hookChain.ts).
-        PrecacheResource("particle", "particles/units/heroes/hero_rattletrap/rattletrap_hookshot.vpcf", context);
+        // Spec 011 chain (wisp tether — run-31 panel winner; pudge_meathook and
+        // rattletrap_hookshot never rendered under script CP driving; see
+        // systems/hookChain.ts). Explicit even though the panel precache below
+        // also covers it: the chain must survive the panel's removal.
+        PrecacheResource("particle", "particles/units/heroes/hero_wisp/wisp_tether.vpcf", context);
         PrecacheResource("particle", "particles/units/heroes/hero_pudge/pudge_rot.vpcf", context);
         PrecacheResource("particle", "particles/generic_gameplay/rune_haste_owner.vpcf", context);
         // River gift chest (spec 006): un-precached unit = "unit ... is

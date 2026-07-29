@@ -17,13 +17,14 @@
 import { Marker } from "../lib/markers";
 import { e2eEnabled } from "./e2eFlags";
 
-/** Clockwerk's hookshot chain — a plain two-CP beam (CP0 anchor, CP1 head).
- *  VPK-verified 2026-07-29 (`rattletrap_hookshot` under
- *  `particles/units/heroes/hero_rattletrap`). Pudge's own pudge_meathook.vpcf
- *  looked right on paper but NEVER rendered under manual CP driving — run-28
- *  montage: 80 combat frames, 268 server-side chains, zero beams on screen.
- *  The vanilla asset evidently needs engine-internal CPs beyond 0/1. */
-const CHAIN_FX = "particles/units/heroes/hero_rattletrap/rattletrap_hookshot.vpcf";
+/** Io's tether — a genuine two-CP beam that renders from raw
+ *  SetParticleControl endpoints. Winner of the run-31 candidate panel
+ *  (`systems/fxTestPanel.ts`): wisp_tether and razor_static_link_beam drew in
+ *  both raw and entity-anchored modes; pudge_meathook (run 28) and
+ *  rattletrap_hookshot (run 29) drew NOTHING in either mode — those vanilla
+ *  assets need engine-internal state no script API provides. Do not swap this
+ *  path without re-running the panel (PW_FXTEST=1). */
+const CHAIN_FX = "particles/units/heroes/hero_wisp/wisp_tether.vpcf";
 /** Chain height off the ground at both endpoints. */
 const CHAIN_Z = 80;
 const RETRACT_TICK = 0.03;
