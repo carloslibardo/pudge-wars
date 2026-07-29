@@ -159,6 +159,22 @@ place.
   bytes) and returns zero matches with exit 1 — no warning with `-c`. Every
   marker census on a pulled log must use `grep -a`, or a perfectly green run
   scans as all-zeros (run 13 diagnosis detour).
+- **`+dota_camera_distance` as a LAUNCH convar is cheat-gated and silently
+  ignored** — the client starts, the convar reads back its value, and the camera
+  stays at the stock distance (run 26: frames pixel-identical to the un-zoomed
+  run). Zoom server-side instead:
+  `GameRules.GetGameModeEntity().SetCameraDistanceOverride(n)`.
+- **`pudge_meathook.vpcf` never renders under manual CP driving.** It looks like
+  a plain CP0→CP1 beam, but 80 combat frames with 268 live server-side chains
+  showed zero beams (run 28) — the vanilla asset needs engine-internal control
+  points the script API cannot feed. Chain-style tethers you drive yourself need
+  a genuinely two-CP particle: `rattletrap_hookshot.vpcf` works.
+- **The IAP tunnel kills any single scp stream around ~59 MB**
+  (ConnectionReconnectTimeout; retrying whole-file dies at the same offset).
+  Pull big artifacts (match mp4s ~190 MB) chunked: split into ≤40 MB parts on
+  the VM (staged .ps1 file — inline PowerShell quoting mangles `$` vars), scp
+  each part with per-part size verification + retries, reassemble locally
+  (`scratchpad pullmp4b.sh` + `pwsplit.ps1` pattern).
 
 ## Testing strategy
 
