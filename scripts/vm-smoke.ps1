@@ -94,7 +94,10 @@ $args = @(
 # the task to draw the spec-011 chain-FX candidate panel. File flag, not env:
 # scheduled-task sessions do not inherit the SSH session's environment.
 if (Test-Path "C:\pw-fxtest.flag") {
-  $args = $args[0..($args.Length-3)] + @("+pudge_wars_fxtest","1") + $args[-2..-1]
+  # Insert BEFORE the final "+dota_launch_custom_game <addon> <map>" triple —
+  # anything spliced inside it is eaten as the addon name and nothing loads
+  # (run 30: "harness never engaged").
+  $args = $args[0..($args.Length-4)] + @("+pudge_wars_fxtest","1") + $args[($args.Length-3)..($args.Length-1)]
 }
 $proc = Start-Process -FilePath (Join-Path $win64 "dota2.exe") -ArgumentList $args -PassThru
 
