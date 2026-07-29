@@ -101,6 +101,16 @@ case "${1:-}" in
     echo "staging vm-smoke.ps1 to C:\\aw\\vm-qgate.ps1 (reusing aw_qgate Interactive task)..."
     ssh "${SSH_OPTS[@]}" builder@localhost "Copy-Item $RVM\\scripts\\vm-smoke.ps1 C:\\aw\\vm-qgate.ps1 -Force"
 
+    # PW_FXTEST=1 draws the spec-011 chain-FX candidate panel (diagnostic runs
+    # only). File flag, not env: the Interactive scheduled task's session does
+    # not inherit this SSH session's environment.
+    if [ "${PW_FXTEST:-0}" = "1" ]; then
+      ssh "${SSH_OPTS[@]}" builder@localhost 'powershell -NoProfile -Command "New-Item C:\pw-fxtest.flag -ItemType File -Force | Out-Null"'
+      echo "fxtest flag SET — candidate panel will draw"
+    else
+      ssh "${SSH_OPTS[@]}" builder@localhost 'powershell -NoProfile -Command "Remove-Item C:\pw-fxtest.flag -Force -ErrorAction SilentlyContinue"' || true
+    fi
+
     echo "running aw_qgate scheduled task..."
     ssh "${SSH_OPTS[@]}" builder@localhost "schtasks /run /tn aw_qgate"
 
