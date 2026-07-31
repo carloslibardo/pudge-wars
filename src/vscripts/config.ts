@@ -69,3 +69,12 @@ export const GIFT_SPAWN_INTERVAL = 25;
 /** 1000 (was 1400): every chest inside the zoomed camera frame (spec 014). */
 export const GIFT_SPAWN_Y_MAX = 1000;
 export const GIFT_GOLD_PURSE = 250;
+/** Spec 014 rev 2 (2026-07-30 field report: "the item on the middle should be
+ *  moving"): after materializing, the chest DRIFTS along the river. Slow
+ *  enough that straight bot aim still lands (hook flies ~1000 units in
+ *  ~0.6 s → the chest moves ~70 units, inside the hook's width), fast enough
+ *  to read as floating on the current. */
+export const GIFT_DRIFT_SPEED = 120;
+export const GIFT_DRIFT_TICK = 0.1;
+/** Drift turnaround band — slightly past the spawn band, still on camera. */
+export const GIFT_DRIFT_Y_MAX = 1100;

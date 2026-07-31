@@ -20,6 +20,8 @@ hunters hooked most within ~1 s of spawn; the chest barely existed on screen.)
 | Global spawn sound | `Rune.Bounty` | already shipped for redeem; reuse at spawn |
 | Hunt delay (bots) | 6 s after spawn | DESIGN-FRESH — guaranteed on-screen dwell |
 | Materialize phase | unhookable < 5 s, EVERYONE | run-24 rev: a stray combat hook latched a 2 s chest; intent-gating cannot stop a projectile, so the chest refuses the latch (projectile flies on) |
+| Drift speed (rev 2) | 120 u/s along the river after materialize, bouncing at ±1100 | 2026-07-30 field report: "the item on the middle should be moving" — a parked chest is the only static actor on the field. 120 keeps straight bot aim viable (hook covers ~1000 units in ~0.6 s → ~70 units of chest travel, inside hook width); hunters aim with `driftLeadY` anyway |
+| Drift pause | while `modifier_pudge_hook_drag` is on the chest | the drag modifier owns the chest's position mid-drag |
 
 ## Out of scope
 

@@ -31,6 +31,7 @@ and the code cannot drift: the test asserts the exact prefixes below.
 | 15 | `[SHOP] trip start/arrive` | bot walked to the shop pad; ≥6 arrives (spec 013) | `Marker.shopTripStart/Arrive` |
 | 16 | `[METEOR] cast/impact` | meteor item used; ≥1 cast + ≥1 nonzero impact (spec 013) | `Marker.meteorCast/Impact` |
 | 17 | `[GIFT] dwell ok` | first hook attempt on a chest aged ≥6 s; ≥3 (spec 014) | `Marker.giftDwellOk` |
+| 18 | `[GIFT] drifting` | a materialized chest starts floating along the river; ≥3 (spec 014 rev 2) | `Marker.giftDrifting` |
 
 Full example lines (verbatim shapes the rig greps):
 

@@ -33,7 +33,7 @@ import { nextAbilitySlot } from "../lib/botSkillPlan";
 import { nextPurchase } from "../lib/botShopping";
 import { anchorY } from "../lib/botFormation";
 import { addTravel, isStuck, AUDIT_WINDOW_THINKS, STUCK_THRESHOLD } from "../lib/motionLiveness";
-import { giftHunter } from "../lib/riverGift";
+import { driftLeadY, giftHunter } from "../lib/riverGift";
 import { isInRiver } from "../lib/river";
 import { activeThreats, dodgeStep, incomingThreat } from "../lib/hookThreats";
 import {
@@ -601,7 +601,15 @@ export class E2EHarness {
                         this.dwellPrinted.add(gift.entindex());
                         print(Marker.giftDwellOk(Math.floor(giftAge)));
                     }
-                    this.castHookAt(hero, hook, gp, id);
+                    // Spec 014 rev 2: the chest drifts — aim where it will be
+                    // when the hook arrives, not where it is.
+                    const aimY = driftLeadY(
+                        gp.y,
+                        RiverGiftSystem.driftVelocityY(),
+                        gdist,
+                        hook.GetSpecialValueFor("hook_speed"),
+                    );
+                    this.castHookAt(hero, hook, Vector(gp.x, aimY, gp.z), id);
                     continue;
                 }
                 // Waiting out the dwell, out of range, or hook down: slide

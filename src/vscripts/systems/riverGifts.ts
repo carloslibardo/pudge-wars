@@ -9,10 +9,18 @@
  * on purpose: the drag modifier resolves a chest arrival without holding a
  * system reference.
  */
-import { chooseGift, giftSpawnY } from "../lib/riverGift";
+import { chooseGift, driftStep, giftSpawnY } from "../lib/riverGift";
 import { SHOP_ITEMS } from "../lib/shop";
 import { Marker } from "../lib/markers";
-import { GIFT_GOLD_PURSE, GIFT_SPAWN_INTERVAL, GIFT_SPAWN_Y_MAX } from "../config";
+import {
+    GIFT_DRIFT_SPEED,
+    GIFT_DRIFT_TICK,
+    GIFT_DRIFT_Y_MAX,
+    GIFT_GOLD_PURSE,
+    GIFT_MATERIALIZE_SECONDS,
+    GIFT_SPAWN_INTERVAL,
+    GIFT_SPAWN_Y_MAX,
+} from "../config";
 import { e2eEnabled } from "./e2eFlags";
 
 const GIFT_UNIT = "npc_pudge_river_gift";
@@ -27,11 +35,22 @@ export class RiverGiftSystem {
     private static current: CDOTA_BaseNPC | undefined;
     private static glow: ParticleID | undefined;
     private static spawnedAt = 0;
+    private static driftDir: 1 | -1 = 1;
 
     /** Seconds the live chest has existed, or undefined without one. */
     public static age(): number | undefined {
         if (!RiverGiftSystem.currentGift()) return undefined;
         return GameRules.GetGameTime() - RiverGiftSystem.spawnedAt;
+    }
+
+    /** The live chest's drift velocity along Y (u/s) — 0 while it is still
+     *  materializing or being dragged. Hunters use this for aim lead. */
+    public static driftVelocityY(): number {
+        const chest = RiverGiftSystem.currentGift();
+        const age = RiverGiftSystem.age();
+        if (!chest || age === undefined || age < GIFT_MATERIALIZE_SECONDS) return 0;
+        if (chest.HasModifier("modifier_pudge_hook_drag")) return 0;
+        return RiverGiftSystem.driftDir * GIFT_DRIFT_SPEED;
     }
 
     constructor() {
@@ -82,6 +101,32 @@ export class RiverGiftSystem {
         });
         EmitGlobalSound("Rune.Bounty");
         if (e2eEnabled()) print(Marker.giftSpawned(y));
+
+        // Spec 014 rev 2: after the look-don't-touch materialize, the chest
+        // breaks loose and floats along the river — toward the far half, so a
+        // mid-band spawn still travels visibly. The drift PAUSES while a hook
+        // drags the chest (the drag modifier owns its position then).
+        RiverGiftSystem.driftDir = y >= 0 ? -1 : 1;
+        Timers.CreateTimer(GIFT_MATERIALIZE_SECONDS, () => {
+            if (RiverGiftSystem.currentGift() !== chest) return undefined;
+            if (e2eEnabled()) print(Marker.giftDrifting(RiverGiftSystem.driftDir));
+            Timers.CreateTimer(GIFT_DRIFT_TICK, () => {
+                if (RiverGiftSystem.currentGift() !== chest) return undefined;
+                if (chest.HasModifier("modifier_pudge_hook_drag")) return GIFT_DRIFT_TICK;
+                const at = chest.GetAbsOrigin();
+                const step = driftStep(
+                    at.y,
+                    RiverGiftSystem.driftDir,
+                    GIFT_DRIFT_SPEED,
+                    GIFT_DRIFT_TICK,
+                    GIFT_DRIFT_Y_MAX,
+                );
+                RiverGiftSystem.driftDir = step.dir;
+                chest.SetAbsOrigin(GetGroundPosition(Vector(at.x, step.y, 0), chest));
+                return GIFT_DRIFT_TICK;
+            });
+            return undefined;
+        });
         return GIFT_SPAWN_INTERVAL;
     }
 

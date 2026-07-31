@@ -241,6 +241,7 @@ if (Test-Path $log) {
   elseif ($logText -notmatch "\[METEOR\] impact victims [1-9]") { $fail = "meteor never hit anyone (spec 013)" }
   elseif (($lines | Select-String -Pattern "\[GIFT\] dwell ok").Count -lt 3)   { $fail = "gift dwell thin -- <3 [GIFT] dwell ok (spec 014)" }
   elseif ($logText -match "\[GIFT\] dwell violation") { $fail = "gift dwell violation -- a bot sniped a chest young (spec 014)" }
+  elseif (($lines | Select-String -Pattern "\[GIFT\] drifting").Count -lt 3)   { $fail = "gift drift thin -- <3 [GIFT] drifting (spec 014 rev 2: chest must float)" }
   elseif (-not (Test-Path $video))                  { $fail = "no recording produced (ffmpeg missing or died)" }
   else {
     # Final inventory audit must be n/n: every living bot holds >=1 item.

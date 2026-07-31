@@ -24,6 +24,41 @@ export function giftSpawnY(roll: number, maxY: number): number {
     return -maxY + r * 2 * maxY;
 }
 
+/** One drift tick (spec 014 rev 2): the chest floats along the river at
+ *  `speed`, reversing at ±maxY. Returns the new y and (possibly flipped)
+ *  direction. Pure — the engine shell applies the result to the unit. */
+export function driftStep(
+    y: number,
+    dir: 1 | -1,
+    speed: number,
+    dt: number,
+    maxY: number,
+): { y: number; dir: 1 | -1 } {
+    let ny = y + dir * speed * dt;
+    let ndir = dir;
+    if (ny >= maxY) {
+        ny = maxY;
+        ndir = -1;
+    } else if (ny <= -maxY) {
+        ny = -maxY;
+        ndir = 1;
+    }
+    return { y: ny, dir: ndir };
+}
+
+/** Aim lead for hooking a drifting chest: where its y will be when a hook
+ *  fired from `dist` away (at `hookSpeed`) arrives. Non-positive speeds are
+ *  a "no lead" no-op. */
+export function driftLeadY(
+    chestY: number,
+    velocityY: number,
+    dist: number,
+    hookSpeed: number,
+): number {
+    if (hookSpeed <= 0) return chestY;
+    return chestY + velocityY * (dist / hookSpeed);
+}
+
 /**
  * The index of the bot best placed to hook the chest — smallest |y − giftY|,
  * lowest index winning ties. `undefined` on an empty roster.

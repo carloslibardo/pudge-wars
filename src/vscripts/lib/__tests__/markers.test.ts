@@ -52,6 +52,7 @@ describe("Marker", () => {
         expect(Marker.meteorCast(5)).toBe("[METEOR] cast by 5");
         expect(Marker.meteorImpact(2)).toBe("[METEOR] impact victims 2");
         expect(Marker.giftDwellOk(7)).toBe("[GIFT] dwell ok age 7");
+        expect(Marker.giftDrifting(-1)).toBe("[GIFT] drifting dir -1");
     });
 
     it("builds the liveness audit markers (spec 007)", () => {
