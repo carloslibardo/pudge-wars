@@ -9,6 +9,9 @@
 	// `FixupResourceName: Illegal path, missing extension` and the minimap
 	// stayed unpainted — Source 2 wants the full materials/ path WITH .vmat.
 	"material"	"materials/overviews/pudge_wars.vmat"
+	// Stock overview txts also name a simple_material; alias ours to the
+	// same vmat in case the HUD's minimap picks the simple variant.
+	"simple_material"	"materials/overviews/pudge_wars.vmat"
 	"pos_x"		"-2856"
 	"pos_y"		"2856"
 	"scale"		"5.578125"

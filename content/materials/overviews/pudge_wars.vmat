@@ -5,5 +5,7 @@
 Layer0
 {
 	shader "ui.vfx"
+	// Stock materials/overviews/dota.vmat_c carries F_TRANSLUCENT — mirror it.
+	F_TRANSLUCENT 1
 	TextureColor "materials/overviews/pudge_wars.png"
 }

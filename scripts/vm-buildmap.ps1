@@ -44,8 +44,14 @@ python (Join-Path $Repo "mapgen\genoverview.py") `
 if ($LASTEXITCODE -ne 0) { throw "genoverview failed" }
 $contentVmat = Join-Path $Dota "content\dota_addons\pudge_wars\materials\overviews\$MapName.vmat"
 & "$win64\resourcecompiler.exe" -i $contentVmat 2>&1 |
-  Select-Object -Last 5 | Add-Content $result
+  Select-Object -Last 20 | Add-Content $result
 if ($LASTEXITCODE -ne 0) { throw "overview vmat compile failed" }
+# Run 35: the minimap still rendered unpainted with a clean compile log —
+# prove the compiled outputs actually landed in the addon GAME dir (the
+# resource the running game loads), not just that the compiler exited 0.
+$ovDir = Join-Path $Dota "game\dota_addons\pudge_wars\materials\overviews"
+if (-not (Test-Path (Join-Path $ovDir "$MapName.vmat_c"))) { throw "overview vmat_c missing after compile" }
+Get-ChildItem $ovDir | ForEach-Object { "overview out: $($_.Name) $($_.Length) bytes" } | Add-Content $result
 
 $vpk = Join-Path $Dota "game\dota_addons\pudge_wars\maps\$MapName.vpk"
 $vpkItem = Get-Item $vpk

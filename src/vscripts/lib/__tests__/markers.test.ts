@@ -54,6 +54,8 @@ describe("Marker", () => {
         expect(Marker.giftDwellOk(7)).toBe("[GIFT] dwell ok age 7");
         expect(Marker.giftDrifting(-1)).toBe("[GIFT] drifting dir -1");
         expect(Marker.hookShielded(42)).toBe("[GIFT] shield ate hook on 42");
+        expect(Marker.hpLow(3, 31)).toBe("[HP] low bot 3 pct 31");
+        expect(Marker.hpCritical(3, 22)).toBe("[HP] critical bot 3 pct 22");
     });
 
     it("builds the liveness audit markers (spec 007)", () => {

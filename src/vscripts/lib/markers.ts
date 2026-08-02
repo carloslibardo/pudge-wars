@@ -45,6 +45,10 @@ export const Marker = {
     giftDwellOk: (age: number): string => `[GIFT] dwell ok age ${age}`,
     giftDrifting: (dir: number): string => `[GIFT] drifting dir ${dir}`,
     hookShielded: (victim: number): string => `[GIFT] shield ate hook on ${victim}`,
+    /** Opportunity telemetry (run 35): lethal hooks made low-HP states rare,
+     *  so the retreat / iron-gut smoke gates are conditional on these. */
+    hpLow: (id: number, pct: number): string => `[HP] low bot ${id} pct ${pct}`,
+    hpCritical: (id: number, pct: number): string => `[HP] critical bot ${id} pct ${pct}`,
     chainAttached: (pid: number): string => `[CHAIN] attached ${pid}`,
     chainReleased: (pid: number, reason: string): string => `[CHAIN] released ${pid} ${reason}`,
     fxTestRow: (row: number, mode: string, fx: string, y: number): string =>

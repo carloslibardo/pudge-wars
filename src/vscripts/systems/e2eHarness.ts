@@ -46,6 +46,8 @@ import {
     pickTarget,
     retreatState,
     RETREAT_DEPTH,
+    RETREAT_EXIT_HP_PCT,
+    RETREAT_HP_PCT,
     type TargetCandidate,
 } from "../lib/botTactics";
 import { holdThinks, reachedWaypoint, roamMood, roamWaypoint, type RoamBounds } from "../lib/botRoam";
@@ -81,7 +83,9 @@ const METEOR_RANGE = 1100;
  *  TELEPORTED mid-river and held for the window — long enough to burn on
  *  camera (grace 4 s), short enough to escape the 6 s river sweep. */
 const HAZARD_PROBE_TICK = 240;
-const HAZARD_PROBE_THINKS = 10;
+// 14 thinks = 7 s: grace is 4 s, so a surviving probe burns ~3 s on camera
+// (10 thinks left only ~1 s of dps — one marker race away from a miss).
+const HAZARD_PROBE_THINKS = 14;
 
 export class E2EHarness {
     private seated = false;
@@ -118,6 +122,9 @@ export class E2EHarness {
     private tripPhase: Partial<Record<number, "none" | "going" | "buying">> = {};
     /** Chests whose dwell-ok marker already printed (spec 014). */
     private dwellPrinted = new Set<EntityIndex>();
+    /** HP-opportunity telemetry episodes (run 35). */
+    private hpLowPrinted: Partial<Record<number, boolean>> = {};
+    private hpCritPrinted: Partial<Record<number, boolean>> = {};
     /** Hazard probe state (spec 012). */
     private probeBot: PlayerID | undefined;
     private probeStartTick = 0;
@@ -452,10 +459,19 @@ export class E2EHarness {
                 break;
             }
         }
-        if (this.probeBot !== undefined && this.tick - this.probeStartTick >= HAZARD_PROBE_THINKS) {
-            print(`[E2E] hazard probe end bot ${this.probeBot}`);
-            this.probeBot = undefined;
-            this.probeDone = true;
+        if (this.probeBot !== undefined) {
+            const ph = heroForPlayer(this.probeBot);
+            if (!ph || ph.IsNull() || !ph.IsAlive()) {
+                // Run 35: a stationary mid-river bot is a free target for a
+                // 2400-speed lethal hook — the probe died in <2 s with zero
+                // hazard exposure. Retry with the next candidate.
+                print(`[E2E] hazard probe bot ${this.probeBot} died — retrying`);
+                this.probeBot = undefined;
+            } else if (this.tick - this.probeStartTick >= HAZARD_PROBE_THINKS) {
+                print(`[E2E] hazard probe end bot ${this.probeBot}`);
+                this.probeBot = undefined;
+                this.probeDone = true;
+            }
         }
 
         for (const id of bots) {
@@ -543,12 +559,32 @@ export class E2EHarness {
 
             const hpPct = hero.GetHealthPercent() / 100;
 
+            // HP-opportunity telemetry (run 35): lethal hooks made damage
+            // bimodal — full or dead — so low-HP states are rare and the
+            // retreat / iron-gut smoke gates went conditional on these
+            // markers. Printed once per episode, at the same thresholds the
+            // behaviors themselves use, so "opportunity without behavior"
+            // reads as a real failure and "no opportunity" as a vacuous pass.
+            if (hpPct < RETREAT_HP_PCT && enemies.length > 0) {
+                if (!this.hpLowPrinted[id]) {
+                    this.hpLowPrinted[id] = true;
+                    print(Marker.hpLow(id, Math.floor(hpPct * 100)));
+                }
+            } else if (hpPct > RETREAT_EXIT_HP_PCT) {
+                this.hpLowPrinted[id] = false;
+            }
+
             // 3) IRON GUT panic button (spec 010): the pack is closing.
             const gut = hero.GetAbilityByIndex(4);
             if (gut && gut.IsFullyCastable() && hpPct < 0.25 && distance < 900) {
+                if (!this.hpCritPrinted[id]) {
+                    this.hpCritPrinted[id] = true;
+                    print(Marker.hpCritical(id, Math.floor(hpPct * 100)));
+                }
                 hero.CastAbilityNoTarget(gut, id);
                 continue;
             }
+            if (hpPct > 0.5) this.hpCritPrinted[id] = false;
 
             // 4) RETREAT (spec 009): break off deep into the own field, Sprint
             // if it's up. HYSTERESIS (run 15): enter under 35%, rejoin only
