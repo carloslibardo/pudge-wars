@@ -44,6 +44,7 @@ export const Marker = {
     meteorImpact: (victims: number): string => `[METEOR] impact victims ${victims}`,
     giftDwellOk: (age: number): string => `[GIFT] dwell ok age ${age}`,
     giftDrifting: (dir: number): string => `[GIFT] drifting dir ${dir}`,
+    hookShielded: (victim: number): string => `[GIFT] shield ate hook on ${victim}`,
     chainAttached: (pid: number): string => `[CHAIN] attached ${pid}`,
     chainReleased: (pid: number, reason: string): string => `[CHAIN] released ${pid} ${reason}`,
     fxTestRow: (row: number, mode: string, fx: string, y: number): string =>

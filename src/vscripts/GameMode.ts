@@ -37,6 +37,8 @@ import "./modifiers/modifier_pudge_wars_iron_gut";
 import "./modifiers/modifier_pudge_wars_sprint";
 import "./abilities/pudge_meteor";
 import "./modifiers/modifier_pudge_meteor_stun";
+import "./modifiers/modifier_pudge_gift_haste";
+import "./modifiers/modifier_pudge_gift_shield";
 import { ShopPads } from "./systems/shopPads";
 import { precacheFxTestPanel, startFxTestPanel } from "./systems/fxTestPanel";
 

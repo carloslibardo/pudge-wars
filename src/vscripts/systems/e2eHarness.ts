@@ -71,7 +71,8 @@ const SWARM_RANGE = 1500;
 /** Roam area (spec 012): own bank to deep field — bounded to the ZOOMED
  *  camera's view (run 24: waypoints at 2400/2000 roamed off-screen and the
  *  video read as an empty map). */
-const ROAM_BOUNDS: RoamBounds = { bankX: BANK_HOLD_X, maxX: 1800, maxY: 1300 };
+// maxX tracks the halved court (arena halfWidth 2150, spawn line 1500).
+const ROAM_BOUNDS: RoamBounds = { bankX: BANK_HOLD_X, maxX: 1150, maxY: 1300 };
 /** Meteor slam range — item cast range 1200 with a safety margin. */
 const METEOR_RANGE = 1100;
 /** Hazard liveness probe (spec 012): bots CANNOT walk into the river (the
@@ -201,13 +202,25 @@ export class E2EHarness {
             host.AddNoDraw();
             FindClearSpaceForUnit(host, GetGroundPosition(Vector(0, 0, 0), host), true);
             host.Stop();
+            // 2026-08-02 field report: the host hero IS the recording's focus
+            // HUD — unleveled skills and an empty inventory read as a broken
+            // game. Dress the tripod: level everything and buy a real loadout.
+            host.AddExperience(6500, ModifyXpReason.UNSPECIFIED, false, true, 0);
+            Timers.CreateTimer(0.5, () => {
+                if (host.IsNull()) return;
+                this.levelAbilities(0 as PlayerID, host as CDOTA_BaseNPC_Hero);
+                for (const item of ["item_pudge_flesh_boots", "item_pudge_greased_hook", "item_pudge_hook_chain"]) {
+                    host.AddItemByName(item);
+                }
+            });
         });
         // Zoom the locked camera so the WHOLE playfield is on frame (pads at
         // ±1900, lurk roamers, gift spawns). The `+dota_camera_distance`
         // launch convar is CHEAT-GATED and silently ignored (run 26: frames
         // identical to default zoom); the server-side game-mode override is
         // the reliable route — e2e only, real matches keep stock camera.
-        GameRules.GetGameModeEntity().SetCameraDistanceOverride(2400);
+        // 2000 after the width halve (was 2400 for the 8600-wide court).
+        GameRules.GetGameModeEntity().SetCameraDistanceOverride(2000);
         // Perma-day. The day/night cycle renders night rounds near-black, which
         // makes every screenshot the rig captures worthless (landmine L15).
         Timers.CreateTimer(0, () => {

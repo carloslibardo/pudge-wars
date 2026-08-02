@@ -14,8 +14,10 @@ export const KILLS_TO_WIN = 10;
 export const RESPAWN_SECONDS = 5;
 export const PLAYERS_PER_TEAM = 5;
 
-/** Two-sided spawn lines (see `lib/battleLines.ts`), in Hammer units. */
-export const SPAWN_LINE_X = 3000;
+/** Two-sided spawn lines (see `lib/battleLines.ts`), in Hammer units.
+ *  2026-08-02 field report: map WIDTH halved (arena.json halfWidth 4300→2150)
+ *  — tighter court, denser action. Spawn lines follow. */
+export const SPAWN_LINE_X = 1500;
 export const SPAWN_SPACING = 500;
 
 /** Economy: enough starting gold for one cheap item, kills fund the rest. */
@@ -53,7 +55,7 @@ export const RIVER_HAZARD_TICK = 0.5;
 /** Shop pads (spec 013): mid-field buy zones, ON CAMERA (run-24 frames: pads
  *  behind the spawn lines sat outside the locked camera's view — shopping
  *  happened invisibly, the exact field-report complaint). */
-export const SHOP_PAD_X = 1900;
+export const SHOP_PAD_X = 1300;
 export const SHOP_PAD_RADIUS = 400;
 
 /** River gift dwell (spec 014): bots may not hook a chest younger than this. */
@@ -69,6 +71,9 @@ export const GIFT_SPAWN_INTERVAL = 25;
 /** 1000 (was 1400): every chest inside the zoomed camera frame (spec 014). */
 export const GIFT_SPAWN_Y_MAX = 1000;
 export const GIFT_GOLD_PURSE = 250;
+/** Spec 014 rev 3 gift payouts (2026-08-02): haste burst + hook shield. */
+export const GIFT_HASTE_SECONDS = 8;
+export const GIFT_SHIELD_SECONDS = 60;
 /** Spec 014 rev 2 (2026-07-30 field report: "the item on the middle should be
  *  moving"): after materializing, the chest DRIFTS along the river. Slow
  *  enough that straight bot aim still lands (hook flies ~1000 units in

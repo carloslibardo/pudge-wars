@@ -76,7 +76,21 @@ export class modifier_pudge_hook_drag extends BaseModifierMotionHorizontal {
             // motion controller on a removed entity is a stale-handle crash.
             const isGift = RiverGiftSystem.isGift(me);
             this.Destroy();
-            if (isGift) RiverGiftSystem.redeem(me, caster);
+            if (isGift) {
+                RiverGiftSystem.redeem(me, caster);
+            } else if (me.IsRealHero() && me.GetTeamNumber() !== caster.GetTeamNumber()) {
+                // 2026-08-02 field report: ONE landed hook is a kill. The
+                // victim dies at the caster's feet — the drag is the execution.
+                // Same-team saves stay non-lethal, and the modifier is already
+                // destroyed so the corpse is not motion-controlled.
+                ApplyDamage({
+                    victim: me,
+                    attacker: caster,
+                    damage: me.GetHealth() + me.GetMaxHealth(),
+                    damage_type: DamageTypes.PURE,
+                    damage_flags: DamageFlag.NO_SPELL_AMPLIFICATION,
+                });
+            }
         }
     }
 

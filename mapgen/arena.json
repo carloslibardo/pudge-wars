@@ -1,7 +1,7 @@
 {
   "__comment": "Pudge Wars arena geometry — the contract with src/vscripts/config.ts (SPAWN_LINE_X, SPAWN_SPACING, RIVER_BAND). Change one, change the other; kvArena.test.ts pins the pairing.",
-  "play": { "halfWidth": 4300, "halfHeight": 2600 },
+  "play": { "halfWidth": 2150, "halfHeight": 2600 },
   "rim": { "width": 256 },
   "river": { "halfWidth": 430 },
-  "spawn": { "lineX": 3000, "spacing": 500, "perTeam": 5 }
+  "spawn": { "lineX": 1500, "spacing": 500, "perTeam": 5 }
 }

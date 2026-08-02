@@ -2,23 +2,27 @@ import { describe, expect, it } from "vitest";
 import { chooseGift, driftLeadY, driftStep, GIFT_KINDS, giftHunter, giftSpawnY } from "../riverGift";
 
 describe("chooseGift", () => {
-    it("splits [0,1) into three uniform bands", () => {
+    it("splits [0,1) into five uniform bands (spec 014 rev 3)", () => {
         expect(chooseGift(0)).toBe("gold");
-        expect(chooseGift(0.32)).toBe("gold");
-        expect(chooseGift(0.34)).toBe("heal");
-        expect(chooseGift(0.65)).toBe("heal");
-        expect(chooseGift(0.67)).toBe("item");
-        expect(chooseGift(0.99)).toBe("item");
+        expect(chooseGift(0.19)).toBe("gold");
+        expect(chooseGift(0.21)).toBe("heal");
+        expect(chooseGift(0.39)).toBe("heal");
+        expect(chooseGift(0.41)).toBe("item");
+        expect(chooseGift(0.59)).toBe("item");
+        expect(chooseGift(0.61)).toBe("haste");
+        expect(chooseGift(0.79)).toBe("haste");
+        expect(chooseGift(0.81)).toBe("shield");
+        expect(chooseGift(0.99)).toBe("shield");
     });
 
     it("clamps out-of-range rolls instead of indexing past the table", () => {
-        expect(chooseGift(1)).toBe("item");
-        expect(chooseGift(1.5)).toBe("item");
+        expect(chooseGift(1)).toBe("shield");
+        expect(chooseGift(1.5)).toBe("shield");
         expect(chooseGift(-0.5)).toBe("gold");
     });
 
-    it("covers exactly the three designed kinds", () => {
-        expect(GIFT_KINDS).toEqual(["gold", "heal", "item"]);
+    it("covers exactly the five designed kinds", () => {
+        expect(GIFT_KINDS).toEqual(["gold", "heal", "item", "haste", "shield"]);
     });
 });
 

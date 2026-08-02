@@ -1,0 +1,9 @@
+// Minimap overview material (2026-08-02): without this the custom map's
+// minimap background renders WHITE and the hero dots vanish on it.
+// Compiled by scripts/vm-buildmap.ps1 (resourcecompiler); the texture is
+// regenerated from arena.json by mapgen/genoverview.py in the same step.
+Layer0
+{
+	shader "ui.vfx"
+	TextureColor "materials/overviews/pudge_wars.png"
+}

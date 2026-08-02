@@ -1,0 +1,12 @@
+// Minimap world-box registration (2026-08-02). Values come from
+// mapgen/genoverview.py: the texture covers a square of half-extent
+// max(halfWidth, halfHeight) + rim = 2856 centered on the origin.
+// pos_x/pos_y are the world coordinates of the texture's TOP-LEFT corner;
+// scale is world units per texture pixel (5712 / 1024).
+"pudge_wars"
+{
+	"material"	"overviews/pudge_wars"
+	"pos_x"		"-2856"
+	"pos_y"		"2856"
+	"scale"		"5.578125"
+}

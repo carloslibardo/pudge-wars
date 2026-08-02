@@ -22,10 +22,13 @@
 			// Read in TS via GetSpecialValueFor. hook_range must match
 			// AbilityCastRange; shop items add bonuses on top (spec 005).
 			"hook_damage"				"100 150 200 250"
-			"hook_speed"				"1600"
+			// 2026-08-02 field report: hooks snappier (1600 -> 2400) and a
+			// completed drag is LETHAL (see modifier_pudge_hook_drag) — one
+			// landed hook is a kill unless a shield gift eats it.
+			"hook_speed"				"2400"
 			"hook_range"				"1100"
 			"hook_width"				"100"
-			"drag_speed"				"1050"
+			"drag_speed"				"1400"
 		}
 	}
 

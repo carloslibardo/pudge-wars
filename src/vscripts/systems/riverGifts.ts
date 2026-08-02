@@ -17,7 +17,9 @@ import {
     GIFT_DRIFT_TICK,
     GIFT_DRIFT_Y_MAX,
     GIFT_GOLD_PURSE,
+    GIFT_HASTE_SECONDS,
     GIFT_MATERIALIZE_SECONDS,
+    GIFT_SHIELD_SECONDS,
     GIFT_SPAWN_INTERVAL,
     GIFT_SPAWN_Y_MAX,
 } from "../config";
@@ -158,6 +160,14 @@ export class RiverGiftSystem {
                 caster.GetMaxHealth(),
                 undefined,
             );
+        } else if (kind === "haste") {
+            caster.AddNewModifier(caster, undefined, "modifier_pudge_gift_haste", {
+                duration: GIFT_HASTE_SECONDS,
+            });
+        } else if (kind === "shield") {
+            caster.AddNewModifier(caster, undefined, "modifier_pudge_gift_shield", {
+                duration: GIFT_SHIELD_SECONDS,
+            });
         } else {
             // Free catalog item. RandomInt is inclusive on both ends.
             const item = SHOP_ITEMS[RandomInt(0, SHOP_ITEMS.length - 1)];

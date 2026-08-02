@@ -26,7 +26,12 @@ def vertex_index(x, y):
 
 def test_court_is_flat_level_zero():
     heights, _, _ = paint()
-    for x, y in [(0, 0), (-3000, 1000), (3000, -1000), (-4096, 2560), (4096, -2560)]:
+    hw = ARENA["play"]["halfWidth"]
+    hh = ARENA["play"]["halfHeight"]
+    # Arena-relative samples: center, mid-field both sides, near both corners
+    # (grid-snapped inward so the sample stays inside the play box).
+    inx, iny = hw - CELL, hh - CELL
+    for x, y in [(0, 0), (-hw / 2, hh / 3), (hw / 2, -hh / 3), (-inx, iny), (inx, -iny)]:
         assert heights[vertex_index(x, y)] == terrain.COURT_LEVEL, (x, y)
 
 

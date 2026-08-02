@@ -5,6 +5,7 @@ import { Marker } from "../lib/markers";
 import { GIFT_MATERIALIZE_SECONDS } from "../config";
 import { e2eEnabled } from "../systems/e2eFlags";
 import { modifier_pudge_hook_drag } from "../modifiers/modifier_pudge_hook_drag";
+import { modifier_pudge_gift_shield } from "../modifiers/modifier_pudge_gift_shield";
 import { HookChain } from "../systems/hookChain";
 import { RiverGiftSystem } from "../systems/riverGifts";
 
@@ -139,6 +140,17 @@ export class pudge_meat_hook extends BaseAbility {
                 }
             }
             modifier_pudge_hook_drag.apply(target, caster, this, {});
+            return true;
+        }
+
+        // River shield gift (spec 014 rev 3): eats the hook instead of a latch
+        // — the counterplay to lethal drags. Consume BEFORE damage: a shielded
+        // hero takes nothing, and the chain reels back as on a miss.
+        const shield = target.FindModifierByName("modifier_pudge_gift_shield");
+        if (shield !== undefined && target.GetTeamNumber() !== caster.GetTeamNumber()) {
+            (shield as modifier_pudge_gift_shield).consume();
+            HookChain.retract(caster, (this.GetSpecialValueFor("hook_speed") + this.itemHookBonus(caster).speed) * 2);
+            if (e2eEnabled()) print(Marker.hookShielded(target.entindex()));
             return true;
         }
 

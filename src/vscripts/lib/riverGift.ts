@@ -8,11 +8,14 @@
  * the thin engine shell that creates units and grants rewards.
  */
 
-export type GiftKind = "gold" | "heal" | "item";
+/** 2026-08-02 field report rev: the river pays out five customized bonuses —
+ *  gold purse, full heal, free catalog item, a haste burst, and a SHIELD that
+ *  eats the next enemy hook (the counterplay to lethal drags). */
+export type GiftKind = "gold" | "heal" | "item" | "haste" | "shield";
 
-export const GIFT_KINDS: readonly GiftKind[] = ["gold", "heal", "item"];
+export const GIFT_KINDS: readonly GiftKind[] = ["gold", "heal", "item", "haste", "shield"];
 
-/** Uniform three-way choice. `roll` in [0, 1); out-of-range rolls clamp. */
+/** Uniform five-way choice. `roll` in [0, 1); out-of-range rolls clamp. */
 export function chooseGift(roll: number): GiftKind {
     const r = Math.max(0, Math.min(0.999999, roll));
     return GIFT_KINDS[Math.floor(r * GIFT_KINDS.length)];

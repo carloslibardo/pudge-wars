@@ -36,6 +36,17 @@ $contentVmap = Join-Path $Dota "content\dota_addons\pudge_wars\maps\$MapName.vma
   Select-Object -Last 8 | Add-Content $result
 if ($LASTEXITCODE -ne 0) { throw "resourcecompiler failed" }
 
+# 4) minimap overview (2026-08-02): regenerate the texture from arena.json and
+#    compile the overview material, or the minimap background renders WHITE.
+python (Join-Path $Repo "mapgen\genoverview.py") `
+  --arena (Join-Path $Repo "mapgen\arena.json") `
+  --out (Join-Path $Repo "content\materials\overviews\$MapName.png") 2>&1 | Add-Content $result
+if ($LASTEXITCODE -ne 0) { throw "genoverview failed" }
+$contentVmat = Join-Path $Dota "content\dota_addons\pudge_wars\materials\overviews\$MapName.vmat"
+& "$win64\resourcecompiler.exe" -i $contentVmat 2>&1 |
+  Select-Object -Last 5 | Add-Content $result
+if ($LASTEXITCODE -ne 0) { throw "overview vmat compile failed" }
+
 $vpk = Join-Path $Dota "game\dota_addons\pudge_wars\maps\$MapName.vpk"
 $vpkItem = Get-Item $vpk
 "vpk: $($vpkItem.Length) bytes, $($vpkItem.LastWriteTime)" | Add-Content $result
