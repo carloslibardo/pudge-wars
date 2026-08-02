@@ -22,8 +22,14 @@ export interface HookThreat {
     readonly team: number;
 }
 
-/** Rough hero hull clearance added to the hook's own radius. */
-export const SELF_RADIUS = 60;
+/** Rough hero hull clearance added to the hook's own radius.
+ *  Run 37: hooks are aimed with INTERCEPT LEAD (spec 009), so the flight
+ *  line passes through the target's predicted position — up to ~165 units
+ *  from where the strafing target stands NOW (300 u/s × 0.55 s). At 60 the
+ *  closest-approach test rejected nearly every led shot as "passes wide"
+ *  and [DODGE] flatlined (~1 per 100 hooks). 150 covers the lead envelope;
+ *  the 75% dodge roll still trims over-triggering. */
+export const SELF_RADIUS = 150;
 /** Threats further out than this are ignored (archer dodge.ts). */
 export const MAX_TIME_TO_IMPACT = 1.5;
 /** Perpendicular escape step (archer dodge.ts). */
