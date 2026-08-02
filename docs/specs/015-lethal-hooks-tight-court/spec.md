@@ -27,8 +27,23 @@ with an aegis flash.
 
 ## Acceptance
 
-- [ ] `[KILL]` scores follow drag completions (a completed enemy drag = a kill)
-- [ ] `[GIFT] shield ate hook` appears when a shielded hero is hooked
-- [ ] Frames: spawn rows inside the narrow court; minimap shows the painted
-      overview (not white); host HUD shows leveled skills + items
-- [ ] Engine surprises → CLAUDE.md
+- [x] `[KILL]` scores follow drag completions (run 34: 17 kills, every enemy
+      `[DRAG] complete` scored the same second; run 38: 100 hooks, PASS)
+- [x] `[GIFT] shield ate hook` appears when a shielded hero is hooked
+      (run 35: `redeemed shield by 4` → `shield ate hook on 238`)
+- [x] Frames: narrow court + tight camera (run 34+), minimap painted
+      (run 37 — vmat param is `Texture`, see CLAUDE.md), host HUD leveled
+      with boots/greased hook/hook chain (run 34+)
+- [x] Engine surprises → CLAUDE.md (vmat `Texture` param + conquest
+      template; lead-envelope dodge geometry; opportunity-gated
+      retreat/iron-gut smoke gates)
+
+## Run ledger (2026-08-02)
+
+| Run | Verdict | What it taught |
+|---|---|---|
+| 34 | FAIL (dodge) | lethal hooks proven; 97 s match starved gates; minimap txt needs `.vmat` extension; 0.4 s reaction > whole hook flight |
+| 35 | FAIL (retreat) | meteor poke + shield loop proven; damage is bimodal → HP gates went opportunity-conditional; probe bot got executed mid-river |
+| 36 | PASS | hazard probe retry works; minimap still grey — compiled vmat bound default_tga |
+| 37 | FAIL (dodge flake) | minimap PAINTED (`Texture` param); dodge ~1/100 traced to intercept lead vs closest-approach tolerance |
+| 38 | PASS | SELF_RADIUS 150: dodge alive; full green |

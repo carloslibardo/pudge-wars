@@ -173,6 +173,24 @@ place.
   `batrider_flaming_lasso.vpcf` (droop arc). Never swap a tether particle
   blind — re-run the panel (`systems/fxTestPanel.ts`, `PW_FXTEST=1
   bash scripts/vm.sh smoke`) and read the frame at horn+50 s.
+- **The minimap overview vmat's texture param is `Texture` — NOT
+  `TextureColor`.** resourcecompiler binds an UNKNOWN param to
+  `materials/default/default_tga` (solid grey), reports "OK: compiled", and
+  the minimap renders a grey blob (runs 34–36; three VM cycles). The overview
+  registration txt also needs the full `materials/overviews/<map>.vmat` path
+  (extensionless logs `FixupResourceName: Illegal path` — the one loud clue).
+  Authoritative template on the VM: Valve's conquest addon,
+  `content/dota_addons/conquest/materials/overviews/` (vmat + a
+  clamp/nocompress/nomip texture sidecar txt). PNG input works; TGA not
+  required. Verify a compile by extracting strings from the emitted vmat_c —
+  it must reference `<map>_png_<hash>.vtex`, not default_tga.
+- **Skillshot bots aim with intercept lead — dodge geometry must widen to
+  the lead envelope.** The hook's flight line passes through the target's
+  PREDICTED position, up to ~165 units from where the strafing target stands
+  now; a closest-approach tolerance of radius+60 rejected nearly every led
+  shot as "passes wide" and [DODGE] flatlined at ~1/100 hooks across three
+  runs (`SELF_RADIUS` 150 fixed it). The failure smelled like dice; the fix
+  was geometry — compute the expected trigger rate before blaming variance.
 - **The IAP tunnel kills any single scp stream around ~59 MB**
   (ConnectionReconnectTimeout; retrying whole-file dies at the same offset).
   Pull big artifacts (match mp4s ~190 MB) chunked: split into ≤40 MB parts on
