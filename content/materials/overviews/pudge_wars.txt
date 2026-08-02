@@ -1,0 +1,10 @@
+// Texture-compile sidecar for pudge_wars.png (conquest cp_forest.txt
+// pattern): clamp the overview at its edges and skip compression/mips so
+// the minimap stays crisp instead of DXT-smeared.
+"settings"
+{
+	"clampu" "1"
+	"clampv" "1"
+	"nocompress" "1"
+	"nomip" "1"
+}

@@ -1,11 +1,15 @@
 // Minimap overview material (2026-08-02): without this the custom map's
-// minimap background renders WHITE and the hero dots vanish on it.
+// minimap background renders WHITE/grey and the hero dots float on nothing.
 // Compiled by scripts/vm-buildmap.ps1 (resourcecompiler); the texture is
 // regenerated from arena.json by mapgen/genoverview.py in the same step.
-Layer0
+//
+// Run 36 forensics: the texture param is "Texture" — NOT "TextureColor".
+// With an unknown param the compiler silently binds materials/default/
+// default_tga (solid grey) and reports OK. Template: Valve's own conquest
+// addon, content/dota_addons/conquest/materials/overviews/cp_forest.vmat.
+"Layer0"
 {
-	shader "ui.vfx"
-	// Stock materials/overviews/dota.vmat_c carries F_TRANSLUCENT — mirror it.
-	F_TRANSLUCENT 1
-	TextureColor "materials/overviews/pudge_wars.png"
+	"Shader"	"ui.vfx"
+	"F_TRANSLUCENT"	"0"
+	"Texture"	"materials/overviews/pudge_wars.png"
 }
