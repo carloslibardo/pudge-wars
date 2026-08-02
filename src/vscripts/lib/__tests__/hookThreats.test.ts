@@ -34,8 +34,8 @@ describe("registry", () => {
 describe("incomingThreat", () => {
     it("sees an enemy hook flying at us after the reaction delay", () => {
         const t = hook();
-        expect(incomingThreat([450, 0], 2, [t], 100.2)).toBeUndefined(); // < 400ms reaction
-        expect(incomingThreat([450, 0], 2, [t], 100.5)).toBe(t);
+        expect(incomingThreat([450, 0], 2, [t], 100.1)).toBeUndefined(); // < 150ms reaction
+        expect(incomingThreat([450, 0], 2, [t], 100.2)).toBe(t);
     });
 
     it("ignores own-team hooks and ones that pass wide", () => {

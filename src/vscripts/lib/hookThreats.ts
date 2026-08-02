@@ -28,8 +28,11 @@ export const SELF_RADIUS = 60;
 export const MAX_TIME_TO_IMPACT = 1.5;
 /** Perpendicular escape step (archer dodge.ts). */
 export const DODGE_STEP = 250;
-/** Reaction delay before a bot may "see" a threat (medium tier). */
-export const REACTION_SECONDS = 0.4;
+/** Reaction delay before a bot may "see" a threat (medium tier).
+ *  Run 34: at hook speed 2400 and range 1100 the whole flight is 0.458 s —
+ *  the old 0.4 s delay left a ≤0.06 s dodge window sampled on a 0.5 s think,
+ *  so [DODGE] flatlined. 0.15 s keeps the reflex honest AND reachable. */
+export const REACTION_SECONDS = 0.15;
 
 const registry: HookThreat[] = [];
 

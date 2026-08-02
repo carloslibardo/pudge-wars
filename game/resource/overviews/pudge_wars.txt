@@ -5,7 +5,10 @@
 // scale is world units per texture pixel (5712 / 1024).
 "pudge_wars"
 {
-	"material"	"overviews/pudge_wars"
+	// Run 34: the bare "overviews/pudge_wars" form logged
+	// `FixupResourceName: Illegal path, missing extension` and the minimap
+	// stayed unpainted — Source 2 wants the full materials/ path WITH .vmat.
+	"material"	"materials/overviews/pudge_wars.vmat"
 	"pos_x"		"-2856"
 	"pos_y"		"2856"
 	"scale"		"5.578125"

@@ -642,32 +642,35 @@ export class E2EHarness {
                     targetSide !== undefined &&
                     onWrongSide(targetSide, target.GetAbsOrigin().x, RIVER_BAND.max) &&
                     distance < SWARM_RANGE;
+                // METEOR (spec 013, rev 2026-08-02) — never at a mid-drag
+                // victim (it moves ~900 units during the fall delay:
+                // guaranteed miss); lead a walking one by its sampled velocity
+                // over the delay. No longer intruder-gated: lethal drags mean
+                // a hooked enemy dies on arrival, so intruders stopped
+                // existing and the meteor is now a cross-river poke.
+                const meteor = this.findMeteor(hero);
+                if (
+                    meteor &&
+                    meteor.IsFullyCastable() &&
+                    distance <= METEOR_RANGE &&
+                    !target.HasModifier("modifier_pudge_hook_drag")
+                ) {
+                    const delay = meteor.GetSpecialValueFor("delay");
+                    const vel = this.velocity[target.GetPlayerOwnerID()] ?? [0, 0];
+                    const tp = target.GetAbsOrigin();
+                    ExecuteOrderFromTable({
+                        UnitIndex: hero.entindex(),
+                        OrderType: UnitOrder.CAST_POSITION,
+                        AbilityIndex: meteor.entindex(),
+                        Position: GetGroundPosition(
+                            Vector(tp.x + vel[0] * delay, tp.y + vel[1] * delay, 0),
+                            hero,
+                        ),
+                        Queue: false,
+                    });
+                    continue;
+                }
                 if (intruder) {
-                    // METEOR (spec 013) — never at a mid-drag victim (it moves
-                    // ~900 units during the fall delay: guaranteed miss); lead
-                    // a walking one by its sampled velocity over the delay.
-                    const meteor = this.findMeteor(hero);
-                    if (
-                        meteor &&
-                        meteor.IsFullyCastable() &&
-                        distance <= METEOR_RANGE &&
-                        !target.HasModifier("modifier_pudge_hook_drag")
-                    ) {
-                        const delay = meteor.GetSpecialValueFor("delay");
-                        const vel = this.velocity[target.GetPlayerOwnerID()] ?? [0, 0];
-                        const tp = target.GetAbsOrigin();
-                        ExecuteOrderFromTable({
-                            UnitIndex: hero.entindex(),
-                            OrderType: UnitOrder.CAST_POSITION,
-                            AbilityIndex: meteor.entindex(),
-                            Position: GetGroundPosition(
-                                Vector(tp.x + vel[0] * delay, tp.y + vel[1] * delay, 0),
-                                hero,
-                            ),
-                            Queue: false,
-                        });
-                        continue;
-                    }
                     const sprint = hero.GetAbilityByIndex(5);
                     if (sprint && sprint.IsFullyCastable()) hero.CastAbilityNoTarget(sprint, id);
                     const range = hook ? hook.GetSpecialValueFor("hook_range") * 0.95 : 0;
