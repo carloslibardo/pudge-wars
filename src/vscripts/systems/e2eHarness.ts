@@ -185,6 +185,11 @@ export class E2EHarness {
         // not the XP curve.
         Timers.CreateTimer(1, () => {
             for (const id of this.bots()) {
+                // The HOST levels the honest way (2026-08-03 field report):
+                // the camera is on its HUD, and a level-9 loadout at the horn
+                // reads as a broken game. Kills feed it XP; levelAbilities
+                // spends the points on camera as they arrive.
+                if (id === 0) continue;
                 const hero = heroForPlayer(id);
                 if (hero && !hero.IsNull()) {
                     // 6500 XP ≈ level 9: one point in all six abilities plus
@@ -195,33 +200,16 @@ export class E2EHarness {
                 }
             }
         });
-        // Camera tripod (e2e only): the rig launches with +dota_camera_lock 1,
-        // which follows the HOST's hero — park that hero mid-river as an
-        // invisible, invulnerable tripod so the locked camera frames both
-        // banks and every hook crossing. Engine-convar lock is the ONE
-        // camera technique that reliably moves the tools client in a match
-        // recording (archer-wars frame audits 2026-07-09/11/14: both the
+        // Camera (e2e only): the rig launches with +dota_camera_lock 1, which
+        // follows the HOST's hero. 2026-08-03 field report: that hero is no
+        // longer an invisible tripod parked mid-river — it PLAYS (same AI as
+        // the fake clients), so the locked camera gives a centered
+        // player's-POV follow shot for free. Engine-convar lock remains the
+        // ONE camera technique that reliably moves the tools client in a
+        // match recording (archer-wars frame audits 2026-07-09/11/14: both
         // server SetCameraTarget and the client GameUI routes stayed parked).
-        Timers.CreateTimer(2, () => {
-            const host = heroForPlayer(0 as PlayerID);
-            if (!host || host.IsNull()) return;
-            host.AddNewModifier(host, undefined, "modifier_invulnerable", {});
-            host.AddNoDraw();
-            FindClearSpaceForUnit(host, GetGroundPosition(Vector(0, 0, 0), host), true);
-            host.Stop();
-            // 2026-08-02 field report: the host hero IS the recording's focus
-            // HUD — unleveled skills and an empty inventory read as a broken
-            // game. Dress the tripod: level everything and buy a real loadout.
-            host.AddExperience(6500, ModifyXpReason.UNSPECIFIED, false, true, 0);
-            Timers.CreateTimer(0.5, () => {
-                if (host.IsNull()) return;
-                this.levelAbilities(0 as PlayerID, host as CDOTA_BaseNPC_Hero);
-                for (const item of ["item_pudge_flesh_boots", "item_pudge_greased_hook", "item_pudge_hook_chain"]) {
-                    host.AddItemByName(item);
-                }
-            });
-        });
-        // Zoom the locked camera so the WHOLE playfield is on frame (pads at
+        //
+        // Zoom the locked camera so the action around the star is on frame
         // ±1900, lurk roamers, gift spawns). The `+dota_camera_distance`
         // launch convar is CHEAT-GATED and silently ignored (run 26: frames
         // identical to default zoom); the server-side game-mode override is
@@ -237,13 +225,16 @@ export class E2EHarness {
         Timers.CreateTimer(THINK_INTERVAL, () => this.think());
     }
 
-    /** Player ids of the seated fake clients — never a human. */
+    /** Player ids the harness drives: the seated fake clients PLUS the host.
+     *  2026-08-03 field report: the host's hero is no longer a parked camera
+     *  tripod — it is a real combatant the locked camera follows, so the
+     *  same AI drives it and its HUD shows earned levels and bought items. */
     private bots(): PlayerID[] {
         const ids: PlayerID[] = [];
         for (let i = 0; i < MAX_PLAYER_SLOTS; i++) {
             const id = i as PlayerID;
             if (!PlayerResource.IsValidPlayerID(id)) continue;
-            if (!PlayerResource.IsFakeClient(id)) continue;
+            if (id !== 0 && !PlayerResource.IsFakeClient(id)) continue;
             ids.push(id);
         }
         return ids;
@@ -448,6 +439,9 @@ export class E2EHarness {
         // burn on camera, release it before the sweep would wash it.
         if (!this.probeDone && this.probeBot === undefined && this.tick >= HAZARD_PROBE_TICK) {
             for (const id of bots) {
+                // Never the host: it is the camera's star (2026-08-03) — a
+                // stationary burn mid-river is bad footage and a free hook.
+                if (id === 0) continue;
                 const h = heroForPlayer(id);
                 if (!h || h.IsNull() || !h.IsAlive() || h.IsCurrentlyHorizontalMotionControlled()) continue;
                 const y = Math.max(-1000, Math.min(1000, h.GetAbsOrigin().y));
@@ -841,10 +835,8 @@ export class E2EHarness {
             const other = HeroList.GetHero(i);
             if (!other || other.IsNull() || !other.IsAlive()) continue;
             if (other.GetTeamNumber() === hero.GetTeamNumber()) continue;
-            // Bots fight bots: the host's hero is the invisible camera tripod
-            // parked mid-river, not a target — without this the whole enemy
-            // team hooks at an invulnerable ghost all match.
-            if (!PlayerResource.IsFakeClient(other.GetPlayerOwnerID())) continue;
+            // 2026-08-03: the host's hero plays now (no more invisible
+            // tripod), so every opposing hero — fake or host — is a target.
             enemies.push(other);
         }
         return enemies;
