@@ -22,12 +22,13 @@ walks onto a shop pad and buys them.
 | Honest items | Host removed from the conjured loadout; the shop-trip AI buys at the pad with earned gold. |
 | Hazard probe | Never picks the host — a stationary mid-river burn is bad footage and a free hook. |
 
-## Acceptance
+## Acceptance (run 39, artifacts/smoke/20260803T150008Z — SMOKE PASS)
 
-- [ ] `[SHOP] purchased <item> by 0` appears (gate) — host bought, not conjured
-- [ ] `[E2E] bot 0 leveled …` entries SPREAD across the match timeline, not
-      clustered at the horn
-- [ ] Frames: host pudge centered; HUD level grows between early and late
-      frames; inventory fills over time
-- [ ] Full smoke still green (host as a 10th combatant must not break pace
-      or liveness gates)
+- [x] `[SHOP] purchased <item> by 0` — 7 buys (3× hook_chain + 2× greased
+      hook are DESIGNED range/speed stacking, catalog caps enforced; plus
+      2× rancid flask)
+- [x] `[E2E] bot 0 leveled …` spread 14:55:11 → 14:57:32+ (hook → rot →
+      flesh → vanish → gut → sprint → hook 2), none clustered at the horn
+- [x] Frames: host centered mid-hook at 260 s (L8, K/D/A 3/4/2, 5 item
+      slots filled); early frame L2 with one skill + one item
+- [x] Full smoke green — host as 10th combatant broke nothing
