@@ -49,6 +49,7 @@ describe("Marker", () => {
         expect(Marker.hazardTick(40, 300)).toBe("[HAZARD] tick 40 on 300");
         expect(Marker.shopTripStart(5, 1200)).toBe("[SHOP] trip start bot 5 gold 1200");
         expect(Marker.shopTripArrive(5)).toBe("[SHOP] trip arrive bot 5");
+        expect(Marker.shopPadsDrawn(2)).toBe("[SHOP] pads drawn 2");
         expect(Marker.meteorCast(5)).toBe("[METEOR] cast by 5");
         expect(Marker.meteorImpact(2)).toBe("[METEOR] impact victims 2");
         expect(Marker.giftDwellOk(7)).toBe("[GIFT] dwell ok age 7");

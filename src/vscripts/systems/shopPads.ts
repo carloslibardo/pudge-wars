@@ -9,6 +9,8 @@
  */
 import { SHOP_PAD_RADIUS, SHOP_PAD_X } from "../config";
 import { sideForTeam } from "../lib/battleLines";
+import { Marker } from "../lib/markers";
+import { e2eEnabled } from "./e2eFlags";
 
 /** VPK-verified 2026-07-29: `rune_regeneration` under `particles/generic_gameplay`. */
 const PAD_FX = "particles/generic_gameplay/rune_regeneration.vpcf";
@@ -21,7 +23,28 @@ const KEEPER_MODEL: Record<number, string> = {
 };
 
 export class ShopPads {
+    private drawn = false;
+
     constructor() {
+        // Draw at the horn, NOT here-and-now. This constructor runs at
+        // Activate, while the server sits in INIT ~15 s before the first
+        // client connects — and a particle create is networked only to the
+        // clients connected at that instant, so pads drawn from the
+        // constructor render for NOBODY, silently (2026-08-03 smoke: every
+        // [SHOP] marker green, zero pad FX on any frame). GAME_IN_PROGRESS is
+        // the same timing the frame-verified gift FX use.
+        ListenToGameEvent(
+            "game_rules_state_change",
+            () => {
+                if (GameRules.State_Get() === GameState.GAME_IN_PROGRESS) this.draw();
+            },
+            undefined,
+        );
+    }
+
+    private draw(): void {
+        if (this.drawn) return;
+        this.drawn = true;
         for (const side of [-1, 1]) {
             const pos = GetGroundPosition(Vector(side * SHOP_PAD_X, 0, 0), undefined);
             // The shopkeeper is the landmark — models always render (unlike
@@ -41,6 +64,7 @@ export class ShopPads {
             );
             ParticleManager.SetParticleControl(ring, 0, pos);
             ParticleManager.SetParticleControl(ring, 1, Vector(SHOP_PAD_RADIUS, 0, 0));
+            ParticleManager.ReleaseParticleIndex(ring);
             // A ring of glows reads as a ZONE at video scale, not a dot.
             for (const [ox, oy] of [
                 [0, 0],
@@ -58,6 +82,7 @@ export class ShopPads {
                 ParticleManager.ReleaseParticleIndex(p);
             }
         }
+        if (e2eEnabled()) print(Marker.shopPadsDrawn(2));
     }
 
     /** The pad position for a team, or undefined for spectator-ish teams. */

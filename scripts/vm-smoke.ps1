@@ -245,6 +245,9 @@ if (Test-Path $log) {
   # Spec 016 (2026-08-03): the host pudge PLAYS on camera — its items must be
   # bought at the pad (HUD shows the purchase), never conjured by script.
   elseif ($logText -notmatch "\[SHOP\] purchased \S+ by 0") { $fail = "host pudge never bought an item (spec 016)" }
+  # Spec 013 visibility fix (2026-08-05): pad visuals must be created at the
+  # horn, with clients connected — constructor-time FX render for nobody.
+  elseif ($logText -notmatch "\[SHOP\] pads drawn 2") { $fail = "no [SHOP] pads drawn 2 -- pad visuals not created at the horn (spec 013 visibility)" }
   elseif ($logText -notmatch "\[METEOR\] cast")     { $fail = "no [METEOR] cast -- meteor item never used (spec 013)" }
   elseif ($logText -notmatch "\[METEOR\] impact victims [1-9]") { $fail = "meteor never hit anyone (spec 013)" }
   elseif (($lines | Select-String -Pattern "\[GIFT\] dwell ok").Count -lt 3)   { $fail = "gift dwell thin -- <3 [GIFT] dwell ok (spec 014)" }

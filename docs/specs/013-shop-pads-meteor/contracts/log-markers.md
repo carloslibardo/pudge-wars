@@ -11,6 +11,7 @@ e2e only.
 | `[SHOP] purchased <item> by <pid>` | existing marker — now fires only on-pad for bots |
 | `[METEOR] cast by <pid>` | meteor item activated at a point |
 | `[METEOR] impact victims <n>` | impact resolved, n heroes damaged/stunned |
+| `[SHOP] pads drawn 2` | pad visuals created at the horn (clients connected — FX drawn at Activate render for nobody) |
 
 Gates (vm-smoke):
 - `[SHOP] trip arrive` ≥ 6

@@ -191,6 +191,14 @@ place.
   shot as "passes wide" and [DODGE] flatlined at ~1/100 hooks across three
   runs (`SELF_RADIUS` 150 fixed it). The failure smelled like dice; the fix
   was geometry — compute the expected trigger rate before blaming variance.
+- **A particle is networked only to clients connected at the instant it is
+  created.** World FX spawned at `Activate`/GameMode-construction run while the
+  server sits in INIT, ~15 s before the first client connects — they render for
+  NOBODY, silently, while every server-side log marker stays green (the spec-013
+  shop pads: 2026-08-03 smoke had all `[SHOP]` markers and zero pad FX on any
+  frame). Create persistent world visuals at `GAME_IN_PROGRESS` (the
+  frame-verified gift-FX timing) and print a draw marker so the rig can prove
+  the timing.
 - **The IAP tunnel kills any single scp stream around ~59 MB**
   (ConnectionReconnectTimeout; retrying whole-file dies at the same offset).
   Pull big artifacts (match mp4s ~190 MB) chunked: split into ≤40 MB parts on

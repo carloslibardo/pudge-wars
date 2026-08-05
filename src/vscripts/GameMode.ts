@@ -92,6 +92,12 @@ export class GameMode {
         PrecacheResource("particle", "particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf", context);
         PrecacheResource("particle", "particles/items2_fx/teleport_end.vpcf", context);
         PrecacheResource("particle", "particles/generic_gameplay/rune_regeneration.vpcf", context);
+        // Shop-pad landmarks (spec 013 visibility fix): un-precached models
+        // spawn as ERROR/invisible and un-precached particles render nothing,
+        // both silently.
+        PrecacheResource("model", "models/heroes/shopkeeper/shopkeeper.vmdl", context);
+        PrecacheResource("model", "models/heroes/shopkeeper_dire/shopkeeper_dire.vmdl", context);
+        PrecacheResource("particle", "particles/ui_mouseactions/range_display.vpcf", context);
         // FX candidate panel (spec 011 diagnostic; only draws with
         // +pudge_wars_fxtest 1, but un-precached particles render nothing).
         precacheFxTestPanel(context);
@@ -116,6 +122,8 @@ export class GameMode {
         new RiverSystem();
         new RiverGiftSystem();
         new SideLockSystem();
+        // Registers now, but DRAWS at the horn — pad FX created this early
+        // (before any client connects) would render for nobody (see shopPads.ts).
         new ShopPads();
     }
 

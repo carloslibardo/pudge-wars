@@ -40,6 +40,7 @@ export const Marker = {
     hazardTick: (dps: number, ent: number): string => `[HAZARD] tick ${dps} on ${ent}`,
     shopTripStart: (pid: number, gold: number): string => `[SHOP] trip start bot ${pid} gold ${gold}`,
     shopTripArrive: (pid: number): string => `[SHOP] trip arrive bot ${pid}`,
+    shopPadsDrawn: (pads: number): string => `[SHOP] pads drawn ${pads}`,
     meteorCast: (pid: number): string => `[METEOR] cast by ${pid}`,
     meteorImpact: (victims: number): string => `[METEOR] impact victims ${victims}`,
     giftDwellOk: (age: number): string => `[GIFT] dwell ok age ${age}`,
