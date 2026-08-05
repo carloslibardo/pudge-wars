@@ -56,6 +56,7 @@ export const Marker = {
         `[FXTEST] row ${row} mode ${mode} y ${y} fx ${fx}`,
     fxTestDone: (rows: number): string => `[FXTEST] panel done ${rows} rows`,
     dodgeSidestep: (pid: number): string => `[DODGE] sidestep by ${pid}`,
+    dodgeVanish: (pid: number): string => `[DODGE] vanish by ${pid}`,
     retreat: (pid: number, hpPct: number): string => `[RETREAT] bot ${pid} hp ${hpPct}`,
     skillUsed: (name: string, pid: number): string => `[SKILL] used ${name} by ${pid}`,
     killScored: (team: number, total: number): string =>

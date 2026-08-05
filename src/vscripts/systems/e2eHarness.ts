@@ -94,6 +94,10 @@ export class E2EHarness {
     private owned: Partial<Record<number, Record<string, number>>> = {};
     /** Think counter — the time source for strafing and the liveness windows. */
     private tick = 0;
+    // Strictly alternates the two dodge actions across the whole match. Tick
+    // parity looked equivalent and is not: dodge events cluster in the same
+    // few ticks of a hook volley, so a whole match can land on one phase.
+    private dodgeCount = 0;
     /** Per-bot travel accumulated this liveness window (spec 007). */
     private travel: Partial<Record<number, number>> = {};
     private prevPos: Partial<Record<number, [number, number]>> = {};
@@ -540,19 +544,22 @@ export class E2EHarness {
             // or Vanish out of it when the own hook is down anyway.
             const threat = incomingThreat([origin.x, origin.y], hero.GetTeamNumber(), threats, now);
             if (threat && dodgeRoll(id, this.tick)) {
-                // Vanish alternates with the sidestep whenever it is castable
-                // (not only when the own hook is down): at 2400 hook speed a
-                // threat window is ~0.46 s and a whole 25-kill match surfaces
-                // only a handful of dodge events — run 40 had 6, and the
-                // hook-down coincidence never happened, zero vanishes. Parity
-                // keeps roughly half the dodges as visible sidesteps.
+                // Two dodge actions, strictly alternating, sidestep first. A
+                // 25-kill match only surfaces a handful of dodge events (run
+                // 40: 6, run 41: 4) at 2400 hook speed, so any probabilistic
+                // split can shut one branch out for a whole match — run 41
+                // gated on "own hook down OR even tick", and with 129 hooks
+                // fired the own-hook-down clause was true nearly always: 4
+                // dodges, 4 vanishes, zero sidesteps.
                 const vanish = hero.GetAbilityByIndex(3);
-                if (
-                    vanish &&
-                    vanish.IsFullyCastable() &&
-                    (!hook || !hook.IsFullyCastable() || this.tick % 2 === 0)
-                ) {
+                const takeVanish = this.dodgeCount % 2 === 1;
+                this.dodgeCount += 1;
+                if (vanish && vanish.IsFullyCastable() && takeVanish) {
                     hero.CastAbilityNoTarget(vanish, id);
+                    // The reflex layer fired — say so on the vanish branch too.
+                    // Run 41 printed nothing here, so a live reflex layer that
+                    // happened to prefer vanish read to the gate as dead code.
+                    print(Marker.dodgeVanish(id));
                 } else {
                     const [ex, ey] = dodgeStep([origin.x, origin.y], threat);
                     this.move(hero, ex, ey); // side-lock clamps the step to our bank
