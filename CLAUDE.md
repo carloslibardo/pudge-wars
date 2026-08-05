@@ -199,6 +199,20 @@ place.
   frame). Create persistent world visuals at `GAME_IN_PROGRESS` (the
   frame-verified gift-FX timing) and print a draw marker so the rig can prove
   the timing.
+- **A smoke gate sees markers, not behaviour — so every BRANCH of a gated
+  behaviour must print.** The dodge reflex has two actions (sidestep, Vanish)
+  and only the sidestep printed `[DODGE]`, so run 41 failed with "the reflex
+  layer is dead code" while the layer was firing normally and picking Vanish
+  four times out of four. A gate's real subject is the union of the markers
+  under it; adding a branch silently narrows every gate above it. Two
+  corollaries, both paid for in that run: when a run must OBSERVE both branches,
+  alternate them on a counter, never on a probability — dodge events are rare
+  (4–6 a match) and cluster inside hook volleys, so a tick-parity split
+  correlated with the event handed all four to one side (and the parity term
+  was dead anyway, short-circuited by an `||` that was true on 129 of 129
+  hooks). And write gate messages as an ABSENCE, not a cause: "no [DODGE]
+  markers in a 25-kill match" is checkable; "the reflex layer is dead code" was
+  an inference the gate could not make and it named the one healthy subsystem.
 - **The IAP tunnel kills any single scp stream around ~59 MB**
   (ConnectionReconnectTimeout; retrying whole-file dies at the same offset).
   Pull big artifacts (match mp4s ~190 MB) chunked: split into ≤40 MB parts on
