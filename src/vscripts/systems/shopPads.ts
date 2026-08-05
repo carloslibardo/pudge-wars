@@ -12,11 +12,35 @@ import { sideForTeam } from "../lib/battleLines";
 
 /** VPK-verified 2026-07-29: `rune_regeneration` under `particles/generic_gameplay`. */
 const PAD_FX = "particles/generic_gameplay/rune_regeneration.vpcf";
+/** VPK-verified 2026-08-05: `range_display` under `particles/ui_mouseactions`. CP1.x = radius. */
+const RING_FX = "particles/ui_mouseactions/range_display.vpcf";
+/** VPK-verified 2026-08-05: the fountain shopkeeper models (radiant / dire). */
+const KEEPER_MODEL: Record<number, string> = {
+    [-1]: "models/heroes/shopkeeper/shopkeeper.vmdl",
+    [1]: "models/heroes/shopkeeper_dire/shopkeeper_dire.vmdl",
+};
 
 export class ShopPads {
     constructor() {
         for (const side of [-1, 1]) {
             const pos = GetGroundPosition(Vector(side * SHOP_PAD_X, 0, 0), undefined);
+            // The shopkeeper is the landmark — models always render (unlike
+            // particles, which can silently no-op under raw CP driving).
+            // Faces the court center so it reads as "come buy here".
+            SpawnEntityFromTableSynchronous("prop_dynamic", {
+                model: KEEPER_MODEL[side],
+                origin: `${pos.x} ${pos.y} ${pos.z}`,
+                angles: `0 ${side < 0 ? 0 : 180} 0`,
+                DefaultAnim: "idle",
+            });
+            // Ground ring marking the exact buy radius.
+            const ring = ParticleManager.CreateParticle(
+                RING_FX,
+                ParticleAttachment.CUSTOMORIGIN,
+                undefined,
+            );
+            ParticleManager.SetParticleControl(ring, 0, pos);
+            ParticleManager.SetParticleControl(ring, 1, Vector(SHOP_PAD_RADIUS, 0, 0));
             // A ring of glows reads as a ZONE at video scale, not a dot.
             for (const [ox, oy] of [
                 [0, 0],
