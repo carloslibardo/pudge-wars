@@ -1,0 +1,20 @@
+// SteamCMD Workshop item descriptor for Pudge Wars.
+//
+// Used by:  steamcmd +login <user> +workshop_build_item <abs-path>.vdf +quit
+// Driven by: scripts/publish-prod.ps1 (writes a resolved copy at run time —
+// this file is the reference template, placeholders included).
+//
+// "publishedfileid" 0  => steamcmd CREATES a new item and prints its ID.
+// After the first publish, record the returned ID here so every later run
+// UPDATES the item instead of creating duplicates.
+"workshopitem"
+{
+	"appid"           "570"
+	"publishedfileid" "0"
+	"contentfolder"   "__CONTENT_FOLDER__"
+	"previewfile"     "__PREVIEW_FILE__"
+	"visibility"      "2"   // 0=public 1=friends 2=hidden 3=unlisted — first publish hidden, flip after a live check
+	"title"           "Pudge Wars"
+	"description"     "Everyone is Pudge. 5v5 across the river on a tight court — a landed hook IS a kill: the victim is dragged home on a visible chain and executed. Hook the drifting river chest for gold, heals, items, haste, or a shield that eats the next enemy hook. First team to 10 kills wins."
+	"changenote"      "__CHANGE_NOTE__"
+}
