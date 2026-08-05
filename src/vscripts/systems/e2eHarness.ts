@@ -540,8 +540,18 @@ export class E2EHarness {
             // or Vanish out of it when the own hook is down anyway.
             const threat = incomingThreat([origin.x, origin.y], hero.GetTeamNumber(), threats, now);
             if (threat && dodgeRoll(id, this.tick)) {
+                // Vanish alternates with the sidestep whenever it is castable
+                // (not only when the own hook is down): at 2400 hook speed a
+                // threat window is ~0.46 s and a whole 25-kill match surfaces
+                // only a handful of dodge events — run 40 had 6, and the
+                // hook-down coincidence never happened, zero vanishes. Parity
+                // keeps roughly half the dodges as visible sidesteps.
                 const vanish = hero.GetAbilityByIndex(3);
-                if (vanish && vanish.IsFullyCastable() && (!hook || !hook.IsFullyCastable())) {
+                if (
+                    vanish &&
+                    vanish.IsFullyCastable() &&
+                    (!hook || !hook.IsFullyCastable() || this.tick % 2 === 0)
+                ) {
                     hero.CastAbilityNoTarget(vanish, id);
                 } else {
                     const [ex, ey] = dodgeStep([origin.x, origin.y], threat);
