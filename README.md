@@ -1,18 +1,27 @@
 # Pudge Wars
 
-Everyone is Pudge. Two teams face off across a central river; you win by hooking
-enemies to your side and finishing them. First team to 10 kills takes it.
+Everyone is Pudge. Two teams of five face off across a central river on a
+tight court where everyone is always in hook range. **A landed hook is a
+kill**: the victim is dragged home on a visible chain and executed at your
+feet. First team to 10 kills takes it.
 
-- **Meat Hook** — a skillshot that latches the first enemy it hits and drags
-  them back to you.
+- **Meat Hook** — a fast skillshot (2400 speed) that latches the first enemy
+  it hits and drags them back to you. Landing it IS the kill.
 - **Rot** — a toggle cloud that damages nearby enemies and yourself (never
   fatally) and slows them.
 - **Flesh Heap** — a passive: every kill permanently grows your health and
   magic resistance.
-- **The river** — a mid-map band that grants move speed + HP regen while you
-  stand in it. A coordinate band in script, not map geometry.
-- **A hook-fantasy shop** — six items: longer / faster / meaner hook, boots,
-  regen, and extra health.
+- **The river** — grants move speed + HP regen, but linger past a grace
+  period and it burns you down to 1 HP. Never a resting state.
+- **River gifts** — a chest drifts along the river; hook it home to redeem
+  one of five prizes: gold, a full heal, a free item, a haste burst, or a
+  **shield that eats the next enemy hook** — the one save against lethal
+  hooks.
+- **A hook-fantasy shop** — seven items: stackable hook range / speed /
+  damage, boots, regen, extra health, and a castable **Meteor** (AoE stun)
+  bought on shop pads at each side of the court.
+- **Skills** — Vanish (brief untargetability), Iron Gut (rot immunity
+  panic button), Sprint.
 
 A Dota 2 custom game written in TypeScript, compiled to Lua with
 TypeScriptToLua. Scaffolded from [dota2-claude-playbook][playbook]; each feature
@@ -35,10 +44,13 @@ bun run launch  # opens Dota 2 with this addon. Workshop Tools need Windows
 bun run unlink  # reverses the link
 ```
 
-## The one step you cannot script
+## The map is generated, not hand-made
 
-You need a `.vmap`. Maps are made in Hammer, which is Windows-only and has no
-command-line "new map" path. See `content/maps/README.md`.
+`mapgen/` turns `arena.json` (court size, river band, spawn rows, shop pads)
+into the playable `.vmap` — terrain, water, lighting, spawns — and paints the
+matching minimap overview. The compile chain (`dmxconvert` +
+`resourcecompiler`) is Windows-only; `scripts/vm-buildmap.ps1` runs it
+end-to-end. See `content/maps/README.md` for the seed-map story.
 
 ## Where things are
 
@@ -49,6 +61,8 @@ command-line "new map" path. See `content/maps/README.md`.
 | `src/vscripts/abilities/` | One TypeScript class per ability |
 | `src/panorama/` | UI TS -> `content/panorama/scripts/custom_game/` |
 | `game/`, `content/` | KV data, layouts, maps. Compiled output is gitignored |
+| `mapgen/` | Python map generator: `arena.json` -> terrain/water/spawns + minimap overview |
+| `scripts/` | install/launch/publish + the Windows VM smoke-test rig (`vm.sh`, `vm-smoke.ps1`) |
 | `docs/specs/` | One directory per feature: spec + plan + marker contract |
 | `.claude/skills/` | The skills an agent should reach for. Triggers in `CLAUDE.md` |
 
