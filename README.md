@@ -23,10 +23,26 @@ feet. First team to 10 kills takes it.
 - **Skills** — Vanish (brief untargetability), Iron Gut (rot immunity
   panic button), Sprint.
 
+## Play it
+
+Published on the Steam Workshop:
+**[Pudge Wars](https://steamcommunity.com/sharedfiles/filedetails/?id=3778117052)**
+(item `3778117052`) — subscribe, then find it in Dota's Arcade.
+
+## How it was built
+
 A Dota 2 custom game written in TypeScript, compiled to Lua with
 TypeScriptToLua. Scaffolded from [dota2-claude-playbook][playbook]; each feature
 was built through the playbook's SDD loop (`docs/specs/`), and the log-marker
 contract a future engine run must satisfy is `docs/specs/MARKERS.md`.
+
+It is also the playbook's dogfood: a second game built on the same rig by an
+agent following that playbook as written, specifically to find out what the
+playbook was still missing. It found plenty — the engine landmines L26–L33, the
+failure casebook's F18–F21, and two whole bot pathologies came out of these
+42 verification runs and went back upstream. Every balance number traces to a
+spec in `docs/specs/`, and every invariant in `CLAUDE.md` cost at least one red
+run to learn.
 
 [playbook]: https://github.com/carloslibardo/dota2-claude-playbook
 
